@@ -26,7 +26,7 @@ Topic Description
    
 Project Description
 ------------------------
-  We plan to make a desktop application of this game with additional varying modes such as, 
+We plan to make a desktop application of this game with additional varying modes such as:
     - Daily Challenge: Each day there will be a daily challenge assigned by developers, where each player are going to try to complete the challenge in the shortest time. Their completion times will be displayed in the leaderboard.
     - Switch Mode: 2 boards will be switched between two players, each player will interract with the board for a fixed time interval. The player who completes the puzzle wins. Players can disarrange the cubes on the board so players will use various strategies when playing this mode.
     - Survival mode: This is a single player mode in which player tries to solve as many puzzles as they can in a time interval. Player will start with a specified time, each time player solves a puzzle, he will be given additional time. So in this mode players will challenge themselves.
