@@ -1,7 +1,7 @@
 kubitz-*/target
 kubitz-*/.DS_Store
 kubitz-*local.properties
-.idea
+kubitz-*/.idea
 kubitz-*/*.iml
 *~
 local.yml
