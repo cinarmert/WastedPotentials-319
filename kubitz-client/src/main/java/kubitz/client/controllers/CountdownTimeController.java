@@ -1,4 +1,4 @@
-package kubitz.client.components;
+package kubitz.client.controllers;
 
 import java.util.function.Function;
 
