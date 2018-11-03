@@ -37,6 +37,10 @@ public class PeriodicTimeController implements Runnable
 
     }
 
+    public void setPeriod(long period) {
+        this.period = period;
+    }
+
     public void setRunning(boolean running)
     {
         this.running = running;
