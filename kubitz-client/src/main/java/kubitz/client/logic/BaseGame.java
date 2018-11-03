@@ -16,6 +16,8 @@ public abstract class BaseGame {
         this.card = card;
     }
 
+    public Grid getGrid(){ return grid;}
+
     public Cube getCube() {
         return cube;
     }
