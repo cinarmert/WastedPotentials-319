@@ -7,7 +7,7 @@ import kubitz.client.logic.BaseGame;
 
 import javax.swing.*;
 
-public abstract class BaseGameUI extends JPanel {
+public class BaseGameUI extends JPanel {
 
     BaseGame baseGame;
 
