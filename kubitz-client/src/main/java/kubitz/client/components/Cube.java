@@ -2,18 +2,18 @@ package kubitz.client.components;
 
 public class Cube
 {
-    public enum Side {RED_DOT, WHITE_DOT, RED, WHITE, TRIANGLE_LU, TRIANGLE_RU, TRIANGLE_LD, TRIANGLE_RD}
-    private Side state;
+    public enum Face {RED_DOT, WHITE_DOT, RED, WHITE, TRIANGLE_LU, TRIANGLE_RU, TRIANGLE_LD, TRIANGLE_RD}
+    private Face currentFace;
 
-    public Cube(Side state)
+    public Cube(Face currentFace)
     {
-        this.state = state;
+        this.currentFace = currentFace;
     }
 
 
-    public Side getState()
+    public Face getCurrentFace()
     {
-        return state;
+        return currentFace;
     }
 
 
