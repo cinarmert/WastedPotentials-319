@@ -1,13 +1,12 @@
 package kubitz.client.gui;
 
 import kubitz.client.logic.SurvivalMode;
-import kubitz.client.logic.SwitchMode;
 
-public class SurvivalModeUI extends BaseGameUI implements Screen {
+public class SurvivalModeScreen extends BaseGameScreen implements Screen {
 
     SurvivalMode sm;
 
-    public SurvivalModeUI(SurvivalMode sm) {
+    public SurvivalModeScreen(SurvivalMode sm) {
         super(sm);
         this.sm = sm;
     }

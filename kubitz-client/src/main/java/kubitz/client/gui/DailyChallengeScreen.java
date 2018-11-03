@@ -1,13 +1,12 @@
 package kubitz.client.gui;
 
-import kubitz.client.logic.ClassicMode;
 import kubitz.client.logic.DailyChallengeMode;
 
-public class DailyChallengeUI extends BaseGameUI implements Screen {
+public class DailyChallengeScreen extends BaseGameScreen implements Screen {
 
     private DailyChallengeMode dcm;
 
-    public DailyChallengeUI(DailyChallengeMode dcm) {
+    public DailyChallengeScreen(DailyChallengeMode dcm) {
         super(dcm);
         this.dcm = dcm;
     }

@@ -2,11 +2,11 @@ package kubitz.client.gui;
 
 import kubitz.client.logic.SwitchMode;
 
-public class SwitchModeUI extends BaseGameUI implements Screen{
+public class SwitchModeScreen extends BaseGameScreen implements Screen{
 
     SwitchMode sm;
 
-    public SwitchModeUI(SwitchMode sm) {
+    public SwitchModeScreen(SwitchMode sm) {
         super(sm);
         this.sm = sm;
     }
