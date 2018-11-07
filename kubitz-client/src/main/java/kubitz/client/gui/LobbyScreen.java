@@ -1,10 +1,11 @@
 package kubitz.client.gui;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LobbyScreen extends JPanel implements Screen {
 
-    public LobbyScreen() {
+    public LobbyScreen(JPanel contentPane, Dimension size) {
     }
 
     @Override
