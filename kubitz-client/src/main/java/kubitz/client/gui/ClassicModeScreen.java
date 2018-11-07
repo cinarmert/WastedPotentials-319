@@ -5,7 +5,7 @@ import kubitz.client.logic.ClassicMode;
 import javax.swing.*;
 import java.awt.*;
 
-public class ClassicModeScreen extends BaseGameScreen implements Screen {
+public class ClassicModeScreen extends BaseGameScreen {
 
     private ClassicMode cm;
 

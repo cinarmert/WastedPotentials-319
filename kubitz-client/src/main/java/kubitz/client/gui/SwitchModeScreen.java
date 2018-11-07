@@ -5,7 +5,7 @@ import kubitz.client.logic.SwitchMode;
 import javax.swing.*;
 import java.awt.*;
 
-public class SwitchModeScreen extends BaseGameScreen implements Screen{
+public class SwitchModeScreen extends BaseGameScreen{
 
     SwitchMode sm;
 

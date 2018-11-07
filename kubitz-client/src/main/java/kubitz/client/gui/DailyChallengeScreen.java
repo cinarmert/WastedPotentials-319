@@ -5,7 +5,7 @@ import kubitz.client.logic.DailyChallengeMode;
 import javax.swing.*;
 import java.awt.*;
 
-public class DailyChallengeScreen extends BaseGameScreen implements Screen {
+public class DailyChallengeScreen extends BaseGameScreen{
 
     private DailyChallengeMode dcm;
 

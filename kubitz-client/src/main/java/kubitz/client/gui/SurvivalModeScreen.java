@@ -5,7 +5,7 @@ import kubitz.client.logic.SurvivalMode;
 import javax.swing.*;
 import java.awt.*;
 
-public class SurvivalModeScreen extends BaseGameScreen implements Screen {
+public class SurvivalModeScreen extends BaseGameScreen {
 
     SurvivalMode sm;
 

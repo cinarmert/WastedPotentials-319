@@ -8,12 +8,16 @@ import kubitz.client.logic.BaseGame;
 import javax.swing.*;
 import java.awt.*;
 
-public class BaseGameScreen extends JPanel {
+public class BaseGameScreen extends JPanel implements Screen{
 
     BaseGame baseGame;
 
-    public BaseGameScreen(BaseGame baseGame, JPanel contentPane, Dimension size) {
+    public BaseGameScreen(BaseGame baseGame) {
         this.baseGame = baseGame;
     }
 
+    @Override
+    public void update() {
+
+    }
 }
