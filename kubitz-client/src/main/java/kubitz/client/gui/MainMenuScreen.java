@@ -54,9 +54,6 @@ public class MainMenuScreen extends JPanel implements Screen {
         this.add(leaderboard);
         this.add(settingsAndCredits);
         this.add(quit);
-
-        JLabel test = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/backgrounds/menu_background.png")).getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT)));
-        this.add(test);
     }
 
     @Override
