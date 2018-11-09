@@ -2,11 +2,14 @@ package kubitz.client.gui;
 
 import kubitz.client.logic.ClassicMode;
 
-public class ClassicModeScreen extends BaseGameScreen implements Screen {
+import javax.swing.*;
+import java.awt.*;
+
+public class ClassicModeScreen extends BaseGameScreen {
 
     private ClassicMode cm;
 
-    public ClassicModeScreen(ClassicMode cm) {
+    public ClassicModeScreen(ClassicMode cm, JPanel contentPane, Dimension size) {
         super(cm);
         this.cm = cm;
     }

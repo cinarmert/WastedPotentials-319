@@ -2,11 +2,14 @@ package kubitz.client.gui;
 
 import kubitz.client.logic.SwitchMode;
 
-public class SwitchModeScreen extends BaseGameScreen implements Screen{
+import javax.swing.*;
+import java.awt.*;
+
+public class SwitchModeScreen extends BaseGameScreen{
 
     SwitchMode sm;
 
-    public SwitchModeScreen(SwitchMode sm) {
+    public SwitchModeScreen(SwitchMode sm, JPanel contentPane, Dimension size) {
         super(sm);
         this.sm = sm;
     }

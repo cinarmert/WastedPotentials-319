@@ -2,11 +2,14 @@ package kubitz.client.gui;
 
 import kubitz.client.logic.SurvivalMode;
 
-public class SurvivalModeScreen extends BaseGameScreen implements Screen {
+import javax.swing.*;
+import java.awt.*;
+
+public class SurvivalModeScreen extends BaseGameScreen {
 
     SurvivalMode sm;
 
-    public SurvivalModeScreen(SurvivalMode sm) {
+    public SurvivalModeScreen(SurvivalMode sm, JPanel contentPane, Dimension size) {
         super(sm);
         this.sm = sm;
     }

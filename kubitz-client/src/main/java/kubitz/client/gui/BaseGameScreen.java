@@ -6,8 +6,9 @@ import kubitz.client.components.Grid;
 import kubitz.client.logic.BaseGame;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class BaseGameScreen extends JPanel {
+public class BaseGameScreen extends JPanel implements Screen{
 
     BaseGame baseGame;
 
@@ -15,4 +16,8 @@ public class BaseGameScreen extends JPanel {
         this.baseGame = baseGame;
     }
 
+    @Override
+    public void update() {
+
+    }
 }
