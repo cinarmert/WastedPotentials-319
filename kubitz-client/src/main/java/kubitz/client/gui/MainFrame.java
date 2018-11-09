@@ -10,8 +10,11 @@ import java.io.IOException;
 
 public class MainFrame extends JFrame {
 
+    private static MainFrame instance = null;
+
     public MainFrame(){
         initializeResources();
+        instance = this;
     }
 
     private void initializeResources(){
@@ -41,5 +44,9 @@ public class MainFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
+    }
+
+    public static MainFrame getInstance(){
+        return instance == null ? new MainFrame() : instance;
     }
 }
