@@ -15,7 +15,7 @@ public class MainMenuScreen extends JPanel implements Screen {
     private void initializeResources(){
         this.setLayout(new GridLayout(5,1));
         this.setVisible(true);
-        this.setPreferredSize(new Dimension(150,150));
+        this.setSize(new Dimension(150,150));
 
         initializeButtons();
     }
@@ -54,6 +54,9 @@ public class MainMenuScreen extends JPanel implements Screen {
         this.add(leaderboard);
         this.add(settingsAndCredits);
         this.add(quit);
+
+        JLabel test = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/backgrounds/menu_background.png")).getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT)));
+        this.add(test);
     }
 
     @Override
