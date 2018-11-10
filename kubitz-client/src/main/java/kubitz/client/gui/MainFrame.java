@@ -1,15 +1,12 @@
 package kubitz.client.gui;
 
-import oracle.jrockit.jfr.JFR;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
+    private JPanel contentPane;
 
     public static final String MAINMENU = "MAINMENU";
     public static final String PLAY = "PLAY";
@@ -27,6 +24,7 @@ public class MainFrame extends JFrame {
     public static final String SURVIVALMODE = "SURVIVAL";
     public static final String DAILYCHALLENGEMODE = "DAILYCHALLENGE";
     public static Image background;
+    private Dimension size;
 
     public MainFrame(){
         initializeResources();
@@ -35,13 +33,13 @@ public class MainFrame extends JFrame {
 
     private void initializeResources(){
 
-        Dimension size = new Dimension(640,480);
+        size = new Dimension(640,480);
 
         this.setSize( size);
 
         background = new ImageIcon(getClass().getResource("/backgrounds/background.png")).getImage();
 
-        JPanel contentPane = new JPanel();
+        contentPane = new JPanel();
         contentPane.setLayout( new CardLayout() );
 
         contentPane.add( new MainMenuScreen( contentPane, size), MAINMENU );
@@ -71,4 +69,17 @@ public class MainFrame extends JFrame {
         return instance == null ? new MainFrame() : instance;
     }
 
+    public void updateResolution( Dimension size){
+        this.size = size;
+        setSize(size);
+
+        Component[] components = contentPane.getComponents();
+
+        for ( int i = 0; i < components.length; i++)
+        {
+            ((Screen) components[i]).updateResolution(size);
+        }
+
+
+    }
 }
