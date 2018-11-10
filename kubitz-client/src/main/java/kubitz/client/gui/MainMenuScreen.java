@@ -159,4 +159,9 @@ public class MainMenuScreen extends JPanel implements Screen {
     public void update() {
 
     }
+
+    @Override
+    public void updateResolution(Dimension size) {
+        this.size = size;
+    }
 }

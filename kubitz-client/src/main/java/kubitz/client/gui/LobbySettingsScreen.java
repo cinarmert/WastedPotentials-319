@@ -12,4 +12,9 @@ public class LobbySettingsScreen extends JPanel implements Screen {
     public void update() {
 
     }
+
+    @Override
+    public void updateResolution(Dimension size) {
+
+    }
 }
