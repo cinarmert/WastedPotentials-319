@@ -5,7 +5,10 @@ import java.awt.*;
 public class CustomButton extends Button {
 
     public CustomButton(String label) {
+
         super(label);
+
+        setFocusable( false);
     }
 
 }
