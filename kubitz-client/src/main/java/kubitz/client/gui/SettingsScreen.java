@@ -91,7 +91,7 @@ public class SettingsScreen extends JPanel implements Screen {
         nickNamePanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         nickNamePanel.setOpaque(false);
 
-        JTextField nickNameTextField = new JTextField("MrHardDick",20);
+        JTextField nickNameTextField = new JTextField("PLAYER",20);
         CustomButton summitButton = new CustomButton("SUMMIT");
 
         nickNamePanel.add(nickNameTextField);
@@ -111,6 +111,8 @@ public class SettingsScreen extends JPanel implements Screen {
 
         JSpinner resolutionSpinner = new JSpinner( new SpinnerListModel( resolutions ));
         ((JSpinner.DefaultEditor)resolutionSpinner.getEditor()).getTextField().setColumns(6);
+        ((JSpinner.DefaultEditor)resolutionSpinner.getEditor()).getTextField().setEditable(false);
+
         resolutionSpinner.addChangeListener(new ChangeListener() {
 
             // for testing
