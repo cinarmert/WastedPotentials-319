@@ -1,7 +1,11 @@
 package kubitz.client.gui;
 
+import oracle.jrockit.jfr.JFR;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainFrame extends JFrame {
 
@@ -35,8 +39,7 @@ public class MainFrame extends JFrame {
 
         this.setSize( size);
 
-        background = new ImageIcon(new ImageIcon(getClass().getResource("/backgrounds/background.png")).getImage()
-                .getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT)).getImage();
+        background = new ImageIcon(getClass().getResource("/backgrounds/background.png")).getImage();
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout( new CardLayout() );
