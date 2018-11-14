@@ -25,15 +25,17 @@ public class MainFrame extends JFrame {
     public static final String DAILYCHALLENGEMODE = "DAILYCHALLENGE";
     public static Image background;
     private Dimension size;
+    Config config;
 
     public MainFrame(){
+        this.config = new Config();
         initializeResources();
         instance = this;
     }
 
     private void initializeResources(){
 
-        size = new Dimension(640,480);
+        size = config.getResolution();
 
         this.setSize( size);
 
@@ -46,7 +48,7 @@ public class MainFrame extends JFrame {
         contentPane.add( new PlayScreen(contentPane,size), PLAY);
         contentPane.add( new HowToPlayScreen( contentPane, size), HOWTOPLAY);
         contentPane.add( new LeaderboardScreen( contentPane, size), LEADERBOARD);
-        contentPane.add( new SettingsScreen( contentPane, size), SETTINGS);
+        contentPane.add( new SettingsScreen( contentPane, size, config), SETTINGS);
         contentPane.add( new CreditsScreen( contentPane, size), CREDITS);
         contentPane.add( new LobbyScreen( contentPane, size), LOBBY);
         contentPane.add( new LobbySettingsScreen(contentPane, size), LOBBYSETTINGS);
@@ -66,20 +68,7 @@ public class MainFrame extends JFrame {
     }
 
     public static MainFrame getInstance(){
-        return instance == null ? new MainFrame() : instance;
+        return instance;// == null ? new MainFrame() : instance;
     }
 
-    public void updateResolution( Dimension size){
-        this.size = size;
-        setSize(size);
-
-        Component[] components = contentPane.getComponents();
-
-        for ( int i = 0; i < components.length; i++)
-        {
-            ((Screen) components[i]).updateResolution(size);
-        }
-
-
-    }
 }
