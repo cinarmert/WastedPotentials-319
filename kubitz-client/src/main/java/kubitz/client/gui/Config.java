@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class Config {
 
-    public final String PROPERTIES_NAME = "kubitz.properties";
+    public final String PROPERTIES_NAME = "/kubitz.properties";
 
     private Dimension resolution;
     private boolean fullScreen;
@@ -19,9 +19,7 @@ public class Config {
         try {
             Properties prop = new Properties();
 
-            File f = new File(PROPERTIES_NAME);
-            InputStream inputStream = new FileInputStream( f );
-
+            InputStream inputStream = getClass().getResource(PROPERTIES_NAME).openStream();
             if (inputStream != null) {
                 prop.load(inputStream);
             } else {
