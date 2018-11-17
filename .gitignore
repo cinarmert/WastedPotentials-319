@@ -1,0 +1,7 @@
+kubitz-*/target
+kubitz-*/.DS_Store
+kubitz-*local.properties
+kubitz-*/.idea
+kubitz-*/*.iml
+*~
+local.yml
