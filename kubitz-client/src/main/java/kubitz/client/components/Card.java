@@ -7,10 +7,17 @@ package kubitz.client.components;
  */
 public class Card
 {
+
+
     Grid grid;
 
     public Card(Grid grid)
     {
         this.grid = grid;
+    }
+
+    public Grid getGrid()
+    {
+        return grid;
     }
 }
