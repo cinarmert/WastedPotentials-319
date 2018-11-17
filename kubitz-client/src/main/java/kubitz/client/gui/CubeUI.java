@@ -12,7 +12,11 @@ public class CubeUI extends JPanel {
     public CubeUI( Cube cube) {
         // responsive size
         setPreferredSize( new Dimension(50,50));
-        setBackground(Color.WHITE);
+
+        if ( cube == null)
+            setBackground(Color.GRAY);
+        else
+            setBackground(Color.WHITE);
         this.cube = cube;
     }
 
@@ -26,6 +30,7 @@ public class CubeUI extends JPanel {
         super.paintComponent(g);
 
         if (cube != null) {
+            setBackground( Color.WHITE);
             g.setColor(Color.RED);
 
             Polygon triangleLeft = new Polygon();

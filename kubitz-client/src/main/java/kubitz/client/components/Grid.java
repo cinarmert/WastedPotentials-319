@@ -30,6 +30,10 @@ public class Grid
         return  true;
     }
 
+    public Cube getCube(int x, int y){
+        return grid[x][y];
+    }
+
     public Cube[][] getGrid()
     {
         return grid;
