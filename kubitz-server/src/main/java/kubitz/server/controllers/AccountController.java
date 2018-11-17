@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/classic")
+@RequestMapping(value = "/account")
 public class AccountController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getChallenge(@RequestBody Map<String, Object> body) {
+    public Map<String, Object> login(@RequestBody Map<String, Object> body) {
         return null;
     }
 
