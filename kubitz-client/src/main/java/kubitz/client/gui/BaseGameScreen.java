@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
 
 public class BaseGameScreen extends JPanel implements Screen{
 
@@ -20,6 +19,7 @@ public class BaseGameScreen extends JPanel implements Screen{
     private Dimension size;
     private BaseGame baseGame;
     public Image background;
+    protected JPanel cardPanel;
 
     public BaseGameScreen(BaseGame baseGame, Dimension size) {
 
@@ -41,6 +41,10 @@ public class BaseGameScreen extends JPanel implements Screen{
         this.baseGame = baseGame;
         if (this.baseGame != null)
             initializeResources();
+    }
+
+    public BaseGame getGame(){
+        return baseGame;
     }
 
 
@@ -73,7 +77,7 @@ public class BaseGameScreen extends JPanel implements Screen{
         cubeGridPanel.add(gridUI);
 
 
-        JPanel cardPanel = new JPanel();
+        cardPanel = new JPanel();
         cardPanel.setOpaque(false);
         cardPanel.setLayout( new FlowLayout(FlowLayout.CENTER,20,50));
         cardPanel.add(cardUI);
@@ -118,9 +122,8 @@ public class BaseGameScreen extends JPanel implements Screen{
     }
 
     public void newCube(){
-        Random random = new Random();
 
-        baseGame.setCube( new Cube( random.nextInt(8) ) );
+        baseGame.setCube( Cube.getRandomCube() );
         cubeUI.setCube( baseGame.getCube() );
 
         cubeUI.repaint();

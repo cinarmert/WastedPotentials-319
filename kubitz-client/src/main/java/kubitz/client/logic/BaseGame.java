@@ -42,6 +42,10 @@ public abstract class BaseGame {
             {
                 if(!finished)
                     break;
+                if ( grid.getGrid()[i][j] == null || card.getGrid().getGrid()[i][j] == null) {
+                    finished = false;
+                    break;
+                }
                 finished = grid.getGrid()[i][j].getCurrentFace() == card.getGrid().getGrid()[i][j].getCurrentFace();
             }
         return finished;
