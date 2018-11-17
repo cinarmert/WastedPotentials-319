@@ -61,6 +61,20 @@ public class SettingsScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                SettingsScreen.this.resolution = config.getResolution();
+                SettingsScreen.this.fullScreen = config.isFullScreen();
+                SettingsScreen.this.masterSound = config.getMasterSound();
+                SettingsScreen.this.effectsSound = config.getEffectsSound();
+                SettingsScreen.this.musicSound = config.getMusicSound();
+
+                resolutionSpinner.setValue( new Resolution(config.getResolution().width,config.getResolution().height));
+                fullScreenCheckBox.setSelected( config.isFullScreen());
+                masterSlider.setValue( config.getMasterSound());
+                effectsSlider.setValue(config.getEffectsSound());
+                musicSlider.setValue(config.getMusicSound());
+
+                applied = false;
+
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                 cardLayout.show(contentPane, MainFrame.MAINMENU);
 

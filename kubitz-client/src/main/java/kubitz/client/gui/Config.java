@@ -2,11 +2,15 @@ package kubitz.client.gui;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class Config {
 
     public final String PROPERTIES_NAME = "/kubitz.properties";
+
+    Properties props;
 
     private Dimension resolution;
     private boolean fullScreen;
@@ -17,43 +21,46 @@ public class Config {
     public Config() {
 
         try {
-            Properties prop = new Properties();
+            props = new Properties();
 
             InputStream inputStream = getClass().getResource(PROPERTIES_NAME).openStream();
-            if (inputStream != null) {
-                prop.load(inputStream);
-            } else {
-                createDefaultConfig();
-            }
 
-            int width = Integer.parseInt( prop.getProperty("width") );
-            int height = Integer.parseInt( prop.getProperty("height") );
+            props.load(inputStream);
+
+            int width = Integer.parseInt( props.getProperty("width") );
+            int height = Integer.parseInt( props.getProperty("height") );
 
             resolution = new Dimension( width, height);
-            fullScreen = Boolean.parseBoolean( prop.getProperty("fullscreen") );
-            masterSound = Integer.parseInt( prop.getProperty("master") );
-            effectsSound = Integer.parseInt( prop.getProperty("effects") );
-            musicSound = Integer.parseInt( prop.getProperty("music") );
+            fullScreen = Boolean.parseBoolean( props.getProperty("fullscreen") );
+            masterSound = Integer.parseInt( props.getProperty("master") );
+            effectsSound = Integer.parseInt( props.getProperty("effects") );
+            musicSound = Integer.parseInt( props.getProperty("music") );
 
         } catch (Exception e) {
-            e.printStackTrace();
+            createDefaultConfig();
         }
     }
 
     private void createDefaultConfig(){
 
         try {
-            Properties props = new Properties();
-            props.setProperty("width", ""+640);
-            props.setProperty("height", ""+480);
+            props = new Properties();
+            props.setProperty("width", ""+800);
+            props.setProperty("height", ""+600);
             props.setProperty("fullscreen", ""+false);
             props.setProperty("master", ""+100);
             props.setProperty("effects", ""+100);
             props.setProperty("music", ""+100);
 
-            File f = new File(PROPERTIES_NAME);
+            File f = new File( getClass().getResource("/").toURI().getPath() +  PROPERTIES_NAME);
             OutputStream out = new FileOutputStream( f );
             props.store(out, "CONFIGURATION FILE");
+
+            resolution = new Dimension( 800, 600);
+            fullScreen = false;
+            masterSound = 100;
+            effectsSound = 100;
+            musicSound = 100;
         }
         catch (Exception e ) {
             e.printStackTrace();
@@ -86,7 +93,6 @@ public class Config {
                              int masterSound, int effectsSound, int musicSound){
 
         try {
-            Properties props = new Properties();
             props.setProperty("width", ""+resolution.width);
             props.setProperty("height", ""+resolution.height);
             props.setProperty("fullscreen", ""+fullScreen);
@@ -94,7 +100,7 @@ public class Config {
             props.setProperty("effects", ""+effectsSound);
             props.setProperty("music", ""+musicSound);
 
-            File f = new File(PROPERTIES_NAME);
+            File f = new File( getClass().getResource(PROPERTIES_NAME).toURI() );
             OutputStream out = new FileOutputStream( f );
             props.store(out, "CONFIGURATION FILE");
 
