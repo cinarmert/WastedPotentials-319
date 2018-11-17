@@ -10,8 +10,5 @@ public class ClassicMode extends BaseGame {
         super(grid, cube, card);
     }
 
-    public boolean isGameFinished() {
-        return false;
-    }
 
 }

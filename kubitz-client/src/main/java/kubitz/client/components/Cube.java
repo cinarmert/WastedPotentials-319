@@ -1,8 +1,8 @@
 package kubitz.client.components;
+import java.util.Random;
 
 public class Cube
 {
-
     public static final int RED_DOT = 0;
     public static final int WHITE_DOT = 1;
     public static final int RED = 2;
@@ -35,4 +35,9 @@ public class Cube
 
     }
 
+    public static Cube getRandomCube()
+    {
+        Random rand = new Random();
+        return new Cube(Face.values()[rand.nextInt(Face.size)]);
+    }
 }

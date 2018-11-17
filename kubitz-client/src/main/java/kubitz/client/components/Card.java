@@ -13,7 +13,7 @@ public class Card
     {
         this.grid = grid;
     }
-
+  
     public Grid getGrid() {
         return grid;
     }
