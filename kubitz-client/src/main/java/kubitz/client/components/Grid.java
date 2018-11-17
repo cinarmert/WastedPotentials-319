@@ -16,13 +16,13 @@ public class Grid
         grid = new Cube[size][size];
     }
 
-    boolean addCube(Cube cube, int x, int y)
+    public boolean addCube(Cube cube, int x, int y)
     {
         grid[x][y] = cube;
         return true;
     }
 
-    boolean removeCube(int x, int y)
+    public boolean removeCube(int x, int y)
     {
         if(grid[x][y] == null)
             return false;
