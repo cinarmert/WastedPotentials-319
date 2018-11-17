@@ -10,7 +10,7 @@ public abstract class BaseGame {
     Cube cube;
     Card card;
 
-    public BaseGame(Grid grid, Cube cube, Card card) {
+    public BaseGame(Grid grid, Cube cube) {
         this.grid = grid;
         this.cube = cube;
         this.card = card;

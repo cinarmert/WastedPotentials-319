@@ -10,7 +10,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
     private DailyChallengeMode dcm;
 
     public DailyChallengeScreen(DailyChallengeMode dcm, JPanel contentPane, Dimension size) {
-        super(dcm);
+        super(dcm,size);
         this.dcm = dcm;
     }
 
