@@ -32,12 +32,112 @@ public class Cube
 
     public void  rotate(int x, int y, int z)
     {
+        switch (currentFace)
+        {
+            case RED_DOT:
+                if(x == 1)
+                    currentFace = RED;
+                if(x == -1)
+                    currentFace = WHITE;
+                if(y == 1)
+                    currentFace = TRIANGLE_LU;
+                if(y == -1)
+                    currentFace = TRIANGLE_RD;
+                break;
+            case WHITE_DOT:
+                if(x == 1)
+                    currentFace = RED;
+                if(x == -1)
+                    currentFace = WHITE;
+                if(y == 1)
+                    currentFace = TRIANGLE_RD;
+                if(y == -1)
+                    currentFace = TRIANGLE_LU;
+                break;
+            case RED:
+                if(x == 1)
+                    currentFace = RED_DOT;
+                if(x == -1)
+                    currentFace = WHITE_DOT;
+                if(y == 1)
+                    currentFace = TRIANGLE_LU;
+                if(y == -1)
+                    currentFace = TRIANGLE_RD;
+                break;
+            case WHITE:
+                if(x == 1)
+                    currentFace = RED;
+                if(x == -1)
+                    currentFace = WHITE;
+                if(y == 1)
+                    currentFace = TRIANGLE_LU;
+                if(y == -1)
+                    currentFace = TRIANGLE_RD;
+                break;
+            case TRIANGLE_LU:
+                if(x == 1)
+                    currentFace = RED;
+                if(x == -1)
+                    currentFace = WHITE;
+                if(y == 1)
+                    currentFace = WHITE_DOT;
+                if(y == -1)
+                    currentFace = RED_DOT;
+                if(z == 1)
+                    currentFace = TRIANGLE_RU;
+                if(z == -1)
+                    currentFace = TRIANGLE_LD;
+                break;
+            case TRIANGLE_RU:
+                if(x == 1)
+                    currentFace = WHITE_DOT;
+                if(x == -1)
+                    currentFace = RED_DOT;
+                if(y == 1)
+                    currentFace = RED;
+                if(y == -1)
+                    currentFace = WHITE;
+                if(z == 1)
+                    currentFace = TRIANGLE_RD;
+                if(z == -1)
+                    currentFace = TRIANGLE_LU;
+                break;
+            case TRIANGLE_LD:
+                if(x == 1)
+                    currentFace = WHITE;
+                if(x == -1)
+                    currentFace = RED;
+                if(y == 1)
+                    currentFace = RED_DOT;
+                if(y == -1)
+                    currentFace = WHITE_DOT;
+                if(z == 1)
+                    currentFace = TRIANGLE_LU;
+                if(z == -1)
+                    currentFace = TRIANGLE_RD;
+                break;
+            case TRIANGLE_RD:
+                if(x == 1)
+                    currentFace = RED_DOT;
+                if(x == -1)
+                    currentFace = WHITE_DOT;
+                if(y == 1)
+                    currentFace = WHITE;
+                if(y == -1)
+                    currentFace = RED;
+                if(z == 1)
+                    currentFace = TRIANGLE_LD;
+                if(z == -1)
+                    currentFace = TRIANGLE_RU;
+                break;
+            default: break;
+        }
 
     }
 
     public static Cube getRandomCube()
     {
         Random rand = new Random();
-        return new Cube(Face.values()[rand.nextInt(Face.size)]);
+        return new Cube(rand.nextInt(8));
     }
 }
