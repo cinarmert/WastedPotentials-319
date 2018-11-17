@@ -10,8 +10,8 @@ public class SwitchMode extends BaseGame {
     PeriodicTimeController ptc;
     int period;
 
-    public SwitchMode(Grid grid, Cube cube, Card card) {
-        super(grid, cube, card);
+    public SwitchMode(Grid grid, Cube cube) {
+        super(grid, cube);
         period = 150000; //ToDo proper period, -consider random-
         ptc = new PeriodicTimeController(period, this::switchGrids);
     }

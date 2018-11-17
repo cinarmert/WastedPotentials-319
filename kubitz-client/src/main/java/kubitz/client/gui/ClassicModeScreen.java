@@ -10,7 +10,7 @@ public class ClassicModeScreen extends BaseGameScreen {
     private ClassicMode cm;
 
     public ClassicModeScreen(ClassicMode cm, JPanel contentPane, Dimension size) {
-        super(cm);
+        super(cm, size);
         this.cm = cm;
     }
 

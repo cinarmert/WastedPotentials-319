@@ -10,7 +10,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
     SurvivalMode sm;
 
     public SurvivalModeScreen(SurvivalMode sm, JPanel contentPane, Dimension size) {
-        super(sm);
+        super(sm, size);
         this.sm = sm;
     }
 

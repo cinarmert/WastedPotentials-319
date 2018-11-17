@@ -9,8 +9,8 @@ public class DailyChallengeMode extends BaseGame {
 
     TimeController tc;
 
-    public DailyChallengeMode(Grid grid, Cube cube, Card card) {
-        super(grid, cube, card);
+    public DailyChallengeMode(Grid grid, Cube cube) {
+        super(grid, cube);
         tc = new TimeController();
     }
 

@@ -10,7 +10,7 @@ public class SwitchModeScreen extends BaseGameScreen{
     SwitchMode sm;
 
     public SwitchModeScreen(SwitchMode sm, JPanel contentPane, Dimension size) {
-        super(sm);
+        super(sm, size);
         this.sm = sm;
     }
 
