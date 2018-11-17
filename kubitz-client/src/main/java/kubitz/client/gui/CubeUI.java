@@ -44,32 +44,32 @@ public class CubeUI extends JPanel {
             triangleRight.addPoint(getHeight(),getHeight());
 
             switch (cube.getCurrentFace()) {
-                case RED_DOT:
+                case Cube.RED_DOT:
                     g.fillOval(0, 0, getWidth(), getHeight());
                     break;
-                case RED:
+                case Cube.RED:
                     setBackground(Color.RED);
                     break;
-                case WHITE:
+                case Cube.WHITE:
                     setBackground(Color.WHITE);
                     break;
-                case WHITE_DOT:
+                case Cube.WHITE_DOT:
                     setBackground(Color.RED);
                     g.setColor(Color.WHITE);
                     g.fillOval(0, 0, getWidth(), getHeight());
                     break;
-                case TRIANGLE_LD:
+                case Cube.TRIANGLE_LD:
                     g.fillPolygon( triangleLeft );
                     break;
-                case TRIANGLE_LU:
+                case Cube.TRIANGLE_LU:
                     setBackground(Color.RED);
                     g.setColor(Color.WHITE);
                     g.fillPolygon( triangleLeft );
                     break;
-                case TRIANGLE_RD:
+                case Cube.TRIANGLE_RD:
                     g.fillPolygon( triangleRight );
                     break;
-                case TRIANGLE_RU:
+                case Cube.TRIANGLE_RU:
                     setBackground(Color.RED);
                     g.setColor(Color.WHITE);
                     g.fillPolygon( triangleRight );
