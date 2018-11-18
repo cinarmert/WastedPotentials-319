@@ -30,6 +30,8 @@ public class GridUI extends JPanel {
 
                 cubes[i][j] = new CubeUI( grid.getCube(i,j) );
                 cubes[i][j].setName(i + "," + j);
+                cubes[i][j].setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
+                        MainFrame.getInstance().getResolution().height/12));
                 add( cubes[i][j] );
 
             }

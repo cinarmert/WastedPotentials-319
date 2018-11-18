@@ -6,7 +6,9 @@ import kubitz.client.components.Grid;
 import kubitz.client.logic.BaseGame;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -20,6 +22,7 @@ public class BaseGameScreen extends JPanel implements Screen{
     private BaseGame baseGame;
     public Image background;
     protected JPanel cardPanel;
+    private CustomButton backButton;
 
     public BaseGameScreen(BaseGame baseGame, Dimension size) {
 
@@ -33,15 +36,44 @@ public class BaseGameScreen extends JPanel implements Screen{
         background = new ImageIcon(getClass().getResource("/backgrounds/game_background.jpg")).getImage();
 
         if (this.baseGame != null)
-            this.add(initializeResources());
+            setGame( baseGame);
 
+    }
+
+    public void addBackListener( ActionListener listener){
+        backButton.addActionListener(listener);
     }
 
     public void setGame( BaseGame baseGame){
         removeAll();
         this.baseGame = baseGame;
-        if (this.baseGame != null)
-            this.add(initializeResources());
+        if (this.baseGame != null) {
+
+            this.setLayout( new GridBagLayout());
+
+            GridBagConstraints c = new GridBagConstraints();
+
+            backButton = new CustomButton("BACK");
+
+            c.insets = new Insets(20,20,0,0);
+            c.anchor = GridBagConstraints.NORTHWEST;
+            //c.gridwidth = 1;
+            c.weightx = 0.1;
+            c.weighty = 0.1;
+            c.gridx = 0;
+            c.gridy = 0;
+            this.add( backButton,c);
+
+            c.anchor = GridBagConstraints.NORTH;
+            c.fill = GridBagConstraints.BOTH;
+            c.weightx = 1.0;
+            c.weighty = 1.0;
+           // c.gridwidth = 2;
+            c.gridx = 1;
+            c.gridy = 0;
+            this.add( initializeResources(),c);
+
+        }
     }
 
     public BaseGame getGame(){
@@ -65,6 +97,9 @@ public class BaseGameScreen extends JPanel implements Screen{
         addGridListeners();
 
         cubeUI = new CubeUI(cube);
+        cubeUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/10,
+                MainFrame.getInstance().getResolution().height/10));
+
         cardUI = new CardUI(card);
 
         JPanel cubeGridPanel = new JPanel();
@@ -73,10 +108,12 @@ public class BaseGameScreen extends JPanel implements Screen{
 
         JPanel cubePanel = new JPanel();
         cubePanel.setOpaque(false);
-        cubePanel.setLayout( new GridBagLayout());
+        cubePanel.setLayout( new FlowLayout(FlowLayout.CENTER,0,0));
+        cubePanel.setBorder(new LineBorder(Color.BLACK, 5));
 
         cubePanel.add(cubeUI);
         cubeGridPanel.add(cubePanel);
+        cubeGridPanel.add( Box.createHorizontalStrut( MainFrame.getInstance().getResolution().width/4)) ;
         cubeGridPanel.add(gridUI);
 
 
