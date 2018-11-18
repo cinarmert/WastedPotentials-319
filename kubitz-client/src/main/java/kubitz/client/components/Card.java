@@ -25,4 +25,9 @@ public class Card
     public int getSize(){
         return grid.getSize();
     }
+
+    public static Card getRandomCard()
+    {
+        return null; // TODO implement cards probably read them form a file
+    }
 }
