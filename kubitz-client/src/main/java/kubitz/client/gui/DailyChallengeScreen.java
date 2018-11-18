@@ -36,8 +36,8 @@ public class DailyChallengeScreen extends BaseGameScreen{
 
         dcm.setTime();
 
-        int refreshRate = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
-        timer = new Timer( 1000/refreshRate,new ActionListener(){
+//        int refreshRate = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
+        timer = new Timer( 1000/60,new ActionListener(){
 
             @Override
             public void actionPerformed(ActionEvent e) {
