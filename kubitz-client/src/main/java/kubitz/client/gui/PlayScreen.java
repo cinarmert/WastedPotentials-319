@@ -108,6 +108,8 @@ public class PlayScreen extends JPanel implements Screen {
                  SurvivalMode survivalMode = new SurvivalMode(new Grid(4), new Cube(0));
                 ((SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX) ).setGame(survivalMode);
 
+                ((SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX) ).startTimer();
+
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                 cardLayout.show(contentPane, MainFrame.SURVIVALMODE);
 

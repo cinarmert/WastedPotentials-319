@@ -78,4 +78,13 @@ public class MainFrame extends JFrame {
         return instance;// == null ? new MainFrame() : instance;
     }
 
+    public Dimension getResolution(){
+        return size;
+    }
+
+    public void setResolution(){
+        this.size = config.getResolution();
+        setSize(size);
+    }
+
 }

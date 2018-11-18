@@ -29,10 +29,11 @@ public class BaseGameScreen extends JPanel implements Screen{
 
         this.baseGame = baseGame;
 
+        this.setOpaque(false);
         background = new ImageIcon(getClass().getResource("/backgrounds/game_background.jpg")).getImage();
 
         if (this.baseGame != null)
-            initializeResources();
+            this.add(initializeResources());
 
     }
 
@@ -40,7 +41,7 @@ public class BaseGameScreen extends JPanel implements Screen{
         removeAll();
         this.baseGame = baseGame;
         if (this.baseGame != null)
-            initializeResources();
+            this.add(initializeResources());
     }
 
     public BaseGame getGame(){
@@ -48,11 +49,13 @@ public class BaseGameScreen extends JPanel implements Screen{
     }
 
 
-    private void initializeResources(){
+    private JPanel initializeResources(){
 
-        this.setSize( size );
-        this.setOpaque(false);
-        this.setLayout( new BorderLayout() );
+        JPanel mainPanel = new JPanel();
+        mainPanel.setPreferredSize(size);
+        mainPanel.setOpaque(false);
+
+        mainPanel.setLayout( new BorderLayout() );
 
         Card card = baseGame.getCard();
         Grid grid = baseGame.getGrid();
@@ -82,8 +85,10 @@ public class BaseGameScreen extends JPanel implements Screen{
         cardPanel.setLayout( new FlowLayout(FlowLayout.CENTER,20,50));
         cardPanel.add(cardUI);
 
-        this.add(cardPanel, BorderLayout.PAGE_START);
-        this.add(cubeGridPanel, BorderLayout.CENTER);
+        mainPanel.add(cardPanel, BorderLayout.PAGE_START);
+        mainPanel.add(cubeGridPanel, BorderLayout.CENTER);
+
+        return mainPanel;
 
     }
 
@@ -101,20 +106,19 @@ public class BaseGameScreen extends JPanel implements Screen{
                     int x = Integer.parseInt(split[0]);
                     int y = Integer.parseInt(split[1]);
 
-                    ((CubeUI) e.getComponent()).setCube(BaseGameScreen.getInstance().getCube());
+                    ((CubeUI) e.getComponent()).setCube(BaseGameScreen.this.getCube());
 
-                    gridUI.addCube(getCube(), x, y);
-
-                    newCube();
-
+                    if (baseGame.isGameFinished()){
+                        // do something when game finished
+                    }
+                    else {
+                        gridUI.addCube(getCube(), x, y);
+                        newCube();
+                    }
                     repaint();
                 }
             });
         }
-    }
-
-    public static BaseGameScreen getInstance(){
-        return instance;
     }
 
     public Cube getCube(){

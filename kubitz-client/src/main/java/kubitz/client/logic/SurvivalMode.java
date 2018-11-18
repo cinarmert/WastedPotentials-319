@@ -1,6 +1,5 @@
 package kubitz.client.logic;
 
-import kubitz.client.components.Card;
 import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
 import kubitz.client.controllers.CountdownTimeController;
@@ -22,6 +21,15 @@ public class SurvivalMode extends BaseGame {
 
     public void createNewChallenge(){
 
+    }
+
+    public void startCountDown(){
+        Thread t = new Thread( ctc );
+        t.start();
+    }
+
+    public long getTime(){
+        return ctc.getRemainingTime();
     }
 
     public Void onGameFinished(Void v){

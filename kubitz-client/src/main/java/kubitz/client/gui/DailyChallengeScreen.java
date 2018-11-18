@@ -25,6 +25,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
         time.setFont( new Font( time.getFont().getName(), Font.PLAIN, 50));
 
         timerPanel = new JPanel();
+        timerPanel.setLayout( new FlowLayout( FlowLayout.LEFT));
         timerPanel.setPreferredSize( new Dimension(300,80));
         timerPanel.setOpaque(false);
     }
