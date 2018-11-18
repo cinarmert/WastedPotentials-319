@@ -106,12 +106,12 @@ public class BaseGameScreen extends JPanel implements Screen{
                     int x = Integer.parseInt(split[0]);
                     int y = Integer.parseInt(split[1]);
 
-                    ((CubeUI) e.getComponent()).setCube(BaseGameScreen.this.getCube());
-
                     if (baseGame.isGameFinished()){
                         // do something when game finished
                     }
                     else {
+                        ((CubeUI) e.getComponent()).setCube(BaseGameScreen.this.getCube());
+                        // add cube to game grid
                         gridUI.addCube(getCube(), x, y);
                         newCube();
                     }
