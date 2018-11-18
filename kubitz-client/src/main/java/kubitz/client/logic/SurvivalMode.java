@@ -1,6 +1,5 @@
 package kubitz.client.logic;
 
-import kubitz.client.components.Card;
 import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
 import kubitz.client.controllers.CountdownTimeController;
@@ -14,8 +13,14 @@ public class SurvivalMode extends BaseGame {
     int score;
     Function<Void, Void> onGameFinished;
 
+
+    public SurvivalMode(Grid grid, Cube cube) {
+        super(grid, cube);
+    }
+  
     public SurvivalMode(Grid grid, Cube cube, Card card, Function<Void, Void> onGameFinished) {
-        super(grid, cube, card);
+        super(grid, cube);
+
         time = 150000; //ToDo reasonable time period
         ctc = new CountdownTimeController(time, onGameFinished);
         this.onGameFinished = onGameFinished;
@@ -34,6 +39,19 @@ public class SurvivalMode extends BaseGame {
         grid = new Grid(grid.getSize());
         card = Card.getRandomCard();
         score++; //TODO maybe change the score system??
+    }
+
+    public void startCountDown(){
+        Thread t = new Thread( ctc );
+        t.start();
+    }
+
+    public long getTime(){
+        return ctc.getRemainingTime();
+    }
+
+    public Void onGameFinished(Void v){
+        return null;
     }
 
 }

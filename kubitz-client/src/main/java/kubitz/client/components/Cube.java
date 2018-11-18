@@ -14,21 +14,19 @@ public class Cube
 
     private int currentFace;
 
-    public void setCurrentFace(int currentFace) {
-        this.currentFace = currentFace;
-    }
-
     public Cube(int currentFace)
     {
         this.currentFace = currentFace;
     }
-
 
     public int getCurrentFace()
     {
         return currentFace;
     }
 
+    public void setCurrentFace(int currentFace) {
+        this.currentFace = currentFace;
+    }
 
     public void  rotate(int x, int y, int z)
     {

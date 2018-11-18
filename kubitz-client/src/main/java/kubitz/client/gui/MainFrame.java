@@ -23,6 +23,13 @@ public class MainFrame extends JFrame {
     public static final String SWITCHMODE = "SWITCH";
     public static final String SURVIVALMODE = "SURVIVAL";
     public static final String DAILYCHALLENGEMODE = "DAILYCHALLENGE";
+
+    public static final int CLASSICMODEINDEX = 11;
+    public static final int SWITCHMODEINDEX = 12;
+    public static final int SURVIVALMODEINDEX = 13;
+    public static final int DAILYCHALLENGEMODEINDEX = 14;
+
+
     public static Image background;
     private Dimension size;
     Config config;
@@ -55,10 +62,10 @@ public class MainFrame extends JFrame {
         contentPane.add( new LobbiesScreen(contentPane,size), LOBBIES);
         contentPane.add( new LobbiesFilterScreen(contentPane,size), LOBBIESFILTER);
         contentPane.add( new CreateLobbyScreen(contentPane, size), CREATELOBBY);
-        contentPane.add( new ClassicModeScreen( null, contentPane,size), CLASSICMODE);
-        contentPane.add( new SwitchModeScreen( null,contentPane, size), SWITCHMODE);
-        contentPane.add( new SurvivalModeScreen( null ,contentPane, size), SURVIVALMODE);
-        contentPane.add( new DailyChallengeScreen( null,contentPane, size), DAILYCHALLENGEMODE);
+        contentPane.add( new ClassicModeScreen( null, contentPane,size), CLASSICMODE, CLASSICMODEINDEX);
+        contentPane.add( new SwitchModeScreen( null,contentPane, size), SWITCHMODE, SWITCHMODEINDEX);
+        contentPane.add( new SurvivalModeScreen( null ,contentPane, size), SURVIVALMODE, SURVIVALMODEINDEX);
+        contentPane.add( new DailyChallengeScreen( null,contentPane, size), DAILYCHALLENGEMODE, DAILYCHALLENGEMODEINDEX);
 
         this.setContentPane(contentPane);
         this.setLocationRelativeTo(null);
@@ -69,6 +76,15 @@ public class MainFrame extends JFrame {
 
     public static MainFrame getInstance(){
         return instance;// == null ? new MainFrame() : instance;
+    }
+
+    public Dimension getResolution(){
+        return size;
+    }
+
+    public void setResolution(){
+        this.size = config.getResolution();
+        setSize(size);
     }
 
 }

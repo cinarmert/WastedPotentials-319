@@ -11,7 +11,8 @@ public class CubeUI extends JPanel {
 
     public CubeUI( Cube cube) {
         // responsive size
-        setPreferredSize( new Dimension(50,50));
+        setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/20,
+                MainFrame.getInstance().getResolution().height/20));
 
         if ( cube == null)
             setBackground(Color.GRAY);

@@ -6,8 +6,8 @@ import kubitz.client.components.Grid;
 
 public class ClassicMode extends BaseGame {
 
-    public ClassicMode(Grid grid, Cube cube, Card card) {
-        super(grid, cube, card);
+    public ClassicMode(Grid grid, Cube cube) {
+        super(grid, cube);
     }
 
 
