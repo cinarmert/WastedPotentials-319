@@ -1,7 +1,11 @@
 package kubitz.server;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
+import kubitz.server.database.accounts.model.Account;
+import kubitz.server.database.accounts.repository.AccountRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,6 +31,25 @@ public class KubitzServer {
             }
 
         };
+    }
+
+    @Bean
+    CommandLineRunner init(AccountRepository accountRepository) {
+
+        return args -> {
+
+//            Account acc = new Account();
+//            acc.setName("mert");
+//            Account acc2 = new Account();
+//            acc.setName("alp");
+//
+//            accountRepository.save(acc);
+//            accountRepository.save(acc2);
+            List<Account> accounts = accountRepository.findAll();
+            System.out.println(accounts);
+
+        };
+
     }
 
 }
