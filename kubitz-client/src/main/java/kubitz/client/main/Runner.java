@@ -1,6 +1,7 @@
 package kubitz.client.main;
 
 import kubitz.client.gui.MainFrame;
+import kubitz.client.rest.RESTRequestManager;
 
 public class Runner {
 
