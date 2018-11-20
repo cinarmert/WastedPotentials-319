@@ -10,6 +10,8 @@ public class Account {
     @Id
     private int id;
 
+    public Account(){}
+
     public Account(int id, String name) {
         this.id = id;
         this.name = name;
