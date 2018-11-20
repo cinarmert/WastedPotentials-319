@@ -1,6 +1,7 @@
 package kubitz.client.rest;
 
 import kubitz.client.response.Account;
+import kubitz.client.util.JsonUtil;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -24,12 +25,18 @@ public class RESTRequestManager {
     private static final String SWITCH_GET_GAME_STATE = "/switch/getGameState/%s";
     private static final String SWITCH_POST_GAME_STATE = "/switch/postGameState";
 
+    private static final String METHOD_GET = "GET";
+    private static final String METHOD_POST = "POST";
+
     private static Client client = ClientBuilder.newClient();
 
-    public static boolean login(int id, String name){
+    public static void login(int id, String name){
         Account account = new Account(id, name);
-        Account a = client.target(BASE_URL).path(ACCOUNT_LOGIN).request().post(Entity.entity(account, MediaType.APPLICATION_JSON), Account.class);
-        return a != null;
+        makeServerRequest(METHOD_POST, ACCOUNT_LOGIN, JsonUtil.toJson(account));
+    }
+
+    private static void makeServerRequest(String method, String path, String body){
+        client.target(BASE_URL).path(path).request().post(Entity.json(body), String.class);
     }
 
 }
