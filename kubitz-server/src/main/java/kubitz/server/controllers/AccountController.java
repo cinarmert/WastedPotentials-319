@@ -21,10 +21,10 @@ public class AccountController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getChallenge(@RequestBody Map<String, Object> body) {
-        Account accountToAdd = new Account(Long.valueOf((String) body.get("id")), (String)body.get("name"));
+    public Account login(@RequestBody Map<String, Object> body) {
+        Account accountToAdd = new Account((Integer) body.get("id"), (String) body.get("name"));
         accountRepository.save(accountToAdd);
-        return null;
+        return accountToAdd;
     }
 
 }

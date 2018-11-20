@@ -7,17 +7,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class LeaderboardUser {
 
     @Id
-    private long id;
+    private int id;
 
     private String name;
 
     private int score;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

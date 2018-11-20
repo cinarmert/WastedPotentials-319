@@ -8,20 +8,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Account {
 
     @Id
-    private long id;
+    private int id;
 
-    public Account(long id, String name) {
+    public Account(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
     private String name;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
