@@ -40,7 +40,15 @@ public class GridUI extends JPanel {
     }
 
     public void addCube(Cube cube, int x, int y){
+
+        cubes[x][y].setCube(cube);
         grid.addCube(cube,x,y);
+    }
+
+    public void removeCube(int x, int y){
+
+        cubes[x][y].setCube(null);
+        grid.removeCube(x,y);
     }
 
 }

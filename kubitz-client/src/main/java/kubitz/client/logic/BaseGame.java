@@ -73,4 +73,8 @@ public abstract class BaseGame {
         return true;
     }
 
+    public void addCubeToGrid( Cube cube, int x, int y){
+        grid.getGrid()[x][y] = cube;
+    }
+
 }
