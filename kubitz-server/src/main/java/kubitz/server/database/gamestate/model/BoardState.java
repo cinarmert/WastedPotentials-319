@@ -9,11 +9,21 @@ public class BoardState {
     @Id
     private int id;
 
+    private int size;
+
     private int[][] state;
 
     private String from;
 
     private String to;
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 
     public int getId() {
         return id;

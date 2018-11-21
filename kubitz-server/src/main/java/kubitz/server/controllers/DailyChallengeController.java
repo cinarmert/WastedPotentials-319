@@ -9,8 +9,6 @@ import java.util.Map;
 @RequestMapping(value = "/daily")
 public class DailyChallengeController {
 
-    private RestTemplate restTemplate = new RestTemplate();
-
     @RequestMapping(value = "/getChallenge", method = RequestMethod.GET)
     @ResponseBody
     public String getChallenge() {
