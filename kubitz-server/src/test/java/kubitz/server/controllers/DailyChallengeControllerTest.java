@@ -58,4 +58,18 @@ public class DailyChallengeControllerTest {
     public void getLeaderboard() throws Exception {
         mockMvc.perform(get("/daily/getChallenge")).andExpect(content().contentType(MediaType.TEXT_PLAIN_VALUE+";charset=UTF-8")).andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    public void postChallenge() throws Exception {
+        String body = "{\n" +
+                "  \"id\": 3,\n" +
+                "  \"size\": 2,\n" +
+                "  \"mission\": [[4,3],[5,6],[6,4],[3,2]]\n" +
+                "}";
+        mockMvc.perform(post("/daily/postDailyChallenge")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
 }

@@ -1,13 +1,14 @@
 package kubitz.server.controllers;
 
+import kubitz.server.database.dailychallenge.model.DailyChallenge;
 import kubitz.server.database.dailychallenge.repository.DailyChallengeRepository;
 import kubitz.server.database.leaderboard.model.LeaderboardUser;
 import kubitz.server.database.leaderboard.repository.LeaderboardRepository;
 import kubitz.server.util.JsonUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -55,6 +56,21 @@ public class DailyChallengeController {
         String response = JsonUtil.toJson(leaderboardRepository.findAll());
         logger.info("returning the leaderboard: " + response);
         return response;
+    }
+
+    @RequestMapping(value = "/postDailyChallenge", method = RequestMethod.POST)
+    @ResponseBody
+    public void postChallenge(@RequestBody String body) {
+        DailyChallenge dailyChallenge = null;
+        try {
+            dailyChallenge = JsonUtil.fromJson(body, DailyChallenge.class);
+        } catch (IOException e) {
+            logger.error("could not parse the body to daily challenge, body: " + body);
+            return;
+        }
+
+        logger.info("saving to leaderboard repo: " + JsonUtil.toJson(dailyChallenge));
+        dailyChallengeRepository.save(dailyChallenge);
     }
 
 }
