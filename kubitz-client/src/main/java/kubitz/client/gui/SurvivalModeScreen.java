@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 
 public class SurvivalModeScreen extends BaseGameScreen {
 
-    private SurvivalMode sm;
     private JLabel time;
     private Timer timer;
     private JPanel timerPanel;
@@ -30,20 +29,19 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
     public void startTimer(){
 
-        sm.startCountDown();
+        ((SurvivalMode)getGame()).startCountDown();
 
-        int refreshRate = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
-        timer = new Timer( 1000/refreshRate,new ActionListener(){
+        timer = new Timer( 1000/60,new ActionListener(){
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                long timePassedLong = sm.getTime();
+                long timePassedLong = ((SurvivalMode)getGame()).getTime();
                 String timePassed = (timePassedLong / (1000 * 60)) % 60 + " : "+ ((timePassedLong / 1000) % 60)  + " : " + timePassedLong % 1000;
 
                 time.setText( timePassed);
 
-                if(sm.isGameFinished())
+                if(getGame().isGameFinished())
                 {
                     SurvivalModeScreen.this.timer.stop();
 
@@ -61,11 +59,28 @@ public class SurvivalModeScreen extends BaseGameScreen {
         timerPanel.add(time);
         super.cardPanel.add(timerPanel, 0);
 
-        this.sm = ((SurvivalMode)getGame());
     }
 
     @Override
     public void update() {
+
+    }
+
+    @Override
+    public void onGameFinished() {
+
+        if (getGame().isGameFinished()){
+
+            ((SurvivalMode)getGame()).createNewChallenge();
+
+            cardUI.setCard( getGame().getCard() );
+            gridUI.resetGrid();
+
+            gridUI.repaint();
+            cardUI.repaint();
+
+            repaint();
+        }
 
     }
 }

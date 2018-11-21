@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.controllers.MoveController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +9,7 @@ public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
     private JPanel contentPane;
+    private MoveController moveController;
 
     public static final String MAINMENU = "MAINMENU";
     public static final String PLAY = "PLAY";
@@ -72,6 +75,13 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);
+
+        moveController = new MoveController();
+        addKeyListener(moveController);
+    }
+
+    public MoveController getMoveController(){
+        return moveController;
     }
 
     public static MainFrame getInstance(){

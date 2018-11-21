@@ -18,4 +18,9 @@ public class ClassicModeScreen extends BaseGameScreen {
     public void update() {
 
     }
+
+    @Override
+    public void onGameFinished() {
+
+    }
 }

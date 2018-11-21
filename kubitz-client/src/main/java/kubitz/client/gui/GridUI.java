@@ -39,6 +39,15 @@ public class GridUI extends JPanel {
 
     }
 
+    public void resetGrid(){
+        for (int i = 0; i < grid.getSize(); i++){
+            for (int j = 0; j < grid.getSize(); j++){
+
+                cubes[i][j].setCube(null);
+            }
+        }
+    }
+
     public void addCube(Cube cube, int x, int y){
 
         cubes[x][y].setCube(cube);

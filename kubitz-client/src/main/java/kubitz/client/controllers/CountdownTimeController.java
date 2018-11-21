@@ -33,7 +33,9 @@ public class CountdownTimeController implements Runnable
             remainingTime -= now - last;
             last = now;
         }
-        f.apply(null);
+
+        if (remainingTime <= 0)
+            f.apply(null);
     }
 
     public long getRemainingTime(){return remainingTime;}

@@ -18,7 +18,8 @@ public class SurvivalMode extends BaseGame {
     public SurvivalMode(Grid grid, Cube cube) {
         super(grid, cube);
         time = 150000; //ToDo reasonable time period
-        ctc = new CountdownTimeController(time, null);
+        ctc = new CountdownTimeController(time,  onGameFinished);
+        setCard(Card.getRandomCard());
     }
   
     public SurvivalMode(Grid grid, Cube cube, Function<Void, Void> onGameFinished) {
@@ -30,10 +31,7 @@ public class SurvivalMode extends BaseGame {
     }
 
     public boolean isGameFinished() {
-        boolean finished = super.isGameFinished();
-        if(finished)
-            createNewChallenge();
-        return finished;
+        return super.isGameFinished();
     }
 
     public void createNewChallenge()

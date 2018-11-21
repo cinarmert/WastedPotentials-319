@@ -16,17 +16,7 @@ public class DailyChallengeMode extends BaseGame {
         super(grid, cube);
         tc = new TimeController();
 
-
-        Grid cardGrid = new Grid(4);
-        for( int i = 0; i < 4; i++){
-            for ( int j = 0; j < 4; j++){
-                cardGrid.addCube( Cube.getRandomCube(), i,j);
-            }
-
-        }
-        Card card = new Card(cardGrid);
-
-        super.setCard( card);
+        super.setCard( Card.getRandomCard());
     }
 
     public void setTime(){tc.setTime();}

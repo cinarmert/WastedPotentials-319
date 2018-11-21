@@ -78,10 +78,20 @@ public class DailyChallengeScreen extends BaseGameScreen{
                     cardLayout.show(contentPane, MainFrame.PLAY);
                     timer.stop();
                     setGame(null);
+                    MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
                 }
 
             }
         });
+    }
+
+    @Override
+    public void onGameFinished(){
+        int quit = JOptionPane.showConfirmDialog( DailyChallengeScreen.this,
+                "Are you sure you want to leave the game?",
+                "Leave?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
     }
 
     @Override

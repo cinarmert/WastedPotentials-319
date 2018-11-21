@@ -3,7 +3,6 @@ package kubitz.client.gui;
 import kubitz.client.components.Card;
 import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
-import kubitz.client.controllers.MoveController;
 import kubitz.client.logic.BaseGame;
 
 import javax.swing.*;
@@ -13,11 +12,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class BaseGameScreen extends JPanel implements Screen{
+public abstract class BaseGameScreen extends JPanel implements Screen{
 
-    private GridUI gridUI;
+    protected GridUI gridUI;
     private CubeUI cubeUI;
-    private CardUI cardUI;
+    protected CardUI cardUI;
     private Dimension size;
     private BaseGame baseGame;
     public Image background;
@@ -72,9 +71,6 @@ public class BaseGameScreen extends JPanel implements Screen{
             c.gridx = 1;
             c.gridy = 0;
             this.add( initializeResources(),c);
-
-            this.setFocusable(true);
-            this.addKeyListener( new MoveController(this));
 
         }
     }
@@ -164,10 +160,7 @@ public class BaseGameScreen extends JPanel implements Screen{
 
                     if (SwingUtilities.isLeftMouseButton(e)) {
 
-                        if (baseGame.isGameFinished()) {
-                            // todo something when game finished
-
-                        } else {
+                        if ( !baseGame.isGameFinished()) {
 
                             gridUI.addCube(getSelectedCube(), x, y);
 
@@ -195,6 +188,9 @@ public class BaseGameScreen extends JPanel implements Screen{
 
                     }
 
+                    if (baseGame.isGameFinished()) {
+                        onGameFinished();
+                    }
                     repaint();
                 }
             });
@@ -232,6 +228,8 @@ public class BaseGameScreen extends JPanel implements Screen{
     public void updateResolution(Dimension size) {
 
     }
+
+    public abstract void onGameFinished();
 
     @Override
     public void paintComponent(Graphics g) {
