@@ -16,7 +16,7 @@ public class RESTRequestManager {
     private static final String ACCOUNT_LOGIN = "/accounts/login";
     private static final String CHAT_GET_MSG = "/chat/getMessages/%s/%s";
     private static final String CHAT_POST_MSG = "/chat/postMessage";
-    private static final String CLASSIC_GET_CHALLENGE = "/classic/getChallenge/%s";
+    private static final String CLASSIC_GET_CHALLENGE = "/classic/getChallenge/%d";
     private static final String DAILY_GET_CHALLENGE = "/daily/getChallenge";
     private static final String DAILY_GET_LEADERBOARD = "/daily/getLeaderboard";
     private static final String DAILY_POST_SCORE = "/daily/postScore";
@@ -35,8 +35,9 @@ public class RESTRequestManager {
         makeServerRequest(METHOD_POST, ACCOUNT_LOGIN, JsonUtil.toJson(account));
     }
 
-    public static Challenge getClassicChallenge(){
-        String response = makeServerRequest(METHOD_GET, CLASSIC_GET_CHALLENGE, null);
+    public static Challenge getClassicChallenge(int id){
+        String urlFragment = String.format(CLASSIC_GET_CHALLENGE, id);
+        String response = makeServerRequest(METHOD_GET, urlFragment, null);
 
         try {
             return JsonUtil.fromJson(response, Challenge.class);
