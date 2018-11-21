@@ -25,18 +25,13 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
     private Cube selectedCube;
     private int[] selectedCubePos;
 
-    public BaseGameScreen(BaseGame baseGame, Dimension size) {
+    public BaseGameScreen( Dimension size) {
 
         super();
         this.size = size;
 
-        this.baseGame = baseGame;
-
         this.setOpaque(false);
         background = new ImageIcon(getClass().getResource("/backgrounds/game_background.jpg")).getImage();
-
-        if (this.baseGame != null)
-            setGame( baseGame);
 
     }
 

@@ -26,11 +26,11 @@ public class Card
         return grid.getSize();
     }
 
-    public static Card getRandomCard()
+    public static Card getRandomCard( int size)
     {
-        Grid cardGrid = new Grid(4);
-        for( int i = 0; i < 4; i++){
-            for ( int j = 0; j < 4; j++){
+        Grid cardGrid = new Grid(size);
+        for( int i = 0; i < size; i++){
+            for ( int j = 0; j < size; j++){
                 cardGrid.addCube( Cube.getRandomCube(), i,j);
             }
 

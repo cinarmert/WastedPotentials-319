@@ -1,10 +1,5 @@
 package kubitz.client.gui;
 
-import kubitz.client.components.Cube;
-import kubitz.client.components.Grid;
-import kubitz.client.logic.DailyChallengeMode;
-import kubitz.client.logic.SurvivalMode;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -88,10 +83,7 @@ public class PlayScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                DailyChallengeMode dailyChallengeMode = new DailyChallengeMode(new Grid(4), new Cube(0));
-                ((DailyChallengeScreen)contentPane.getComponent(MainFrame.DAILYCHALLENGEMODEINDEX) ).setGame(dailyChallengeMode);
-
-                ((DailyChallengeScreen)contentPane.getComponent(MainFrame.DAILYCHALLENGEMODEINDEX) ).startTimer();
+                ((DailyChallengeScreen)contentPane.getComponent(MainFrame.DAILYCHALLENGEMODEINDEX) ).createGame();
 
                 MainFrame.getInstance().getMoveController().setBaseGameScreen(
                         (DailyChallengeScreen)contentPane.getComponent(MainFrame.DAILYCHALLENGEMODEINDEX));
@@ -108,14 +100,10 @@ public class PlayScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                 SurvivalMode survivalMode = new SurvivalMode(new Grid(4), new Cube(0));
-                ((SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX) ).setGame(survivalMode);
-
-                ((SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX) ).startTimer();
+                ((SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX) ).createGame();
 
                 MainFrame.getInstance().getMoveController().setBaseGameScreen(
                         (SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX));
-
 
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                 cardLayout.show(contentPane, MainFrame.SURVIVALMODE);

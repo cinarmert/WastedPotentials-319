@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.components.Cube;
+import kubitz.client.components.Grid;
 import kubitz.client.logic.BaseGame;
 import kubitz.client.logic.DailyChallengeMode;
 
@@ -15,8 +17,8 @@ public class DailyChallengeScreen extends BaseGameScreen{
     private Timer timer;
     private JPanel timerPanel;
 
-    public DailyChallengeScreen(DailyChallengeMode dcm, JPanel contentPane, Dimension size) {
-        super(dcm,size);
+    public DailyChallengeScreen( JPanel contentPane, Dimension size) {
+        super(size);
         this.contentPane = contentPane;
 
         time = new JLabel("00:00:00");
@@ -83,6 +85,12 @@ public class DailyChallengeScreen extends BaseGameScreen{
 
             }
         });
+    }
+
+    public void createGame(){
+        DailyChallengeMode dm = new DailyChallengeMode(new Grid(4), new Cube(0));
+        setGame(dm);
+        startTimer();
     }
 
     @Override

@@ -65,10 +65,10 @@ public class MainFrame extends JFrame {
         contentPane.add( new LobbiesScreen(contentPane,size), LOBBIES);
         contentPane.add( new LobbiesFilterScreen(contentPane,size), LOBBIESFILTER);
         contentPane.add( new CreateLobbyScreen(contentPane, size), CREATELOBBY);
-        contentPane.add( new ClassicModeScreen( null, contentPane,size), CLASSICMODE, CLASSICMODEINDEX);
-        contentPane.add( new SwitchModeScreen( null,contentPane, size), SWITCHMODE, SWITCHMODEINDEX);
-        contentPane.add( new SurvivalModeScreen( null ,contentPane, size), SURVIVALMODE, SURVIVALMODEINDEX);
-        contentPane.add( new DailyChallengeScreen( null,contentPane, size), DAILYCHALLENGEMODE, DAILYCHALLENGEMODEINDEX);
+        contentPane.add( new ClassicModeScreen(  contentPane,size), CLASSICMODE, CLASSICMODEINDEX);
+        contentPane.add( new SwitchModeScreen( contentPane, size), SWITCHMODE, SWITCHMODEINDEX);
+        contentPane.add( new SurvivalModeScreen( contentPane, size), SURVIVALMODE, SURVIVALMODEINDEX);
+        contentPane.add( new DailyChallengeScreen( contentPane, size), DAILYCHALLENGEMODE, DAILYCHALLENGEMODEINDEX);
 
         this.setContentPane(contentPane);
         this.setLocationRelativeTo(null);

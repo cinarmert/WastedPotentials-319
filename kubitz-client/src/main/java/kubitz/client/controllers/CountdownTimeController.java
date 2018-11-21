@@ -9,8 +9,9 @@ import java.util.function.Function;
  */
 public class CountdownTimeController implements Runnable
 {
-    long remainingTime;
+    Long remainingTime;
     Function<Void, Void> f;
+    Thread thread;
 
     public CountdownTimeController(long remainingTime, Function<Void, Void> f)
     {
@@ -20,7 +21,10 @@ public class CountdownTimeController implements Runnable
 
     public void addRemainingTime(long time)
     {
+        stop();
         remainingTime += time;
+        start();
+
     }
 
     public void run()
@@ -36,7 +40,32 @@ public class CountdownTimeController implements Runnable
 
         if (remainingTime <= 0)
             f.apply(null);
+        stop();
     }
 
-    public long getRemainingTime(){return remainingTime;}
+    public long getRemainingTime(){
+        return remainingTime;}
+
+    public void start(){
+        if (thread != null)
+            thread.stop();
+
+        thread = new Thread(this);
+
+        thread.start();
+
+    }
+
+    public void stop(){
+        if (thread != null) {
+            thread.stop();
+
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        thread = null;
+    }
 }
