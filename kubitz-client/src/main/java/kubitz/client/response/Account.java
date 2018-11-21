@@ -1,8 +1,14 @@
 package kubitz.client.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Account {
 
+    @JsonProperty
     private int id;
+
+    @JsonProperty
+    private String name;
 
     public Account(){}
 
@@ -10,8 +16,6 @@ public class Account {
         this.id = id;
         this.name = name;
     }
-
-    private String name;
 
     public int getId() {
         return id;

@@ -3,10 +3,8 @@ package kubitz.client.rest;
 import kubitz.client.response.Account;
 import kubitz.client.util.JsonUtil;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.Response;
 
 public class RESTRequestManager {
 
@@ -30,13 +28,33 @@ public class RESTRequestManager {
 
     private static Client client = ClientBuilder.newClient();
 
-    public static void login(int id, String name){
-        Account account = new Account(id, name);
+    public static void login(Account account){
         makeServerRequest(METHOD_POST, ACCOUNT_LOGIN, JsonUtil.toJson(account));
     }
 
-    private static void makeServerRequest(String method, String path, String body){
-        client.target(BASE_URL).path(path).request().post(Entity.json(body), String.class);
+    private static String makeServerRequest(String method, String path, String body){
+
+        Invocation.Builder target = client.target(BASE_URL).path(path).request();
+        Response response = null;
+
+        switch (method) {
+            case METHOD_GET:
+                response = target.get();
+                break;
+            case METHOD_POST:
+                response = target.post(Entity.json(body), Response.class);
+                break;
+        }
+
+        if (response == null) {
+            System.err.println("could not get response from server");
+            return null;
+        } else if (response.getStatus() != Response.Status.OK.getStatusCode()){
+            System.err.println("Got response code: " + response.getStatus());
+            return null;
+        }
+
+        return response.readEntity(String.class);
     }
 
 }
