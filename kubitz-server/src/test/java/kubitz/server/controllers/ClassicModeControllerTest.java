@@ -15,6 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,5 +36,19 @@ public class ClassicModeControllerTest {
     @Test
     public void getChallenge() throws Exception {
         mockMvc.perform(get("/classic/getChallenge/123")).andExpect(content().contentType(MediaType.TEXT_PLAIN_VALUE+";charset=UTF-8")).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void postChallenge() throws Exception {
+        String body = "{\n" +
+                "  \"id\": 3,\n" +
+                "  \"size\": 2,\n" +
+                "  \"mission\": [[4,3],[5,6],[6,4],[3,2]]\n" +
+                "}";
+        mockMvc.perform(post("/classic/postChallenge")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }

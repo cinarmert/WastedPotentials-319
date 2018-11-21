@@ -69,7 +69,7 @@ public class DailyChallengeController {
             return;
         }
 
-        logger.info("saving to leaderboard repo: " + JsonUtil.toJson(dailyChallenge));
+        logger.info("saving to daily challenge repo: " + JsonUtil.toJson(dailyChallenge));
         dailyChallengeRepository.save(dailyChallenge);
     }
 
