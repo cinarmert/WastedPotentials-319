@@ -36,14 +36,14 @@ public class RESTRequestManager {
         makeServerRequest(METHOD_POST, ACCOUNT_LOGIN, JsonUtil.toJson(account));
     }
 
-    public static Challenge getClassicChallenge(int id){
+    public static ClassicChallenge getClassicChallenge(int id){
         String urlFragment = String.format(CLASSIC_GET_CHALLENGE, id);
         String response = makeServerRequest(METHOD_GET, urlFragment, null);
 
         try {
-            return JsonUtil.fromJson(response, Challenge.class);
+            return JsonUtil.fromJson(response, ClassicChallenge.class);
         } catch (IOException e) {
-            System.err.println("Could not parse the storage to Challenge, storage: " + response);
+            System.err.println("Could not parse the storage to ClassicChallenge, storage: " + response);
             return null;
         }
     }
@@ -73,15 +73,15 @@ public class RESTRequestManager {
         String response = makeServerRequest(METHOD_GET, DAILY_GET_CHALLENGE, null);
 
         try {
-            List<Challenge> challengeList = JsonUtil.fromListOfJson(response, Challenge.class);
+            List<ClassicChallenge> classicChallengeList = JsonUtil.fromListOfJson(response, ClassicChallenge.class);
             DailyChallenges dailyChallenges = new DailyChallenges();
-            dailyChallenges.setChallenges(challengeList);
+            dailyChallenges.setClassicChallenges(classicChallengeList);
             return dailyChallenges;
         } catch (IOException e) {
-            System.err.println("Could not parse the storage to Challenge, storage: " + response);
+            System.err.println("Could not parse the storage to ClassicChallenge, storage: " + response);
             return null;
         } catch (ClassNotFoundException e) {
-            System.err.println("Storage class not found: " + Challenge.class.getName());
+            System.err.println("Storage class not found: " + ClassicChallenge.class.getName());
             return null;
         }
     }

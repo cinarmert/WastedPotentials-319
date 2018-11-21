@@ -3,7 +3,7 @@ package kubitz.client.storage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Challenge {
+public class ClassicChallenge {
 
     @JsonProperty
     private int id;

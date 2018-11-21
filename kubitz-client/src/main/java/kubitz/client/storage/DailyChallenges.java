@@ -4,13 +4,13 @@ import java.util.List;
 
 public class DailyChallenges {
 
-    List<Challenge> challenges;
+    List<ClassicChallenge> classicChallenges;
 
-    public List<Challenge> getChallenges() {
-        return challenges;
+    public List<ClassicChallenge> getClassicChallenges() {
+        return classicChallenges;
     }
 
-    public void setChallenges(List<Challenge> challenges) {
-        this.challenges = challenges;
+    public void setClassicChallenges(List<ClassicChallenge> classicChallenges) {
+        this.classicChallenges = classicChallenges;
     }
 }
