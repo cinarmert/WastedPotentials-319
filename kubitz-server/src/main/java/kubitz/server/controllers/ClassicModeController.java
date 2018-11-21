@@ -11,7 +11,7 @@ public class ClassicModeController {
 
     @RequestMapping(value = "/getChallenge/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getChallenge(@PathVariable("id") String id) {
+    public String getChallenge(@PathVariable("id") String id) {
         return null;
     }
 

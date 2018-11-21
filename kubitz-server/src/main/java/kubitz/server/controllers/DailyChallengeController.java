@@ -13,19 +13,19 @@ public class DailyChallengeController {
 
     @RequestMapping(value = "/getChallenge", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getChallenge() {
+    public String getChallenge() {
         return null;
     }
 
     @RequestMapping(value = "/postScore", method = RequestMethod.POST)
     @ResponseBody
-    public void postScore(@RequestBody Map<String, Object> body) {
+    public void postScore(@RequestBody String body) {
 
     }
 
     @RequestMapping(value = "/getLeaderboard", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getLeaderboard() {
+    public String getLeaderboard() {
         return null;
     }
 

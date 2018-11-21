@@ -10,13 +10,13 @@ public class ChatController {
 
     @RequestMapping(value = "/getMessages/{ownId}/{lobbyId}", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getMessages(@PathVariable("ownId") String userId, @PathVariable("lobbyId") String lobbyId) {
+    public String getMessages(@PathVariable("ownId") String userId, @PathVariable("lobbyId") String lobbyId) {
         return null;
     }
 
     @RequestMapping(value = "/postMessage", method = RequestMethod.POST)
     @ResponseBody
-    public void postMessage(@RequestBody Map<String, Object> body) {
+    public void postMessage(@RequestBody String body) {
 
     }
 

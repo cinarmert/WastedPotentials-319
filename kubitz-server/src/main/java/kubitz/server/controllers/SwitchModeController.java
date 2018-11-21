@@ -11,7 +11,7 @@ public class SwitchModeController {
 
     @RequestMapping(value = "/getGameState/{opponentId}", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getGameState(@PathVariable("opponentId") String id) {
+    public String getGameState(@PathVariable("opponentId") String id) {
         return null;
     }
 

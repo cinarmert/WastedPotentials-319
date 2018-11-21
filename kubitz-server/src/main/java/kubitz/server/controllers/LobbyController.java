@@ -12,19 +12,19 @@ public class LobbyController {
 
     @RequestMapping(value = "/getLobbies", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getLobbies() {
+    public String getLobbies() {
         return null;
     }
 
     @RequestMapping(value = "/kickPlayer", method = RequestMethod.POST)
     @ResponseBody
-    public void kickPlayer(@RequestBody Map<String, Object> body) {
+    public void kickPlayer(@RequestBody String body) {
 
     }
 
     @RequestMapping(value = "/changeSettings", method = RequestMethod.POST)
     @ResponseBody
-    public void changeSettings(@RequestBody Map<String, Object> body) {
+    public void changeSettings(@RequestBody String body) {
 
     }
 
