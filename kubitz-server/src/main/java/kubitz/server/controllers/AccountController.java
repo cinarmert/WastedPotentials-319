@@ -25,7 +25,6 @@ public class AccountController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
     public void login(@RequestBody String body) {
         Account accountToAdd = null;
         try {
