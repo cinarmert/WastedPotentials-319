@@ -17,7 +17,7 @@ public class SwitchModeController {
 
     @RequestMapping(value = "/postGameState", method = RequestMethod.POST)
     @ResponseBody
-    public void postGameState(@RequestBody Map<String, Object> body) {
+    public void postGameState(@RequestBody String body) {
 
     }
 
