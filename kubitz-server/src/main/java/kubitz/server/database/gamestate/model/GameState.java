@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "gamestates")
-public class BoardState {
+public class GameState {
 
     @Id
     private int id;
