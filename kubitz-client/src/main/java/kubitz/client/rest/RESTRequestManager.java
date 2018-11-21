@@ -23,7 +23,7 @@ public class RESTRequestManager {
     private static final String LOBBY_CHANGE_SETTINGS = "/lobby/changeSettings";
     private static final String LOBBY_GET_LOBBIES = "/lobby/getLobbies";
     private static final String LOBBY_KICK_PLAYER = "/lobby/kickPlayer";
-    private static final String SWITCH_GET_GAME_STATE = "/switch/getGameState/%s";
+    private static final String SWITCH_GET_GAME_STATE = "/switch/getGameState/%d";
     private static final String SWITCH_POST_GAME_STATE = "/switch/postGameState";
 
     private static final String METHOD_GET = "GET";
@@ -72,8 +72,8 @@ public class RESTRequestManager {
         }
     }
 
-    public static GameState getSwitchOpponentGameState(String opponentId){
-        String urlFragment = String.format(SWITCH_GET_GAME_STATE, opponentId);
+    public static GameState getSwitchOpponentGameState(int stateId){
+        String urlFragment = String.format(SWITCH_GET_GAME_STATE, stateId);
         String response = makeServerRequest(METHOD_GET, urlFragment, null);
 
         try {
@@ -85,7 +85,7 @@ public class RESTRequestManager {
     }
 
     public static void postSwitchGameState(GameState gameState){
-        makeServerRequest(METHOD_GET, SWITCH_POST_GAME_STATE, JsonUtil.toJson(gameState));
+        makeServerRequest(METHOD_POST, SWITCH_POST_GAME_STATE, JsonUtil.toJson(gameState));
     }
 
     private static String makeServerRequest(String method, String path, String body){
