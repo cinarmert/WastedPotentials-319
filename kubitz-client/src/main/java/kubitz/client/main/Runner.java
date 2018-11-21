@@ -6,8 +6,7 @@ import kubitz.client.rest.RESTRequestManager;
 public class Runner {
 
     public static void main(String[] args){
-//        new MainFrame();
-        RESTRequestManager.login(45, "mert2cli");
+        new MainFrame();
     }
 
 }

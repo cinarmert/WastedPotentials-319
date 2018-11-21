@@ -1,8 +1,8 @@
-package kubitz.client.response;
+package kubitz.client.storage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Account {
+public class LeaderboardUser {
 
     @JsonProperty
     private int id;
@@ -10,12 +10,8 @@ public class Account {
     @JsonProperty
     private String name;
 
-    public Account(){}
-
-    public Account(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @JsonProperty
+    private int score;
 
     public int getId() {
         return id;
@@ -31,5 +27,13 @@ public class Account {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

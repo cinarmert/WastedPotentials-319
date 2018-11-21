@@ -1,11 +1,14 @@
 package kubitz.client.rest;
 
-import kubitz.client.response.Account;
+import kubitz.client.storage.*;
 import kubitz.client.util.JsonUtil;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 
+
+//ToDo to be tested
 public class RESTRequestManager {
 
     private static final String BASE_URL = "http://127.0.0.1:8083";
@@ -32,6 +35,59 @@ public class RESTRequestManager {
         makeServerRequest(METHOD_POST, ACCOUNT_LOGIN, JsonUtil.toJson(account));
     }
 
+    public static Challenge getClassicChallenge(){
+        String response = makeServerRequest(METHOD_GET, CLASSIC_GET_CHALLENGE, null);
+
+        try {
+            return JsonUtil.fromJson(response, Challenge.class);
+        } catch (IOException e) {
+            System.err.println("Could not parse the storage to Challenge, storage: " + response);
+            return null;
+        }
+    }
+
+    public static Leaderboard getDailyChallengeLeaderboard(){
+        String response = makeServerRequest(METHOD_GET, DAILY_GET_LEADERBOARD, null);
+
+        try {
+            return JsonUtil.fromJson(response, Leaderboard.class);
+        } catch (IOException e) {
+            System.err.println("Could not parse the storage to Leaderboard, storage: " + response);
+            return null;
+        }
+    }
+
+    public static void postDailyChallengeScore(LeaderboardUser user){
+        makeServerRequest(METHOD_POST, DAILY_POST_SCORE, JsonUtil.toJson(user));
+    }
+
+    public static Challenge getDailyChallenge(){
+        String response = makeServerRequest(METHOD_GET, DAILY_GET_CHALLENGE, null);
+
+        try {
+            return JsonUtil.fromJson(response, Challenge.class);
+        } catch (IOException e) {
+            System.err.println("Could not parse the storage to Challenge, storage: " + response);
+            return null;
+        }
+    }
+
+    public static GameState getSwitchOpponentGameState(String opponentId){
+        String urlFragment = String.format(SWITCH_GET_GAME_STATE, opponentId);
+        String response = makeServerRequest(METHOD_GET, urlFragment, null);
+
+        try {
+            return JsonUtil.fromJson(response, GameState.class);
+        } catch (IOException e) {
+            System.err.println("Could not parse the storage to GameState, storage: " + response);
+            return null;
+        }
+    }
+
+    public static void postSwitchGameState(GameState gameState){
+        makeServerRequest(METHOD_GET, SWITCH_POST_GAME_STATE, JsonUtil.toJson(gameState));
+    }
+
     private static String makeServerRequest(String method, String path, String body){
 
         Invocation.Builder target = client.target(BASE_URL).path(path).request();
@@ -47,10 +103,10 @@ public class RESTRequestManager {
         }
 
         if (response == null) {
-            System.err.println("could not get response from server");
+            System.err.println("could not get storage from server");
             return null;
         } else if (response.getStatus() != Response.Status.OK.getStatusCode()){
-            System.err.println("Got response code: " + response.getStatus());
+            System.err.println("Got storage code: " + response.getStatus());
             return null;
         }
 
