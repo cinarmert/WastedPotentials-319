@@ -2,13 +2,15 @@ package kubitz.server.controllers;
 
 
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.boot.logging.LoggingSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping(value = "/lobby")
 public class LobbyController {
+
+    private static final Logger logger = LoggerFactory.getLogger(LobbyController.class);
 
     @RequestMapping(value = "/getLobbies", method = RequestMethod.GET)
     @ResponseBody

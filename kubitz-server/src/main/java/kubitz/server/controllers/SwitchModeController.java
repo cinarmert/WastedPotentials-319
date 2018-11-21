@@ -2,12 +2,15 @@ package kubitz.server.controllers;
 
 
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.boot.logging.LoggingSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping(value = "/switch")
 public class SwitchModeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(SwitchModeController.class);
 
     @RequestMapping(value = "/getGameState/{opponentId}", method = RequestMethod.GET)
     @ResponseBody

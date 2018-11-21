@@ -5,10 +5,9 @@ import kubitz.server.database.accounts.model.Account;
 import kubitz.server.database.accounts.repository.AccountRepository;
 import kubitz.server.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import org.springframework.boot.logging.LoggingSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,10 +32,11 @@ public class AccountController {
         try {
             accountToAdd = JsonUtil.fromJson(body, Account.class);
         } catch (IOException e) {
-            //Todo add logger - projectwise
+            logger.error("could not parse the body to account, body: " + body);
             return;
-
         }
+
+        logger.info("saving to accountdb: " + JsonUtil.toJson(accountToAdd));
         accountRepository.save(accountToAdd);
     }
 
