@@ -7,7 +7,6 @@ import kubitz.server.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
-import org.springframework.boot.logging.LoggingSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

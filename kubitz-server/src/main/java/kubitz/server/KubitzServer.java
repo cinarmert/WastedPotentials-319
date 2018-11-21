@@ -1,10 +1,5 @@
 package kubitz.server;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import kubitz.server.database.accounts.model.Account;
 import kubitz.server.database.accounts.repository.AccountRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
