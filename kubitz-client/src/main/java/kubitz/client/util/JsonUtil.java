@@ -1,10 +1,15 @@
 package kubitz.client.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import kubitz.client.storage.LeaderboardUser;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class JsonUtil {
 
@@ -28,5 +33,11 @@ public class JsonUtil {
           throws IOException
   {
     return objectMapper.readValue(json, c);
+  }
+
+  public static <T> List<T> fromListOfJson(String json, Class<T> c) throws IOException, ClassNotFoundException {
+    Class<T[]> arrayClass = (Class<T[]>) Class.forName("[L" + c.getName() + ";");
+    T[] objects = objectMapper.readValue(json, arrayClass);
+    return Arrays.asList(objects);
   }
 }

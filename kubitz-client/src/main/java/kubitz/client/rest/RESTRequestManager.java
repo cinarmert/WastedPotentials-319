@@ -6,6 +6,7 @@ import kubitz.client.util.JsonUtil;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.List;
 
 
 //ToDo to be tested
@@ -51,9 +52,15 @@ public class RESTRequestManager {
         String response = makeServerRequest(METHOD_GET, DAILY_GET_LEADERBOARD, null);
 
         try {
-            return JsonUtil.fromJson(response, Leaderboard.class);
+            List<LeaderboardUser> leaderboardUserList = JsonUtil.fromListOfJson(response, LeaderboardUser.class);
+            Leaderboard leaderboard = new Leaderboard();
+            leaderboard.setLeaderboard(leaderboardUserList);
+            return leaderboard;
         } catch (IOException e) {
             System.err.println("Could not parse the storage to Leaderboard, storage: " + response);
+            return null;
+        } catch (ClassNotFoundException e) {
+            System.err.println("Storage class not found: " + LeaderboardUser.class.getName());
             return null;
         }
     }
@@ -66,9 +73,15 @@ public class RESTRequestManager {
         String response = makeServerRequest(METHOD_GET, DAILY_GET_CHALLENGE, null);
 
         try {
-            return JsonUtil.fromJson(response, DailyChallenges.class);
+            List<Challenge> challengeList = JsonUtil.fromListOfJson(response, Challenge.class);
+            DailyChallenges dailyChallenges = new DailyChallenges();
+            dailyChallenges.setChallenges(challengeList);
+            return dailyChallenges;
         } catch (IOException e) {
             System.err.println("Could not parse the storage to Challenge, storage: " + response);
+            return null;
+        } catch (ClassNotFoundException e) {
+            System.err.println("Storage class not found: " + Challenge.class.getName());
             return null;
         }
     }
