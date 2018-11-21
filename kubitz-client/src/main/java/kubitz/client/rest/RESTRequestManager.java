@@ -62,11 +62,11 @@ public class RESTRequestManager {
         makeServerRequest(METHOD_POST, DAILY_POST_SCORE, JsonUtil.toJson(user));
     }
 
-    public static Challenge getDailyChallenge(){
+    public static DailyChallenges getDailyChallenge(){
         String response = makeServerRequest(METHOD_GET, DAILY_GET_CHALLENGE, null);
 
         try {
-            return JsonUtil.fromJson(response, Challenge.class);
+            return JsonUtil.fromJson(response, DailyChallenges.class);
         } catch (IOException e) {
             System.err.println("Could not parse the storage to Challenge, storage: " + response);
             return null;
