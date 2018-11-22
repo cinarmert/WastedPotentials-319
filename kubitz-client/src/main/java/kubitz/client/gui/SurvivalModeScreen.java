@@ -118,6 +118,8 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
         timer.stop();
 
+        time.setText("0 : 0 : 0");
+
         JOptionPane.showMessageDialog( this,
                 "Your score is : " + ((SurvivalMode)getGame()).getScore(),
                 "GAME OVER",
@@ -128,6 +130,16 @@ public class SurvivalModeScreen extends BaseGameScreen {
                 "GAME OVER",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
+
+        if( newGame == 0 ) {
+            createGame();
+        }
+        else {
+            CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+            cardLayout.show(contentPane, MainFrame.PLAY);
+            setGame(null);
+            MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+        }
 
         return null;
     }

@@ -44,40 +44,24 @@ public class LeaderboardScreen extends JPanel implements Screen {
         c.gridy = 0;
         this.add( backButton,c);
 
+        c.anchor = GridBagConstraints.CENTER;
         c.weightx = 1.0;
-        c.gridx = 1;
+        c.gridx = 0;
         c.gridy = 1;
         this.add( initializeLeaderboard(),c);
-
-        c.weightx = 0.3;
-        c.gridx = 1;
-        c.gridy = 1;
-        this.add( initializeLeaderboardButtons(), c);
 
     }
     
     private JPanel initializeLeaderboard(){
 
-        JPanel buttons = new JPanel();
-        buttons.setLayout( new GridLayout(1,1, 10, 10));
-        buttons.setMaximumSize(new Dimension( getWidth()/6, 30));
-        buttons.setBackground( new Color(0,0,0, 0));
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout( new GridLayout(1,1, 10, 10));
+        mainPanel.setPreferredSize(new Dimension( getWidth()-120, getHeight()-150));
+        mainPanel.setBackground(new Color(0,0,0,200));
 
 
-        return buttons;
+        return mainPanel;
         
-        
-    }
-
-    private JPanel initializeLeaderboardButtons() {
-
-        JPanel buttons = new JPanel();
-        buttons.setLayout( new GridLayout(3,1, 10, 10));
-        buttons.setMaximumSize(new Dimension( getWidth()*2/3, 30));
-        buttons.setBackground( new Color(0,0,0, 0));
-
-
-        return buttons;
     }
 
     @Override
