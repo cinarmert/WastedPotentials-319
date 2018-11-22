@@ -67,9 +67,7 @@ public class Config {
             props.setProperty("music", ""+100);
             props.setProperty("lastPlayedDailyChallenge", ""+(-1));
 
-            File f = new File( getClass().getResource("/").toURI().getPath() +  PROPERTIES_NAME);
-            OutputStream out = new FileOutputStream( f );
-            props.store(out, "CONFIGURATION FILE");
+            updateFile();
 
             resolution = new Dimension( 800, 600);
             fullScreen = false;
@@ -83,6 +81,16 @@ public class Config {
 
     }
 
+    private void updateFile(){
+        try {
+            File f = new File( getClass().getResource("/").toURI().getPath() +  PROPERTIES_NAME);
+            OutputStream out = new FileOutputStream( f );
+            props.store(out, "CONFIGURATION FILE");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public long getLastPlayedDailyChallenge() {
         return lastPlayedDailyChallenge;
     }
@@ -90,6 +98,7 @@ public class Config {
     public void setLastPlayedDailyChallenge(long lastPlayedDailyChallenge) {
         props.setProperty("lastPlayedDailyChallenge", Long.toString(lastPlayedDailyChallenge));
         this.lastPlayedDailyChallenge = lastPlayedDailyChallenge;
+        updateFile();
     }
 
     public boolean isRegistered(){
@@ -103,11 +112,13 @@ public class Config {
     public void setId(String id){
         props.setProperty("id", id);
         this.id = id;
+        updateFile();
     }
 
     public void setName(String name){
         props.setProperty("name", name);
         this.name = name;
+        updateFile();
     }
 
     public String getName(){
