@@ -7,22 +7,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Account {
 
     @Id
-    private int id;
+    private String id;
 
     public Account(){}
 
-    public Account(int id, String name) {
+    public Account(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
     private String name;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
