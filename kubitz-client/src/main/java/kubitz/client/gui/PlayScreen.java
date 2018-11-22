@@ -84,7 +84,7 @@ public class PlayScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (Config.getLastPlayedDailyChallenge() != 1 && (LocalDate.now().getDayOfYear() - Config.getLastPlayedDailyChallenge()) < 1){
+                if (Config.getInstance().getLastPlayedDailyChallenge() != 1 && (LocalDate.now().getDayOfYear() - Config.getInstance().getLastPlayedDailyChallenge()) < 1){
                     JOptionPane.showMessageDialog( PlayScreen.this,
                             "You have already played the challenge of the day",
                             "Warning!",

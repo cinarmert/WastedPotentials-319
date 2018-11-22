@@ -48,9 +48,9 @@ public class DailyChallengeMode extends BaseGame {
         boolean finsihed = super.isGameFinished();
         if(finsihed)
         {
-            MainFrame.getInstance().config.setLastPlayedDailyChallenge(LocalDate.now().getDayOfYear());
+            Config.getInstance().setLastPlayedDailyChallenge(LocalDate.now().getDayOfYear());
             score = (int) tc.getTimePassed(); //ToDo make calculation of score meaningful
-            LeaderboardUser user = new LeaderboardUser(Config.getId(), Config.getName(), score);
+            LeaderboardUser user = new LeaderboardUser(Config.getInstance().getId(), Config.getInstance().getName(), score);
             RESTRequestManager.postDailyChallengeScore(user);
             Leaderboard leaderboard = RESTRequestManager.getDailyChallengeLeaderboard(); //ToDo add ui for leaderboard
         }

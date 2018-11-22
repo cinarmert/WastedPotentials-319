@@ -40,7 +40,6 @@ public class MainFrame extends JFrame {
 
     public static Image background;
     private Dimension size;
-    public Config config;
     private NetworkInterface networkInterface;
     private Account account;
     Filter filter;
@@ -48,7 +47,6 @@ public class MainFrame extends JFrame {
 
     public MainFrame(){
         instance = this;
-        this.config = new Config();
         filter = new Filter();
         initializeResources();
         initializeAccount();
@@ -56,8 +54,8 @@ public class MainFrame extends JFrame {
 
     private void initializeAccount() {
 
-        if(config.isRegistered()){
-            account = new Account(config.getId(), config.getName());
+        if(Config.getInstance().isRegistered()){
+            account = new Account(Config.getInstance().getId(), Config.getInstance().getName());
             return;
         }
 
@@ -66,8 +64,8 @@ public class MainFrame extends JFrame {
             String mac = new String(networkInterface.getHardwareAddress());
             String name = UUID.randomUUID().toString();
             account = new Account(mac, name);
-            config.setId(mac);
-            config.setName(name);
+            Config.getInstance().setId(mac);
+            Config.getInstance().setName(name);
             RESTRequestManager.login(account);
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +74,7 @@ public class MainFrame extends JFrame {
 
     private void initializeResources(){
 
-        size = config.getResolution();
+        size = Config.getInstance().getResolution();
 
         this.setSize( size);
 
@@ -91,7 +89,7 @@ public class MainFrame extends JFrame {
         contentPane.add( new PlayScreen(contentPane,size), PLAY);
         contentPane.add( new HowToPlayScreen( contentPane, size), HOWTOPLAY);
         contentPane.add( new LeaderboardScreen( contentPane, size), LEADERBOARD);
-        contentPane.add( new SettingsScreen( contentPane, size, config), SETTINGS);
+        contentPane.add( new SettingsScreen( contentPane, size, Config.getInstance()), SETTINGS);
         contentPane.add( new CreditsScreen( contentPane, size), CREDITS);
         contentPane.add( lobbyScreen, LOBBY);
         contentPane.add( new LobbySettingsScreen(contentPane, size), LOBBYSETTINGS);
@@ -126,7 +124,7 @@ public class MainFrame extends JFrame {
     }
 
     public void setResolution(){
-        this.size = config.getResolution();
+        this.size = Config.getInstance().getResolution();
         setSize(size);
     }
 

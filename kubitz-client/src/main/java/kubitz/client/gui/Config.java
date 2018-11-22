@@ -9,6 +9,7 @@ import java.util.Properties;
 public class Config {
 
     public final String PROPERTIES_NAME = "/kubitz.properties";
+    private static Config instance = null;
 
     Properties props;
 
@@ -22,6 +23,7 @@ public class Config {
     private static long lastPlayedDailyChallenge;
 
     public Config() {
+        instance = this;
 
         try {
             props = new Properties();
@@ -47,6 +49,10 @@ public class Config {
         }
     }
 
+    public static Config getInstance(){
+        return instance == null ? new Config() : instance;
+    }
+
     private void createDefaultConfig(){
 
         try {
@@ -59,7 +65,7 @@ public class Config {
             props.setProperty("master", ""+100);
             props.setProperty("effects", ""+100);
             props.setProperty("music", ""+100);
-            props.setProperty("lastPlayedDailyChallenge", ""+1);
+            props.setProperty("lastPlayedDailyChallenge", ""+(-1));
 
             File f = new File( getClass().getResource("/").toURI().getPath() +  PROPERTIES_NAME);
             OutputStream out = new FileOutputStream( f );
@@ -77,7 +83,7 @@ public class Config {
 
     }
 
-    public static long getLastPlayedDailyChallenge() {
+    public long getLastPlayedDailyChallenge() {
         return lastPlayedDailyChallenge;
     }
 
@@ -90,7 +96,7 @@ public class Config {
         return props.containsKey("id") && getId() != null;
     }
 
-    public static String getId(){
+    public String getId(){
         return id;
     }
 
@@ -104,7 +110,7 @@ public class Config {
         this.name = name;
     }
 
-    public static String getName(){
+    public String getName(){
         return name;
     }
 
