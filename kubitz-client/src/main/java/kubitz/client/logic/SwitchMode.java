@@ -13,12 +13,15 @@ public class SwitchMode extends BaseGame {
     int period;
     Function<Void, Void> switchGrids;
 
+
+    public SwitchMode(Grid grid, Cube cube) {
+        super(grid, cube);
+    }
+  
     public SwitchMode(Grid grid, Cube cube, Card card, Function<Void, Void> switchGrids) {
-        super(grid, cube, card);
+        super(grid, cube);
         period = 150000; //ToDo proper period, -consider random-
         ptc = new PeriodicTimeController(period, switchGrids);
         this.switchGrids = switchGrids;
     }
-
-
 }

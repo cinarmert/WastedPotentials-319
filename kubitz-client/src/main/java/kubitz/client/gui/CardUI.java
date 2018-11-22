@@ -4,6 +4,7 @@ import kubitz.client.components.Card;
 import kubitz.client.components.Grid;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class CardUI extends JPanel {
@@ -24,6 +25,7 @@ public class CardUI extends JPanel {
 
         this.card = card.getGrid();
         setLayout( new GridLayout(card.getSize(),card.getSize()));
+        setBorder( new LineBorder(Color.BLACK,5));
 
         cubes = new CubeUI[card.getSize()][card.getSize()];
 

@@ -5,14 +5,23 @@ import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
 import kubitz.client.controllers.TimeController;
 
+import java.security.PublicKey;
+
 public class DailyChallengeMode extends BaseGame {
 
     TimeController tc;
     long score = -1;
 
-    public DailyChallengeMode(Grid grid, Cube cube, Card card) {
-        super(grid, cube, card);
+    public DailyChallengeMode(Grid grid, Cube cube) {
+        super(grid, cube);
         tc = new TimeController();
+
+        super.setCard( new Card( new Grid(4)));
+    }
+
+    public void setTime(){tc.setTime();}
+    public long getTimePassed(){
+        return tc.getTimePassed();
     }
 
     public boolean isGameFinished()

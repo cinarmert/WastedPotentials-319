@@ -10,10 +10,12 @@ public abstract class BaseGame {
     Cube cube;
     Card card;
 
-    public BaseGame(Grid grid, Cube cube, Card card) {
+    public BaseGame(Grid grid, Cube cube) {
         this.grid = grid;
         this.cube = cube;
-        this.card = card;
+
+        // to do generate card
+        this.card = new Card(new Grid(4));
     }
 
     public Grid getGrid(){ return grid;}
@@ -42,6 +44,10 @@ public abstract class BaseGame {
             {
                 if(!finished)
                     break;
+                if ( grid.getGrid()[i][j] == null || card.getGrid().getGrid()[i][j] == null) {
+                    finished = false;
+                    break;
+                }
                 finished = grid.getGrid()[i][j].getCurrentFace() == card.getGrid().getGrid()[i][j].getCurrentFace();
             }
         return finished;

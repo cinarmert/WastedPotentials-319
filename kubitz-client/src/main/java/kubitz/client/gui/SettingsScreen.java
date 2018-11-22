@@ -278,9 +278,10 @@ public class SettingsScreen extends JPanel implements Screen {
 
                     config.updateConfig(resolution, fullScreen, masterSound, effectsSound, musicSound);
 
-                    MainFrame.getInstance().setSize(resolution);
+                    MainFrame.getInstance().setResolution();
                     SettingsScreen.this.size = resolution;
                 }
+
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                 cardLayout.show(contentPane, MainFrame.MAINMENU);
 
@@ -300,7 +301,7 @@ public class SettingsScreen extends JPanel implements Screen {
                     ScreenDevice.restoreScreen();
                 }
 
-                MainFrame.getInstance().setSize( resolution);
+                MainFrame.getInstance().setResolution();
                 config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
 
                 SettingsScreen.this.size = resolution;
