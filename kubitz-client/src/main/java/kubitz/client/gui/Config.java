@@ -157,9 +157,7 @@ public class Config {
             props.setProperty("effects", ""+effectsSound);
             props.setProperty("music", ""+musicSound);
 
-            File f = new File( getClass().getResource(PROPERTIES_NAME).toURI() );
-            OutputStream out = new FileOutputStream( f );
-            props.store(out, "CONFIGURATION FILE");
+            updateFile();
 
             this.resolution = resolution;
             this.fullScreen = fullScreen;
