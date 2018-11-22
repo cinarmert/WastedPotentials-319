@@ -222,6 +222,9 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
     @Override
     public void updateResolution(Dimension size) {
 
+        //ToDo handle size change
+        //ToDo size change for grid card and cube
+
     }
 
     public abstract void onGameFinished();
