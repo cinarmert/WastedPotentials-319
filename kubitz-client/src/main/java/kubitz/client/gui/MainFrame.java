@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 
     public static Image background;
     private Dimension size;
-    Config config;
+    public Config config;
     private NetworkInterface networkInterface;
     private Account account;
     Filter filter;
