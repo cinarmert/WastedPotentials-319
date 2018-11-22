@@ -1,5 +1,6 @@
 package kubitz.client.gui;
 
+import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Leaderboard;
 import kubitz.client.storage.LeaderboardUser;
 import kubitz.client.storage.Lobby;
@@ -63,11 +64,12 @@ public class LeaderboardScreen extends JPanel implements Screen {
     }
 
     private void setLeaderBoard(){
-        leaderboard = new Leaderboard();
-        ArrayList<LeaderboardUser> list = new ArrayList<>();
-        //
-        Collections.sort(list, new LeaderBoardUserScoreComparator());
-        leaderboard.setLeaderboard(list);
+        leaderboard = RESTRequestManager.getDailyChallengeLeaderboard();
+        if (leaderboard == null) {
+            leaderboard = new Leaderboard();
+        }
+        Collections.sort(leaderboard.getLeaderboard(), new LeaderBoardUserScoreComparator());
+        leaderboard.setLeaderboard(leaderboard.getLeaderboard());
 
     }
     
