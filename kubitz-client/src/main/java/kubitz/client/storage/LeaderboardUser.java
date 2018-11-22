@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LeaderboardUser {
 
     @JsonProperty
-    private int id;
+    private String id;
 
     @JsonProperty
     private String name;
@@ -13,11 +13,19 @@ public class LeaderboardUser {
     @JsonProperty
     private int score;
 
-    public int getId() {
+    public LeaderboardUser(){}
+
+    public LeaderboardUser(String id, String name, int score) {
+        this.id = id;
+        this.name = name;
+        this.score = score;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

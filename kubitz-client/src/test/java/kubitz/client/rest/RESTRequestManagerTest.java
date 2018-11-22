@@ -22,7 +22,7 @@ public class RESTRequestManagerTest {
 
     @Test
     public void login() {
-        account.setId(3);
+        account.setId("3");
         account.setName("test");
         RESTRequestManager.login(account);
     }
@@ -43,7 +43,7 @@ public class RESTRequestManagerTest {
 
     @Test
     public void postDailyChallengeScore() {
-        leaderboardUser.setId(3);
+        leaderboardUser.setId("3");
         leaderboardUser.setName("test");
         leaderboardUser.setScore(100);
         RESTRequestManager.postDailyChallengeScore(leaderboardUser);
