@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -37,7 +36,7 @@ public class LobbyControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
         lobby = new Lobby("4", "test", "Switch", false);
         lobby.setStatus("Waiting");
-        lobby.setNoOfPlayers(4);
+        lobby.setMaxPlayerLimit(4);
     }
 
     @Test
@@ -57,7 +56,7 @@ public class LobbyControllerTest {
 
     @Test
     public void kickPlayer() throws Exception {
-        lobby.setNoOfPlayers(3);
+        lobby.setMaxPlayerLimit(3);
         lobby.setId("3");
         String body = JsonUtil.toJson(lobby);
 

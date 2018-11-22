@@ -1,7 +1,10 @@
 package kubitz.server.database.lobby.model;
 
+import kubitz.server.database.accounts.model.Account;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 
 @Document(collection = "lobby")
 public class Lobby {
@@ -11,13 +14,15 @@ public class Lobby {
 
     private String name;
 
-    private int noOfPlayers;
+    private int maxPlayerLimit;
 
     private String mode;
 
     private boolean privateLobby;
 
     private String status;
+
+    private ArrayList<Account> players;
 
     public Lobby(){}
 
@@ -36,8 +41,8 @@ public class Lobby {
         return name;
     }
 
-    public int getNoOfPlayers() {
-        return noOfPlayers;
+    public int getMaxPlayerLimit() {
+        return maxPlayerLimit;
     }
 
     public String getMode() {
@@ -60,8 +65,8 @@ public class Lobby {
         this.name = name;
     }
 
-    public void setNoOfPlayers(int noOfPlayers) {
-        this.noOfPlayers = noOfPlayers;
+    public void setMaxPlayerLimit(int maxPlayerLimit) {
+        this.maxPlayerLimit = maxPlayerLimit;
     }
 
     public void setMode(String mode) {
@@ -74,5 +79,21 @@ public class Lobby {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public boolean isPrivateLobby() {
+        return privateLobby;
+    }
+
+    public void setPrivateLobby(boolean privateLobby) {
+        this.privateLobby = privateLobby;
+    }
+
+    public ArrayList<Account> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Account> players) {
+        this.players = players;
     }
 }
