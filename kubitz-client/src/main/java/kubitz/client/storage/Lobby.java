@@ -24,6 +24,7 @@ public class Lobby {
     @JsonProperty
     private boolean privateLobby;
 
+    @JsonProperty
     private ArrayList<Account> players;
 
     public final static String MODE_SWITCH = "LOBBY_MODE_SWITCH";
