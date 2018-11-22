@@ -10,5 +10,12 @@ public class ClassicMode extends BaseGame {
         super(grid, cube);
     }
 
+    @Override
+    public boolean isGameFinished(){
+
+        // ToDO check if other players finished
+        return super.isGameFinished();
+    }
+
 
 }

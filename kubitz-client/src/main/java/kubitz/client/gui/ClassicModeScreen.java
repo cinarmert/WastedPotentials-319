@@ -59,5 +59,17 @@ public class ClassicModeScreen extends BaseGameScreen {
     @Override
     public void onGameFinished() {
 
+        // ToDo get who wins
+        if( true)
+        JOptionPane.showMessageDialog( this,
+                "You win!",
+                "GAME OVER",
+                JOptionPane.INFORMATION_MESSAGE);
+        else
+        JOptionPane.showMessageDialog( this,
+                "You lose!",
+                "GAME OVER",
+                JOptionPane.INFORMATION_MESSAGE);
+
     }
 }

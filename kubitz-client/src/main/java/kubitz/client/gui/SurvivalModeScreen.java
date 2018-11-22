@@ -47,12 +47,6 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
                 time.setText( timePassed);
 
-                if(getGame().isGameFinished())
-                {
-                    SurvivalModeScreen.this.timer.stop();
-
-                }
-
             }
         });
         timer.start();
@@ -105,6 +99,8 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
         if (getGame().isGameFinished()){
 
+            ((SurvivalMode)getGame()).stopCountDown();
+
             ((SurvivalMode)getGame()).createNewChallenge();
 
             cardUI.setCard( getGame().getCard() );
@@ -119,6 +115,19 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
 
     public Void onGameFinished( Void v){
+
+        timer.stop();
+
+        JOptionPane.showMessageDialog( this,
+                "Your score is : " + ((SurvivalMode)getGame()).getScore(),
+                "GAME OVER",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        int newGame = JOptionPane.showConfirmDialog( this,
+                "New game?",
+                "GAME OVER",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
 
         return null;
     }

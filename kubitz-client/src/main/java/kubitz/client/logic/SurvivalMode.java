@@ -51,4 +51,8 @@ public class SurvivalMode extends BaseGame {
         return score;
     }
 
+    public void stopCountDown(){
+        ctc.stop();
+    }
+
 }
