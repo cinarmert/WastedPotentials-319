@@ -50,9 +50,9 @@ public class Config {
         try {
             props = new Properties();
 
-            //ToDo reasonable size
-            props.setProperty("width", ""+800);
-            props.setProperty("height", ""+600);
+            DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayModes()[0];
+            props.setProperty("width", ""+displayMode.getWidth());
+            props.setProperty("height", ""+displayMode.getHeight());
             props.setProperty("fullscreen", ""+false);
             props.setProperty("master", ""+100);
             props.setProperty("effects", ""+100);

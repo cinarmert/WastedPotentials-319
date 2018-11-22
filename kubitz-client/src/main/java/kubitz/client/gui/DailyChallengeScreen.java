@@ -94,7 +94,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
         long timePassedLong = ((DailyChallengeMode)getGame()).getTimePassed();
         String timePassed = (timePassedLong / (1000 * 60)) % 60 + " : "+ ((timePassedLong / 1000) % 60)  + " : " + timePassedLong % 1000;
 
-        JOptionPane.showMessageDialog( DailyChallengeScreen.this,
+        JOptionPane.showMessageDialog( this,
                 "You finished game in: " + timePassed,
                 "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
