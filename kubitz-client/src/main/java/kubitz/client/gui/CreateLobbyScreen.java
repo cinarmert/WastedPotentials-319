@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.storage.Lobby;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -118,11 +120,11 @@ public class CreateLobbyScreen extends JPanel implements Screen {
         JPanel modePanel = new JPanel(new BorderLayout());
         modePanel.setBackground( new Color(204,204,204));
         modePanel.add(new JLabel("Game Mode", JLabel.LEFT), BorderLayout.WEST);
-        String[] modelist = {Lobby.CLASSIC, Lobby.SWITCH};
+        String[] modelist = {Lobby.MODE_CLASSIC, Lobby.MODE_SWITCH};
         modeBox = new JComboBox(modelist);
         modeBox.setPreferredSize(BOXDIMENSION);
         modeBox.addActionListener(e->{
-            if(modeBox.getSelectedItem().equals(Lobby.SWITCH)){
+            if(modeBox.getSelectedItem().equals(Lobby.MODE_SWITCH)){
                 noOfPlayersBox.setSelectedItem(2);
                 noOfPlayersBox.setEnabled(false);
             }

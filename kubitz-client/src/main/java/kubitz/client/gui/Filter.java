@@ -110,9 +110,9 @@ public class Filter {
     public String[] getFilteredModeList() {
         String[] filteredModeList = new String[2];
         if(classicMode)
-            filteredModeList[0] = "CLASSIC";
+            filteredModeList[0] = "MODE_CLASSIC";
         if(switchMode)
-            filteredModeList[1] = "SWITCH";
+            filteredModeList[1] = "MODE_SWITCH";
 
 
         return filteredModeList;

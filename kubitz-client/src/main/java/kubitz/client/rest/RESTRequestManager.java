@@ -21,6 +21,7 @@ public class RESTRequestManager {
     private static final String DAILY_GET_CHALLENGE = "/daily/getChallenge";
     private static final String DAILY_GET_LEADERBOARD = "/daily/getLeaderboard";
     private static final String DAILY_POST_SCORE = "/daily/postScore";
+    private static final String LOBBY_CREATE_LOBBY = "/lobby/createLobby";
     private static final String LOBBY_CHANGE_SETTINGS = "/lobby/changeSettings";
     private static final String LOBBY_GET_LOBBIES = "/lobby/getLobbies";
     private static final String LOBBY_KICK_PLAYER = "/lobby/kickPlayer";
@@ -34,6 +35,32 @@ public class RESTRequestManager {
 
     public static void login(Account account){
         makeServerRequest(METHOD_POST, ACCOUNT_LOGIN, JsonUtil.toJson(account));
+    }
+
+    public static void createLobby(Lobby lobby){
+        makeServerRequest(METHOD_POST, LOBBY_CREATE_LOBBY, JsonUtil.toJson(lobby));
+    }
+
+    public static void changeSettings(Lobby lobby){
+        makeServerRequest(METHOD_POST, LOBBY_CHANGE_SETTINGS, JsonUtil.toJson(lobby));
+    }
+
+    public static List<Lobby> getLobbies(){
+        String response = makeServerRequest(METHOD_GET, LOBBY_GET_LOBBIES, null);
+
+        try {
+            return JsonUtil.fromListOfJson(response, Lobby.class);
+        } catch (IOException e) {
+            System.err.println("Could not parse the storage to Lobby, storage: " + response);
+            return null;
+        } catch (ClassNotFoundException e) {
+            System.err.println("Storage class not found: " + Lobby.class.getName());
+            return null;
+        }
+    }
+
+    public static void kickPlayer(Lobby lobby){
+        makeServerRequest(METHOD_POST, LOBBY_KICK_PLAYER, JsonUtil.toJson(lobby));
     }
 
     public static ClassicChallenge getClassicChallenge(int id){

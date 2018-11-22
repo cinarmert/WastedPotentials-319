@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.storage.Lobby;
+
 import javax.swing.*;
 import java.awt.*;
 

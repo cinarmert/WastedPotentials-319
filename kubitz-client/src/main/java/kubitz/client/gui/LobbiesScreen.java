@@ -1,6 +1,6 @@
 package kubitz.client.gui;
 
-import sun.applet.Main;
+import kubitz.client.storage.Lobby;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -170,9 +170,9 @@ public class LobbiesScreen extends JPanel implements Screen {
 
         for(int i = 0; i < 20;i++){
             if(i < 5)
-                lobbies.add(new Lobby("Test Lobby" + i, Lobby.SWITCH, 2,false,  i%4 + 1,"Waiting"));
+                lobbies.add(new Lobby("Test Lobby" + i, Lobby.MODE_SWITCH, 2,false,  i%4 + 1,Lobby.STATUS_WAITING));
             else
-                lobbies.add(new Lobby("Test Lobby" + i, Lobby.CLASSIC, 4,false,i%4 + 1, "Waiting"));
+                lobbies.add(new Lobby("Test Lobby" + i, Lobby.MODE_CLASSIC, 4,false,i%4 + 1, Lobby.STATUS_WAITING));
         }
 
 
@@ -231,7 +231,7 @@ public class LobbiesScreen extends JPanel implements Screen {
             switch (columnIndex){
                 case 0 : obj = lobbies.get(rowIndex).getName();
                     break;
-                case 1 : obj = lobbies.get(rowIndex).getPlayerCount() + "/" + lobbies.get(rowIndex).getNoOfPlayers();
+                case 1 : obj = lobbies.get(rowIndex).getPlayerCount() + "/" + lobbies.get(rowIndex).getMaxPlayerLimit();
                     break;
                 case 2 : obj = lobbies.get(rowIndex).getMode();
                     break;

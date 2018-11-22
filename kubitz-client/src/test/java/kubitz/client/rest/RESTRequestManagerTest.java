@@ -4,7 +4,8 @@ import kubitz.client.storage.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RESTRequestManagerTest {
@@ -15,6 +16,7 @@ public class RESTRequestManagerTest {
     private GameState gameState = new GameState();
     private Leaderboard leaderboard = new Leaderboard();
     private LeaderboardUser leaderboardUser = new LeaderboardUser();
+    private Lobby lobby = new Lobby("test1", Lobby.MODE_CLASSIC, 5, false, 4, Lobby.STATUS_PLAYING);
 
     @Before
     public void setUp() throws Exception {
@@ -72,5 +74,29 @@ public class RESTRequestManagerTest {
         gameState.setId(3);
         gameState.setSize(2);
         RESTRequestManager.postSwitchGameState(this.gameState);
+    }
+
+    @Test
+    public void createLobby() {
+        RESTRequestManager.createLobby(lobby);
+    }
+
+    @Test
+    public void changeSettings() {
+        lobby.setMode(Lobby.STATUS_WAITING);
+        RESTRequestManager.changeSettings(lobby);
+    }
+
+    @Test
+    public void getLobbies() {
+        List<Lobby> response = RESTRequestManager.getLobbies();
+        assertThat(response != null).isEqualTo(true);
+        assertThat(lobby.getMode() != null).isEqualTo(true);
+    }
+
+    @Test
+    public void kickPlayer() {
+        lobby.setPlayerCount(3);
+        RESTRequestManager.kickPlayer(lobby);
     }
 }
