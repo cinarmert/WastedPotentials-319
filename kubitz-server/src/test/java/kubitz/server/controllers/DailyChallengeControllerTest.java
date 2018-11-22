@@ -63,8 +63,8 @@ public class DailyChallengeControllerTest {
     public void postChallenge() throws Exception {
         String body = "{\n" +
                 "  \"id\": 3,\n" +
-                "  \"size\": 2,\n" +
-                "  \"mission\": [[4,3],[5,6],[6,4],[3,2]]\n" +
+                "  \"size\": 4,\n" +
+                "  \"mission\": [[3,1,0,3],[0,2,3,1],[1,2,3,1],[3,2,0,2]]\n" +
                 "}";
         mockMvc.perform(post("/daily/postDailyChallenge")
                 .contentType(MediaType.APPLICATION_JSON)
