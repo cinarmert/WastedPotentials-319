@@ -45,6 +45,8 @@ public class ClassicModeScreen extends BaseGameScreen {
     }
 
     public void createGame(){
+        MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
+
         ClassicMode cm = new ClassicMode(new Grid(4), new Cube(0));
         setGame(cm);
     }

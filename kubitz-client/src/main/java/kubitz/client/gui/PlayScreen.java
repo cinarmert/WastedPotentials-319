@@ -85,9 +85,6 @@ public class PlayScreen extends JPanel implements Screen {
 
                 ((DailyChallengeScreen)contentPane.getComponent(MainFrame.DAILYCHALLENGEMODEINDEX) ).createGame();
 
-                MainFrame.getInstance().getMoveController().setBaseGameScreen(
-                        (DailyChallengeScreen)contentPane.getComponent(MainFrame.DAILYCHALLENGEMODEINDEX));
-
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                 cardLayout.show(contentPane, MainFrame.DAILYCHALLENGEMODE);
 
@@ -101,9 +98,6 @@ public class PlayScreen extends JPanel implements Screen {
             public void actionPerformed(ActionEvent e) {
 
                 ((SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX) ).createGame();
-
-                MainFrame.getInstance().getMoveController().setBaseGameScreen(
-                        (SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX));
 
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                 cardLayout.show(contentPane, MainFrame.SURVIVALMODE);

@@ -45,6 +45,7 @@ public class SwitchModeScreen extends BaseGameScreen{
     }
 
     public void createGame(){
+        MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
 
         SwitchMode sm = new SwitchMode(new Grid(4), new Cube(0), this::switchGames );
         setGame(sm);

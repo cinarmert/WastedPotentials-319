@@ -88,6 +88,8 @@ public class DailyChallengeScreen extends BaseGameScreen{
     }
 
     public void createGame(){
+        MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
+
         DailyChallengeMode dm = new DailyChallengeMode(new Grid(4), new Cube(0));
         setGame(dm);
         startTimer();
@@ -95,11 +97,17 @@ public class DailyChallengeScreen extends BaseGameScreen{
 
     @Override
     public void onGameFinished(){
-        int quit = JOptionPane.showConfirmDialog( DailyChallengeScreen.this,
-                "Are you sure you want to leave the game?",
-                "Leave?",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
+        long timePassedLong = ((DailyChallengeMode)getGame()).getTimePassed();
+        String timePassed = (timePassedLong / (1000 * 60)) % 60 + " : "+ ((timePassedLong / 1000) % 60)  + " : " + timePassedLong % 1000;
+
+        JOptionPane.showMessageDialog( DailyChallengeScreen.this,
+                "You finished game in: " + timePassed,
+                "GAME OVER",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+        cardLayout.show(contentPane, MainFrame.LEADERBOARD);
+
     }
 
     @Override
