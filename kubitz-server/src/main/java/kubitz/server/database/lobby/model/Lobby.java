@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Lobby {
 
     @Id
-    private int id;
+    private String id;
 
     private String name;
 
@@ -21,14 +21,14 @@ public class Lobby {
 
     public Lobby(){}
 
-    public Lobby(int id, String name, String mode, boolean privateLobby) {
+    public Lobby(String id, String name, String mode, boolean privateLobby) {
         this.id = id;
         this.name = name;
         this.mode = mode;
         this.privateLobby = privateLobby;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -52,7 +52,7 @@ public class Lobby {
         return status;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
