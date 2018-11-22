@@ -20,6 +20,7 @@ class Lobby{
         playerCount = 1;
         status = "Waiting";
     }
+
     public Lobby(String name, String mode, int noOfPlayers, boolean privateLobby, int playerCount, String status ){
         this.name = name;
         this.mode = mode;
@@ -29,19 +30,25 @@ class Lobby{
         this.status = status;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
-    public int getPlayerCount(){
+
+    public int getPlayerCount() {
         return playerCount;
     }
-    public String getMode(){
+
+    public String getMode() {
         return mode;
     }
-    public String getStatus(){
+
+    public String getStatus() {
         return status;
     }
-    public boolean isPrivate(){return privateLobby;}
+
+    public boolean isPrivate() {
+        return privateLobby;
+    }
 
     public int getNoOfPlayers() {
         return noOfPlayers;
@@ -50,14 +57,8 @@ class Lobby{
     public boolean isFull(){
         return(noOfPlayers == playerCount);
     }
+
     public boolean isPlaying(){
-        if(status == "Waiting")
-            return false;
-        else
-            return true;
+        return !status.equals("Waiting");
     }
-
-
-
-
 }
