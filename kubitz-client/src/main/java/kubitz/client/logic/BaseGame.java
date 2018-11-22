@@ -13,9 +13,6 @@ public abstract class BaseGame {
     public BaseGame(Grid grid, Cube cube) {
         this.grid = grid;
         this.cube = cube;
-
-        // to do generate card
-        this.card = new Card(new Grid(4));
     }
 
     public Grid getGrid(){ return grid;}

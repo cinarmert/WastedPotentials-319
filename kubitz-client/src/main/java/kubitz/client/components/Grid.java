@@ -45,6 +45,7 @@ public class Grid
 
     public void setSize(int size) {
         this.size = size;
+        grid = new Cube[size][size];
     }
 
     public void setGrid(int[][] grid){

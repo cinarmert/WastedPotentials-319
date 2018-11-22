@@ -47,13 +47,6 @@ public class DailyChallengeScreen extends BaseGameScreen{
                 String timePassed = (timePassedLong / (1000 * 60)) % 60 + " : "+ ((timePassedLong / 1000) % 60)  + " : " + timePassedLong % 1000;
 
                 time.setText( timePassed);
-
-                if(getGame().isGameFinished())
-                {
-                    DailyChallengeScreen.this.timer.stop();
-
-                }
-
             }
         });
         timer.start();
@@ -97,6 +90,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
 
     @Override
     public void onGameFinished(){
+        DailyChallengeScreen.this.timer.stop();
         long timePassedLong = ((DailyChallengeMode)getGame()).getTimePassed();
         String timePassed = (timePassedLong / (1000 * 60)) % 60 + " : "+ ((timePassedLong / 1000) % 60)  + " : " + timePassedLong % 1000;
 
