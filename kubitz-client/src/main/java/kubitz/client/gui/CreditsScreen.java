@@ -4,16 +4,14 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class CreditsScreen extends JPanel implements Screen {
 
-    JPanel contentPane;
-    Dimension size;
+    private JPanel contentPane;
+    private Dimension size;
 
     public CreditsScreen(JPanel contentPane, Dimension size) {
 
@@ -68,40 +66,15 @@ public class CreditsScreen extends JPanel implements Screen {
         c.insets = new Insets(20,0,0,0);
         c.gridx = 0;
         c.gridy = 0;
-        settingsPanel.add( new JPanel(new BorderLayout()){{
-            add(new JLabel("Mertkan Akkuş",JLabel.CENTER), BorderLayout.CENTER);
-            setPreferredSize( new Dimension(size.width/6, size.height/20));
-            setBorder(new LineBorder(Color.BLACK));
-            setBackground(Color.WHITE);
-        }}, c);
+        settingsPanel.add( nameBox("Mertkan Akkuş"), c);
         c.gridy = 1;
-        settingsPanel.add( new JPanel(new BorderLayout()){{
-            add(new JLabel("Yasin Alptekin Ay",JLabel.CENTER), BorderLayout.CENTER);
-            setPreferredSize( new Dimension(size.width/6, size.height/20));
-            setBorder(new LineBorder(Color.BLACK));
-            setBackground(Color.WHITE);
-        }}, c);
+        settingsPanel.add( nameBox("Yasin Alptekin Ay"), c);
         c.gridy = 2;
-        settingsPanel.add( new JPanel(new BorderLayout()){{
-            add(new JLabel("Ahmet Furkan Bıyık",JLabel.CENTER), BorderLayout.CENTER);
-            setPreferredSize( new Dimension(size.width/6, size.height/20));
-            setBorder(new LineBorder(Color.BLACK));
-            setBackground(Color.WHITE);
-        }}, c);
+        settingsPanel.add( nameBox("Ahmet Furkan Bıyık"), c);
         c.gridy = 3;
-        settingsPanel.add( new JPanel(new BorderLayout()){{
-            add(new JLabel("Ramazan Mert Çınar",JLabel.CENTER), BorderLayout.CENTER);
-            setPreferredSize( new Dimension(size.width/6, size.height/20));
-            setBorder(new LineBorder(Color.BLACK));
-            setBackground(Color.WHITE);
-        }}, c);
+        settingsPanel.add( nameBox("Ramazan Mert Çınar"), c);
         c.gridy = 4;
-        settingsPanel.add( new JPanel(new BorderLayout()){{
-            add(new JLabel("Yaman Yağız Taşbağ",JLabel.CENTER), BorderLayout.CENTER);
-            setPreferredSize( new Dimension(size.width/6, size.height/20));
-            setBorder(new LineBorder(Color.BLACK));
-            setBackground(Color.WHITE);
-        }}, c);
+        settingsPanel.add( nameBox("Yaman Yağız Taşbağ"), c);
         c.gridy = 5;
         try {
             settingsPanel.add(new JButton(){{
@@ -109,10 +82,10 @@ public class CreditsScreen extends JPanel implements Screen {
                 addActionListener( e -> {
                     try {
                         Desktop.getDesktop().browse(new URI("https://github.com/cinarmert/WastedPotentials-319"));
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    } catch (URISyntaxException e1) {
-                        e1.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    } catch (URISyntaxException ex) {
+                        ex.printStackTrace();
                     }
                 });
                 setPreferredSize(new Dimension(96,96));
@@ -120,19 +93,17 @@ public class CreditsScreen extends JPanel implements Screen {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-        /*CustomButton git = new CustomButton("GitHUB Page");
-        git.addActionListener( e -> {
-            try {
-                Desktop.getDesktop().browse(new URI("https://github.com/cinarmert/WastedPotentials-319"));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (URISyntaxException e1) {
-                e1.printStackTrace();
-            }
-        });
-        settingsPanel.add(git, c);*/
 
         return settingsPanel;
+    }
+
+    public JPanel nameBox( String name){
+        return new JPanel( new BorderLayout()){{
+            add(new JLabel(name,JLabel.CENTER), BorderLayout.CENTER);
+            setPreferredSize( new Dimension( size.width/6, size.height/20));
+            setBorder(new LineBorder(Color.BLACK));
+            setBackground(Color.WHITE);
+        }};
     }
 
     @Override

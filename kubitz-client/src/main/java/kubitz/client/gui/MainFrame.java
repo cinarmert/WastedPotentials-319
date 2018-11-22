@@ -1,10 +1,6 @@
 package kubitz.client.gui;
 
 import kubitz.client.controllers.MoveController;
-import kubitz.client.rest.RESTRequestManager;
-import kubitz.client.storage.Account;
-
-import java.net.NetworkInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,9 +40,12 @@ public class MainFrame extends JFrame {
     Config config;
     private NetworkInterface networkInterface;
     private Account account;
+    Filter filter;
+    public static LobbyScreen lobbyScreen;
 
     public MainFrame(){
         this.config = new Config();
+        filter = new Filter();
         initializeResources();
         initializeAccount();
         instance = this;
@@ -83,16 +82,18 @@ public class MainFrame extends JFrame {
         contentPane = new JPanel();
         contentPane.setLayout( new CardLayout() );
 
+        lobbyScreen = new LobbyScreen(contentPane,size);
+
         contentPane.add( new MainMenuScreen( contentPane, size), MAINMENU );
         contentPane.add( new PlayScreen(contentPane,size), PLAY);
         contentPane.add( new HowToPlayScreen( contentPane, size), HOWTOPLAY);
         contentPane.add( new LeaderboardScreen( contentPane, size), LEADERBOARD);
         contentPane.add( new SettingsScreen( contentPane, size, config), SETTINGS);
         contentPane.add( new CreditsScreen( contentPane, size), CREDITS);
-        contentPane.add( new LobbyScreen( contentPane, size), LOBBY);
+        contentPane.add( lobbyScreen, LOBBY);
         contentPane.add( new LobbySettingsScreen(contentPane, size), LOBBYSETTINGS);
-        contentPane.add( new LobbiesScreen(contentPane,size), LOBBIES);
-        contentPane.add( new LobbiesFilterScreen(contentPane,size), LOBBIESFILTER);
+        contentPane.add( new LobbiesScreen(contentPane,size, filter), LOBBIES);
+        contentPane.add( new LobbiesFilterScreen(contentPane,size, filter), LOBBIESFILTER);
         contentPane.add( new CreateLobbyScreen(contentPane, size), CREATELOBBY);
         contentPane.add( new ClassicModeScreen(  contentPane,size), CLASSICMODE, CLASSICMODEINDEX);
         contentPane.add( new SwitchModeScreen( contentPane, size), SWITCHMODE, SWITCHMODEINDEX);
