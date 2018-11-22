@@ -1,14 +1,64 @@
 package kubitz.client.gui;
 
+import kubitz.client.components.Cube;
+import kubitz.client.components.Grid;
+import kubitz.client.logic.BaseGame;
 import kubitz.client.logic.SwitchMode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SwitchModeScreen extends BaseGameScreen{
 
+    private JPanel contentPane;
+
     public SwitchModeScreen(JPanel contentPane, Dimension size) {
         super(size);
+        this.contentPane = contentPane;
+    }
+
+    @Override
+    public void setGame( BaseGame classicMode){
+        super.setGame(classicMode);
+
+        addBackListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int quit = JOptionPane.showConfirmDialog( SwitchModeScreen.this,
+                        "Are you sure you want to leave the game?",
+                        "Leave?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if( quit == 0 ) {
+                    CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+                    cardLayout.show(contentPane, MainFrame.LOBBIES);
+                    setGame(null);
+                    MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+                }
+
+            }
+        });
+    }
+
+    public void createGame(){
+
+        SwitchMode sm = new SwitchMode(new Grid(4), new Cube(0), this::switchGames );
+        setGame(sm);
+
+        ((SwitchMode)getGame()).start();
+    }
+
+    public Void switchGames( Void v){
+
+        ((SwitchMode)getGame()).stop();
+        setGame( ((SwitchMode)getGame()).getOtherGame() );
+        ((SwitchMode)getGame()).start();
+        return null;
+
     }
 
     @Override
