@@ -47,11 +47,11 @@ public class MainFrame extends JFrame {
     public static LobbyScreen lobbyScreen;
 
     public MainFrame(){
+        instance = this;
         this.config = new Config();
         filter = new Filter();
         initializeResources();
         initializeAccount();
-        instance = this;
     }
 
     private void initializeAccount() {
