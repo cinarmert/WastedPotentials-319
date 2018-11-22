@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.storage.Lobby;
+
 import java.io.*;
 import java.util.Properties;
 
@@ -110,9 +112,9 @@ public class Filter {
     public String[] getFilteredModeList() {
         String[] filteredModeList = new String[2];
         if(classicMode)
-            filteredModeList[0] = "MODE_CLASSIC";
+            filteredModeList[0] = Lobby.MODE_CLASSIC;
         if(switchMode)
-            filteredModeList[1] = "MODE_SWITCH";
+            filteredModeList[1] = Lobby.MODE_SWITCH;
 
 
         return filteredModeList;

@@ -2,6 +2,8 @@ package kubitz.client.storage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+
 public class Lobby {
 
     @JsonProperty
@@ -22,6 +24,8 @@ public class Lobby {
     @JsonProperty
     private boolean privateLobby;
 
+    private ArrayList<Account> players;
+
     public final static String MODE_SWITCH = "LOBBY_MODE_SWITCH";
     public final static String MODE_CLASSIC = "LOBBY_MODE_CLASSIC";
     public final static String STATUS_WAITING = "LOBBY_STATUS_WAITING";
@@ -34,6 +38,7 @@ public class Lobby {
         this.mode = mode;
         this.maxPlayerLimit = maxPlayerLimit;
         this.privateLobby = privateLobby;
+        players = new ArrayList<>();
         playerCount = 1;
         status = Lobby.STATUS_WAITING;
     }
@@ -43,6 +48,7 @@ public class Lobby {
         this.mode = mode;
         this.maxPlayerLimit = maxPlayerLimit;
         this.privateLobby = privateLobby;
+        players = new ArrayList<>();
         this.playerCount = playerCount;
         this.status = status;
     }
@@ -105,5 +111,13 @@ public class Lobby {
 
     public boolean isPlaying(){
         return !status.equals(this.STATUS_PLAYING);
+    }
+
+    public ArrayList<Account> getPlayers() {
+        return players;
+    }
+
+    public void addPlayer(Account a) {
+        players.add(a);
     }
 }

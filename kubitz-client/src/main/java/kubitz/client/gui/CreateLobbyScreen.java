@@ -1,5 +1,6 @@
 package kubitz.client.gui;
 
+import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
 
 import javax.swing.*;
@@ -148,7 +149,14 @@ public class CreateLobbyScreen extends JPanel implements Screen {
         return namePanel;
     }
 
-    private void createLobby(){}
+    private void createLobby(){
+        Lobby lobby = new Lobby(nameField.getText(),(String)modeBox.getSelectedItem(),
+                (int)noOfPlayersBox.getSelectedItem(), privateCheckBox.isSelected());
+        lobby.addPlayer(new Account(Config.getId(), Config.getName()));
+        MainFrame.lobbyScreen.setCurrentLobby(lobby);
+        CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+        cardLayout.show(contentPane, MainFrame.LOBBY);
+    }
 
     @Override
     public void paintComponent(Graphics g){

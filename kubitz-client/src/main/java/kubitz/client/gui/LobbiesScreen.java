@@ -137,7 +137,6 @@ public class LobbiesScreen extends JPanel implements Screen {
                             break;
                         }
                     }
-//                    ((LobbyScreen)contentPane.getComponent(MainFrame.LOBBY));
                     MainFrame.lobbyScreen.setCurrentLobby(lobby);
                     CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                     cardLayout.show(contentPane, MainFrame.LOBBY);
