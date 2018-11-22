@@ -58,7 +58,7 @@ public class Config {
         try {
             props = new Properties();
 
-            DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayModes()[0];
+            DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
             props.setProperty("width", ""+displayMode.getWidth());
             props.setProperty("height", ""+displayMode.getHeight());
             props.setProperty("fullscreen", ""+false);
@@ -69,7 +69,7 @@ public class Config {
 
             updateFile();
 
-            resolution = new Dimension( 800, 600);
+            resolution = new Dimension( displayMode.getWidth(), displayMode.getHeight());
             fullScreen = false;
             masterSound = 100;
             effectsSound = 100;
