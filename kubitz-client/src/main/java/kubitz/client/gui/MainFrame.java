@@ -127,7 +127,7 @@ public class MainFrame extends JFrame {
         this.size = Config.getInstance().getResolution();
         setSize(size);
 
-        Component[] components = getComponents();
+        Component[] components = contentPane.getComponents();
 
         for( int i = 0; i < components.length; i++){
             ((Screen)components[i] ).updateResolution(size);
