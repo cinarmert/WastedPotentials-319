@@ -2,7 +2,6 @@ package kubitz.client.gui;
 
 import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
-import sun.tools.jps.Jps;
 
 import javax.swing.*;
 import java.awt.*;

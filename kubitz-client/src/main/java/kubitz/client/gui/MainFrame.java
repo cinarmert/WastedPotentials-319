@@ -6,8 +6,8 @@ import kubitz.client.storage.Account;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.UUID;
 
 
@@ -62,14 +62,14 @@ public class MainFrame extends JFrame {
         }
 
         try {
-            networkInterface = NetworkInterface.getByName("en0");
+            networkInterface = NetworkInterface.getByInetAddress( InetAddress.getLocalHost() );
             String mac = new String(networkInterface.getHardwareAddress());
             String name = UUID.randomUUID().toString();
             account = new Account(mac, name);
             config.setId(mac);
             config.setName(name);
             RESTRequestManager.login(account);
-        } catch (SocketException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
