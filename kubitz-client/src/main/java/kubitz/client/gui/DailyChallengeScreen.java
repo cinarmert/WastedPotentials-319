@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.components.Cube;
+import kubitz.client.components.Grid;
 import kubitz.client.logic.BaseGame;
 import kubitz.client.logic.DailyChallengeMode;
 
@@ -11,13 +13,12 @@ import java.awt.event.ActionListener;
 public class DailyChallengeScreen extends BaseGameScreen{
 
     private JPanel contentPane;
-    private DailyChallengeMode dcm;
     private JLabel time;
     private Timer timer;
     private JPanel timerPanel;
 
-    public DailyChallengeScreen(DailyChallengeMode dcm, JPanel contentPane, Dimension size) {
-        super(dcm,size);
+    public DailyChallengeScreen( JPanel contentPane, Dimension size) {
+        super(size);
         this.contentPane = contentPane;
 
         time = new JLabel("00:00:00");
@@ -34,7 +35,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
 
     public void startTimer(){
 
-        dcm.setTime();
+        ((DailyChallengeMode)getGame()).setTime();
 
 //        int refreshRate = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
         timer = new Timer( 1000/60,new ActionListener(){
@@ -42,12 +43,12 @@ public class DailyChallengeScreen extends BaseGameScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                long timePassedLong = dcm.getTimePassed();
+                long timePassedLong = ((DailyChallengeMode)getGame()).getTimePassed();
                 String timePassed = (timePassedLong / (1000 * 60)) % 60 + " : "+ ((timePassedLong / 1000) % 60)  + " : " + timePassedLong % 1000;
 
                 time.setText( timePassed);
 
-                if(dcm.isGameFinished())
+                if(getGame().isGameFinished())
                 {
                     DailyChallengeScreen.this.timer.stop();
 
@@ -64,7 +65,41 @@ public class DailyChallengeScreen extends BaseGameScreen{
         timerPanel.add(time);
         super.cardPanel.add(timerPanel, 0);
 
-        this.dcm = ((DailyChallengeMode)getGame());
+        addBackListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int quit = JOptionPane.showConfirmDialog( DailyChallengeScreen.this,
+                        "Are you sure you want to leave the game?",
+                        "Leave?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if( quit == 0 ) {
+                    CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+                    cardLayout.show(contentPane, MainFrame.PLAY);
+                    timer.stop();
+                    setGame(null);
+                    MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+                }
+
+            }
+        });
+    }
+
+    public void createGame(){
+        DailyChallengeMode dm = new DailyChallengeMode(new Grid(4), new Cube(0));
+        setGame(dm);
+        startTimer();
+    }
+
+    @Override
+    public void onGameFinished(){
+        int quit = JOptionPane.showConfirmDialog( DailyChallengeScreen.this,
+                "Are you sure you want to leave the game?",
+                "Leave?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
     }
 
     @Override

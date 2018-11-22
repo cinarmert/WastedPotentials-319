@@ -26,13 +26,19 @@ public class CubeUI extends JPanel {
         repaint();
     }
 
+    public Cube getCube(){
+        return cube;
+    }
+
     @Override
     public void paintComponent( Graphics g){
         super.paintComponent(g);
 
+        setBackground( Color.GRAY);
+
         if (cube != null) {
-            setBackground( Color.WHITE);
             g.setColor(Color.RED);
+            setBackground( Color.WHITE);
 
             Polygon triangleLeft = new Polygon();
             triangleLeft.addPoint(0,0);

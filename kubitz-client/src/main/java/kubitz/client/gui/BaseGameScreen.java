@@ -12,36 +12,32 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class BaseGameScreen extends JPanel implements Screen{
+public abstract class BaseGameScreen extends JPanel implements Screen{
 
-    private static BaseGameScreen instance = null;
-    private GridUI gridUI;
+    protected GridUI gridUI;
     private CubeUI cubeUI;
-    private CardUI cardUI;
+    protected CardUI cardUI;
     private Dimension size;
     private BaseGame baseGame;
     public Image background;
     protected JPanel cardPanel;
     private CustomButton backButton;
+    private Cube selectedCube;
+    private int[] selectedCubePos;
 
-    public BaseGameScreen(BaseGame baseGame, Dimension size) {
+    public BaseGameScreen( Dimension size) {
 
         super();
-        instance = this;
         this.size = size;
-
-        this.baseGame = baseGame;
 
         this.setOpaque(false);
         background = new ImageIcon(getClass().getResource("/backgrounds/game_background.jpg")).getImage();
 
-        if (this.baseGame != null)
-            setGame( baseGame);
-
     }
 
     public void addBackListener( ActionListener listener){
-        backButton.addActionListener(listener);
+        if (this.baseGame != null)
+            backButton.addActionListener(listener);
     }
 
     public void setGame( BaseGame baseGame){
@@ -57,7 +53,6 @@ public class BaseGameScreen extends JPanel implements Screen{
 
             c.insets = new Insets(20,20,0,0);
             c.anchor = GridBagConstraints.NORTHWEST;
-            //c.gridwidth = 1;
             c.weightx = 0.1;
             c.weighty = 0.1;
             c.gridx = 0;
@@ -68,7 +63,6 @@ public class BaseGameScreen extends JPanel implements Screen{
             c.fill = GridBagConstraints.BOTH;
             c.weightx = 1.0;
             c.weighty = 1.0;
-           // c.gridwidth = 2;
             c.gridx = 1;
             c.gridy = 0;
             this.add( initializeResources(),c);
@@ -93,12 +87,28 @@ public class BaseGameScreen extends JPanel implements Screen{
         Grid grid = baseGame.getGrid();
         Cube cube = baseGame.getCube();
 
+        selectedCube = cube;
+        selectedCubePos = new int[2];
+        selectedCubePos[0] = -1;
+        selectedCubePos[1] = -1;
+
         gridUI = new GridUI(grid);
         addGridListeners();
 
         cubeUI = new CubeUI(cube);
         cubeUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/10,
                 MainFrame.getInstance().getResolution().height/10));
+        cubeUI.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+
+                BaseGameScreen.this.selectedCube = ((CubeUI)e.getComponent()).getCube();
+                selectedCubePos[0] = -1;
+                selectedCubePos[1] = -1;
+
+            }
+        });
 
         cardUI = new CardUI(card);
 
@@ -129,7 +139,7 @@ public class BaseGameScreen extends JPanel implements Screen{
 
     }
 
-    public void addGridListeners(){
+    private void addGridListeners(){
 
         Component[] cubes = gridUI.getComponents();
 
@@ -137,25 +147,58 @@ public class BaseGameScreen extends JPanel implements Screen{
             cubes[i].addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    super.mouseReleased(e);
+                    super.mousePressed(e);
 
                     String[] split = e.getComponent().getName().split(",");
                     int x = Integer.parseInt(split[0]);
                     int y = Integer.parseInt(split[1]);
 
-                    if (baseGame.isGameFinished()){
-                        // do something when game finished
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+
+                        if ( !baseGame.isGameFinished()) {
+
+                            gridUI.addCube(getSelectedCube(), x, y);
+
+                            if (getSelectedCubePos()[0] == -1 && getSelectedCubePos()[1] == -1) {
+                                baseGame.addCubeToGrid(BaseGameScreen.this.getSelectedCube(), x, y);
+                                newCube();
+                            }
+                            else {
+                                baseGame.moveCube(getSelectedCubePos()[0],getSelectedCubePos()[1],x,y);
+                                gridUI.removeCube(getSelectedCubePos()[0], getSelectedCubePos()[1]);
+
+                                BaseGameScreen.this.selectedCubePos[0] = x;
+                                BaseGameScreen.this.selectedCubePos[1] = y;
+
+                                BaseGameScreen.this.selectedCube = baseGame.getGrid().getCube(x,y);
+                          }
+
+                        }
+
                     }
-                    else {
-                        ((CubeUI) e.getComponent()).setCube(BaseGameScreen.this.getCube());
-                        // add cube to game grid
-                        gridUI.addCube(getCube(), x, y);
-                        newCube();
+                    else if (SwingUtilities.isRightMouseButton(e)){
+                        BaseGameScreen.this.selectedCube = baseGame.getGrid().getCube(x,y);
+                        BaseGameScreen.this.selectedCubePos[0] = x;
+                        BaseGameScreen.this.selectedCubePos[1] = y;
+
+                    }
+
+                    if (baseGame.isGameFinished()) {
+                        onGameFinished();
                     }
                     repaint();
                 }
             });
+
         }
+    }
+
+    public int[] getSelectedCubePos(){
+        return selectedCubePos;
+    }
+
+    public Cube getSelectedCube(){
+        return selectedCube;
     }
 
     public Cube getCube(){
@@ -166,7 +209,7 @@ public class BaseGameScreen extends JPanel implements Screen{
 
         baseGame.setCube( Cube.getRandomCube() );
         cubeUI.setCube( baseGame.getCube() );
-
+        selectedCube = baseGame.getCube();
         cubeUI.repaint();
 
     }
@@ -180,6 +223,8 @@ public class BaseGameScreen extends JPanel implements Screen{
     public void updateResolution(Dimension size) {
 
     }
+
+    public abstract void onGameFinished();
 
     @Override
     public void paintComponent(Graphics g) {

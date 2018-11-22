@@ -26,8 +26,15 @@ public class Card
         return grid.getSize();
     }
 
-    public static Card getRandomCard()
+    public static Card getRandomCard( int size)
     {
-        return null; // TODO implement cards probably read them form a file
+        Grid cardGrid = new Grid(size);
+        for( int i = 0; i < size; i++){
+            for ( int j = 0; j < size; j++){
+                cardGrid.addCube( Cube.getRandomCube(), i,j);
+            }
+
+        }
+        return new Card(cardGrid);
     }
 }

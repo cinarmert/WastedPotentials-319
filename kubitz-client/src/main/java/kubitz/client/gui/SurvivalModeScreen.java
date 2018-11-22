@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.components.Cube;
+import kubitz.client.components.Grid;
 import kubitz.client.logic.BaseGame;
 import kubitz.client.logic.SurvivalMode;
 
@@ -10,13 +12,16 @@ import java.awt.event.ActionListener;
 
 public class SurvivalModeScreen extends BaseGameScreen {
 
-    private SurvivalMode sm;
     private JLabel time;
     private Timer timer;
     private JPanel timerPanel;
+    private JPanel contentPane;
 
-    public SurvivalModeScreen(SurvivalMode sm, JPanel contentPane, Dimension size) {
-        super(sm, size);
+    public SurvivalModeScreen( JPanel contentPane, Dimension size) {
+
+        super(size);
+
+        this.contentPane = contentPane;
 
         time = new JLabel("00:00:00");
         time.setForeground(Color.BLACK);
@@ -30,23 +35,21 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
     public void startTimer(){
 
-        sm.startCountDown();
+        ((SurvivalMode)getGame()).startCountDown();
 
-        int refreshRate = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
-        timer = new Timer( 1000/refreshRate,new ActionListener(){
+        timer = new Timer( 1000/60,new ActionListener(){
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                long timePassedLong = sm.getTime();
+                long timePassedLong = ((SurvivalMode)getGame()).getTime();
                 String timePassed = (timePassedLong / (1000 * 60)) % 60 + " : "+ ((timePassedLong / 1000) % 60)  + " : " + timePassedLong % 1000;
 
                 time.setText( timePassed);
 
-                if(sm.isGameFinished())
+                if(getGame().isGameFinished())
                 {
                     SurvivalModeScreen.this.timer.stop();
-
 
                 }
 
@@ -55,17 +58,67 @@ public class SurvivalModeScreen extends BaseGameScreen {
         timer.start();
     }
 
+    public void createGame(){
+        SurvivalMode sm = new SurvivalMode(new Grid(2), new Cube(0), this::onGameFinished );
+        setGame(sm);
+        startTimer();
+    }
+
     @Override
     public void setGame(BaseGame game){
         super.setGame(game);
         timerPanel.add(time);
         super.cardPanel.add(timerPanel, 0);
 
-        this.sm = ((SurvivalMode)getGame());
+        addBackListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                int quit = JOptionPane.showConfirmDialog( SurvivalModeScreen.this,
+                        "Are you sure you want to leave the game?",
+                        "Leave?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if( quit == 0 ) {
+                    CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+                    cardLayout.show(contentPane, MainFrame.PLAY);
+                    timer.stop();
+                    setGame(null);
+                    MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+                }
+
+            }
+        });
+
     }
 
     @Override
     public void update() {
 
     }
+
+    @Override
+    public void onGameFinished() {
+
+        if (getGame().isGameFinished()){
+
+            ((SurvivalMode)getGame()).createNewChallenge();
+
+            cardUI.setCard( getGame().getCard() );
+            gridUI.resetGrid();
+
+            gridUI.repaint();
+            cardUI.repaint();
+
+            repaint();
+        }
+    }
+
+
+    public Void onGameFinished( Void v){
+
+        return null;
+    }
 }
+

@@ -13,13 +13,6 @@ public class SurvivalMode extends BaseGame {
     long time;
     int score;
     Function<Void, Void> onGameFinished;
-
-
-    public SurvivalMode(Grid grid, Cube cube) {
-        super(grid, cube);
-        time = 150000; //ToDo reasonable time period
-        ctc = new CountdownTimeController(time, null);
-    }
   
     public SurvivalMode(Grid grid, Cube cube, Function<Void, Void> onGameFinished) {
         super(grid, cube);
@@ -27,26 +20,23 @@ public class SurvivalMode extends BaseGame {
         time = 150000; //ToDo reasonable time period
         ctc = new CountdownTimeController(time, onGameFinished);
         this.onGameFinished = onGameFinished;
+        setCard(Card.getRandomCard(grid.getSize()));
     }
 
     public boolean isGameFinished() {
-        boolean finished = super.isGameFinished();
-        if(finished)
-            createNewChallenge();
-        return finished;
+        return super.isGameFinished();
     }
 
     public void createNewChallenge()
     {
-        ctc.addRemainingTime(15000); //TODO reasonable time
+        ctc.addRemainingTime(30000); //TODO reasonable time
         grid = new Grid(grid.getSize());
-        card = Card.getRandomCard();
+        card = Card.getRandomCard(grid.getSize());
         score++; //TODO maybe change the score system??
     }
 
     public void startCountDown(){
-        Thread t = new Thread( ctc );
-        t.start();
+        ctc.start();
     }
 
     public long getTime(){
@@ -55,6 +45,10 @@ public class SurvivalMode extends BaseGame {
 
     public Void onGameFinished(Void v){
         return null;
+    }
+
+    public int getScore(){
+        return score;
     }
 
 }

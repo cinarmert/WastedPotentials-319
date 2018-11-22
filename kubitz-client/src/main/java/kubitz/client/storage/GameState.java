@@ -1,25 +1,37 @@
-package kubitz.server.database.gamestate.model;
+package kubitz.client.storage;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Document(collection = "gamestates")
-public class BoardState {
+public class GameState {
 
-    @Id
-    private long id;
+    @JsonProperty
+    private int id;
 
+    @JsonProperty
+    private int size;
+
+    @JsonProperty
     private int[][] state;
 
+    @JsonProperty
     private String from;
 
+    @JsonProperty
     private String to;
 
-    public long getId() {
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

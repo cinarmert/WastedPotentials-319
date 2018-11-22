@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.controllers.MoveController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +9,7 @@ public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
     private JPanel contentPane;
+    private MoveController moveController;
 
     public static final String MAINMENU = "MAINMENU";
     public static final String PLAY = "PLAY";
@@ -67,16 +70,23 @@ public class MainFrame extends JFrame {
         contentPane.add( new LobbiesScreen(contentPane,size, filter), LOBBIES);
         contentPane.add( new LobbiesFilterScreen(contentPane,size, filter), LOBBIESFILTER);
         contentPane.add( new CreateLobbyScreen(contentPane, size), CREATELOBBY);
-        contentPane.add( new ClassicModeScreen( null, contentPane,size), CLASSICMODE, CLASSICMODEINDEX);
-        contentPane.add( new SwitchModeScreen( null,contentPane, size), SWITCHMODE, SWITCHMODEINDEX);
-        contentPane.add( new SurvivalModeScreen( null ,contentPane, size), SURVIVALMODE, SURVIVALMODEINDEX);
-        contentPane.add( new DailyChallengeScreen( null,contentPane, size), DAILYCHALLENGEMODE, DAILYCHALLENGEMODEINDEX);
+        contentPane.add( new ClassicModeScreen(  contentPane,size), CLASSICMODE, CLASSICMODEINDEX);
+        contentPane.add( new SwitchModeScreen( contentPane, size), SWITCHMODE, SWITCHMODEINDEX);
+        contentPane.add( new SurvivalModeScreen( contentPane, size), SURVIVALMODE, SURVIVALMODEINDEX);
+        contentPane.add( new DailyChallengeScreen( contentPane, size), DAILYCHALLENGEMODE, DAILYCHALLENGEMODEINDEX);
 
         this.setContentPane(contentPane);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);
+
+        moveController = new MoveController();
+        addKeyListener(moveController);
+    }
+
+    public MoveController getMoveController(){
+        return moveController;
     }
 
     public static MainFrame getInstance(){

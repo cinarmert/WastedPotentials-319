@@ -7,15 +7,18 @@ import java.awt.*;
 
 public class ClassicModeScreen extends BaseGameScreen {
 
-    private ClassicMode cm;
 
-    public ClassicModeScreen(ClassicMode cm, JPanel contentPane, Dimension size) {
-        super(cm, size);
-        this.cm = cm;
+    public ClassicModeScreen(JPanel contentPane, Dimension size) {
+        super( size);
     }
 
     @Override
     public void update() {
+
+    }
+
+    @Override
+    public void onGameFinished() {
 
     }
 }

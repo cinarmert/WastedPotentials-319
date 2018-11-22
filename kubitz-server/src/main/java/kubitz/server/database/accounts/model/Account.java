@@ -1,27 +1,28 @@
 package kubitz.server.database.accounts.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "accounts")
 public class Account {
 
     @Id
-    private long id;
+    private int id;
 
-    public Account(long id, String name) {
+    public Account(){}
+
+    public Account(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
     private String name;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

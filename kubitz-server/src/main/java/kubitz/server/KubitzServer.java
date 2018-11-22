@@ -1,10 +1,5 @@
 package kubitz.server;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import kubitz.server.database.accounts.model.Account;
 import kubitz.server.database.accounts.repository.AccountRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,16 +16,7 @@ public class KubitzServer {
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
-            }
-
-        };
+        return args -> {};
     }
 
     @Bean
@@ -45,8 +31,8 @@ public class KubitzServer {
 //
 //            accountRepository.save(acc);
 //            accountRepository.save(acc2);
-            List<Account> accounts = accountRepository.findAll();
-            System.out.println(accounts);
+//            List<Account> accounts = accountRepository.findAll();
+//            System.out.println(accounts);
 
         };
 
