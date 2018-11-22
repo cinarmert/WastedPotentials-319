@@ -1,5 +1,8 @@
 package kubitz.client.gui;
 
+import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.storage.Account;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -116,11 +119,18 @@ public class SettingsScreen extends JPanel implements Screen {
         nickNamePanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         nickNamePanel.setOpaque(false);
 
-        JTextField nickNameTextField = new JTextField("PLAYER",20);
-        CustomButton summitButton = new CustomButton("SUMMIT");
+        JTextField nickNameTextField = new JTextField(config.getName(),20);
+        CustomButton submitButton = new CustomButton("SUBMIT");
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                config.setName(nickNameTextField.getText());
+                RESTRequestManager.login(new Account(config.getId(), nickNameTextField.getText()));
+            }
+        });
 
         nickNamePanel.add(nickNameTextField);
-        nickNamePanel.add(summitButton);
+        nickNamePanel.add(submitButton);
 
         //====================================================Graphics==========================================================
         JLabel graphicsText = new JLabel("GRAPHICS");

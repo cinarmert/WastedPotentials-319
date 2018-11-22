@@ -17,6 +17,8 @@ public class Config {
     private int masterSound;
     private int effectsSound;
     private int musicSound;
+    private static String id;
+    private static String name;
 
     public Config() {
 
@@ -35,6 +37,8 @@ public class Config {
             masterSound = Integer.parseInt( props.getProperty("master") );
             effectsSound = Integer.parseInt( props.getProperty("effects") );
             musicSound = Integer.parseInt( props.getProperty("music") );
+            id = props.getProperty("id");
+            name = props.getProperty("name");
 
         } catch (Exception e) {
             createDefaultConfig();
@@ -45,6 +49,8 @@ public class Config {
 
         try {
             props = new Properties();
+
+            //ToDo reasonable size
             props.setProperty("width", ""+800);
             props.setProperty("height", ""+600);
             props.setProperty("fullscreen", ""+false);
@@ -66,6 +72,28 @@ public class Config {
             e.printStackTrace();
         }
 
+    }
+
+    public boolean isRegistered(){
+        return props.containsKey("id") && getId() != null;
+    }
+
+    public static String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        props.setProperty("id", id);
+        this.id = id;
+    }
+
+    public void setName(String name){
+        props.setProperty("name", name);
+        this.name = name;
+    }
+
+    public static String getName(){
+        return name;
     }
 
     public Dimension getResolution() {

@@ -1,9 +1,16 @@
 package kubitz.client.gui;
 
 import kubitz.client.controllers.MoveController;
+import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.storage.Account;
+
+import java.net.NetworkInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.SocketException;
+import java.util.UUID;
+
 
 public class MainFrame extends JFrame {
 
@@ -32,15 +39,37 @@ public class MainFrame extends JFrame {
     public static final int SURVIVALMODEINDEX = 13;
     public static final int DAILYCHALLENGEMODEINDEX = 14;
 
-
     public static Image background;
     private Dimension size;
     Config config;
+    private NetworkInterface networkInterface;
+    private Account account;
 
     public MainFrame(){
         this.config = new Config();
         initializeResources();
+        initializeAccount();
         instance = this;
+    }
+
+    private void initializeAccount() {
+
+        if(config.isRegistered()){
+            account = new Account(config.getId(), config.getName());
+            return;
+        }
+
+        try {
+            networkInterface = NetworkInterface.getByName("en0");
+            String mac = new String(networkInterface.getHardwareAddress());
+            String name = UUID.randomUUID().toString();
+            account = new Account(mac, name);
+            config.setId(mac);
+            config.setName(name);
+            RESTRequestManager.login(account);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initializeResources(){

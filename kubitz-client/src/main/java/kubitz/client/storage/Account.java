@@ -5,23 +5,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Account {
 
     @JsonProperty
-    private int id;
+    private String id;
 
     @JsonProperty
     private String name;
 
     public Account(){}
 
-    public Account(int id, String name) {
+    public Account(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
