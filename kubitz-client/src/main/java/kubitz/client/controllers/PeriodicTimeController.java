@@ -12,6 +12,7 @@ public class PeriodicTimeController implements Runnable
     long period;
     boolean running = true;
     Function<Void, Void> f;
+    Thread thread;
 
     public PeriodicTimeController(int period, Function<Void, Void> f)
     {
@@ -35,6 +36,29 @@ public class PeriodicTimeController implements Runnable
             }
         }
 
+    }
+
+    public void start(){
+        if (thread != null)
+            thread.stop();
+
+        thread = new Thread(this);
+
+        thread.start();
+
+    }
+
+    public void stop(){
+        if (thread != null) {
+            thread.stop();
+
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        thread = null;
     }
 
     public void setPeriod(long period) {
