@@ -1,9 +1,12 @@
 package kubitz.client.storage;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class DailyChallenges {
 
+    @JsonProperty
     List<ClassicChallenge> classicChallenges;
 
     public List<ClassicChallenge> getClassicChallenges() {
