@@ -1,9 +1,12 @@
 package kubitz.client.gui;
 
 import kubitz.client.controllers.MoveController;
+import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.storage.Account;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.UUID;
 
