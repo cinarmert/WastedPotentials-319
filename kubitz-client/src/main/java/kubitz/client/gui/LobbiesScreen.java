@@ -1,6 +1,7 @@
 package kubitz.client.gui;
 
 import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
 
 import javax.swing.*;
@@ -142,6 +143,10 @@ public class LobbiesScreen extends JPanel implements Screen {
                         }
                     }
                     MainFrame.lobbyScreen.setCurrentLobby(lobby);
+                    if (lobby != null) {
+                        lobby.addPlayer(new Account(Config.getInstance().getId(), Config.getInstance().getName()));
+                        RESTRequestManager.changeSettings(lobby);
+                    }
                     CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                     cardLayout.show(contentPane, MainFrame.LOBBY);
                 }

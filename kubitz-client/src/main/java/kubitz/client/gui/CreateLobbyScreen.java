@@ -156,8 +156,8 @@ public class CreateLobbyScreen extends JPanel implements Screen {
         Lobby lobby = new Lobby(nameField.getText(),(String)modeBox.getSelectedItem(),
                 (int)noOfPlayersBox.getSelectedItem(), privateCheckBox.isSelected());
         lobby.addPlayer(new Account(Config.getInstance().getId(), Config.getInstance().getName()));
-        MainFrame.lobbyScreen.setCurrentLobby(lobby);
         RESTRequestManager.createLobby(lobby);
+        MainFrame.lobbyScreen.setCurrentLobby(lobby);
         CardLayout cardLayout = (CardLayout) contentPane.getLayout();
         cardLayout.show(contentPane, MainFrame.LOBBY);
     }

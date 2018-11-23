@@ -40,10 +40,20 @@ public class LobbyScreen extends JPanel implements Screen {
             public void run() {
                 while (true) {
                     messageList = RESTRequestManager.getMessages(LobbyScreen.this.getCurrentLobby());
+                    Lobby lobby = RESTRequestManager.getLobbyByName(currentLobby.getName());
+                    if(lobby != null) {
+                        currentLobby = lobby;
+                    }
                     try {
                         chatBox.setText("");
                         for(Message message : messageList) {
                             chatBox.append(getChatBoxMessage(message));
+                        }
+                        if(lobby != null) {
+                            accountListModel.removeAllElements();
+                            for (Account account : currentLobby.getPlayers()) {
+                                accountListModel.addElement(account);
+                            }
                         }
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
