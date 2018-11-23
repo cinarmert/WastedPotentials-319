@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 
 @RestController
@@ -67,6 +68,14 @@ public class LobbyController {
             return;
         }
         lobbyRepository.save(lobby);
+    }
+
+    @RequestMapping(value = "/getLobbyByName/{lobbyname}", method = RequestMethod.GET)
+    @ResponseBody
+    public String getLobbyByName(@PathParam("lobbyname") String lobbyname) {
+        String response = JsonUtil.toJson(lobbyRepository.findLobbyByName(lobbyname));
+        logger.info("returning the lobbies: " + response);
+        return response;
     }
 
 }
