@@ -64,9 +64,9 @@ public class Cube
                 break;
             case WHITE:
                 if(x == 1)
-                    currentFace = RED;
+                    currentFace = WHITE_DOT;
                 if(x == -1)
-                    currentFace = WHITE;
+                    currentFace = RED_DOT;
                 if(y == 1)
                     currentFace = TRIANGLE_LU;
                 if(y == -1)
