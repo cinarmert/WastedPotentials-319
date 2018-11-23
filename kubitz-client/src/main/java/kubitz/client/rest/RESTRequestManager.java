@@ -1,5 +1,6 @@
 package kubitz.client.rest;
 
+import kubitz.client.gui.Config;
 import kubitz.client.storage.*;
 import kubitz.client.util.JsonUtil;
 
@@ -35,6 +36,25 @@ public class RESTRequestManager {
 
     public static void login(Account account){
         makeServerRequest(METHOD_POST, ACCOUNT_LOGIN, JsonUtil.toJson(account));
+    }
+
+    public static List<Message> getMessages(Lobby lobby){
+        String urlFragment = String.format(CHAT_GET_MSG, Config.getInstance().getId(), lobby.getName());
+        String response = makeServerRequest(METHOD_GET, urlFragment, null);
+
+        try {
+            return JsonUtil.fromListOfJson(response, Message.class);
+        } catch (IOException e) {
+            System.err.println("Could not parse the body to Message, storage: " + response);
+            return null;
+        } catch (ClassNotFoundException e) {
+            System.err.println("Storage class not found: " + Message.class.getName());
+            return null;
+        }
+    }
+
+    public static void postMesage(Message message){
+        makeServerRequest(METHOD_POST, CHAT_POST_MSG, JsonUtil.toJson(message));
     }
 
     public static void createLobby(Lobby lobby){

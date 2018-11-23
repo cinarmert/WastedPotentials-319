@@ -16,7 +16,8 @@ public class RESTRequestManagerTest {
     private GameState gameState = new GameState();
     private Leaderboard leaderboard = new Leaderboard();
     private LeaderboardUser leaderboardUser = new LeaderboardUser();
-    private Lobby lobby = new Lobby("test1", Lobby.MODE_CLASSIC, 5, false, 4, Lobby.STATUS_PLAYING);
+    private Lobby lobby = new Lobby("testlobby", Lobby.MODE_CLASSIC, 5, false, 4, Lobby.STATUS_PLAYING);
+    Message message = new Message("testfromrest", "testlobby", "tstmsg", "now", "autrest");
 
     @Before
     public void setUp() throws Exception {
@@ -98,5 +99,16 @@ public class RESTRequestManagerTest {
     public void kickPlayer() {
         lobby.setPlayerCount(3);
         RESTRequestManager.kickPlayer(lobby);
+    }
+
+    @Test
+    public void getMessages() {
+        List<Message> response = RESTRequestManager.getMessages(lobby);
+        assertThat(response != null).isEqualTo(true);
+    }
+
+    @Test
+    public void postMesage() {
+        RESTRequestManager.postMesage(message);
     }
 }
