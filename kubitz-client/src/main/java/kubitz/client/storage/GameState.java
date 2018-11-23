@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GameState {
 
     @JsonProperty
-    private int id;
+    private String id;
 
     @JsonProperty
     private int size;
@@ -19,6 +19,17 @@ public class GameState {
     @JsonProperty
     private String to;
 
+    public GameState() {}
+
+    public GameState(String id, int size, int[][] state, String from, String to)
+    {
+        this.id = id;
+        this.size = size;
+        this.state = state;
+        this.from = from;
+        this.to = to;
+    }
+
     public int getSize() {
         return size;
     }
@@ -27,11 +38,11 @@ public class GameState {
         this.size = size;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
