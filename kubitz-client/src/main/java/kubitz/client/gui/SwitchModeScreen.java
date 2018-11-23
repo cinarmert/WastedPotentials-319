@@ -57,7 +57,7 @@ public class SwitchModeScreen extends BaseGameScreen{
     public Void switchGames( Void v){
 
         ((SwitchMode)getGame()).stop();
-        setGame( ((SwitchMode)getGame()).getOtherGame() );
+        //setGame( ((SwitchMode)getGame()).getOtherGame() );
         ((SwitchMode)getGame()).start();
         return null;
 
