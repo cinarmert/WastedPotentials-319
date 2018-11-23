@@ -57,6 +57,7 @@ public class CreateLobbyScreen extends JPanel implements Screen {
 
     private JPanel initializeContainer() {
         JPanel container = new JPanel(new GridBagLayout());
+        container.setBorder(new LineBorder(Color.BLACK, 2));
         container.setBackground( new Color(204,204,204));
         container.setBackground( new Color(204,204,204));
         setBorder( new LineBorder(Color.BLACK, 2));

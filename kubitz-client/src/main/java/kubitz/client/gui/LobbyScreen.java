@@ -1,10 +1,17 @@
 package kubitz.client.gui;
 
+import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
+import kubitz.client.storage.Message;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.UUID;
 
 public class LobbyScreen extends JPanel implements Screen {
 
@@ -16,6 +23,9 @@ public class LobbyScreen extends JPanel implements Screen {
     private DefaultListModel<Account> accountListModel;
     private static final Dimension BUTTONSIZE = new Dimension(150,20);
     private static LobbyScreen instance = null;
+    private Thread messageGetter;
+    private List<Message> messageList;
+    private JTextArea chatBox;
 
 
     public LobbyScreen(JPanel contentPane, Dimension size) {
@@ -24,6 +34,24 @@ public class LobbyScreen extends JPanel implements Screen {
         this.contentPane = contentPane;
         this.size = size;
         initializeResources();
+
+        messageGetter = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    messageList = RESTRequestManager.getMessages(LobbyScreen.this.getCurrentLobby());
+                    try {
+                        chatBox.setText("");
+                        for(Message message : messageList) {
+                            chatBox.append(getChatBoxMessage(message));
+                        }
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        System.err.println(e.getMessage());
+                    }
+                }
+            }
+        });
     }
 
     private void initializeResources() {
@@ -55,6 +83,7 @@ public class LobbyScreen extends JPanel implements Screen {
 
     private JPanel initializeContainer() {
         JPanel container = new JPanel(new GridBagLayout());
+        container.setBorder(new LineBorder(Color.BLACK, 2));
         container.setBackground( new Color(204,204,204));
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets( 30, 30, 30,30);
@@ -112,15 +141,26 @@ public class LobbyScreen extends JPanel implements Screen {
         c.gridx = 0;
         c.gridy = 0;
         chatPanel.setBackground( new Color(204,204,204));
-        JTextArea chatBox = new JTextArea();
+        chatBox = new JTextArea();
         chatBox.setEditable(false);
         chatBox.setText("Player 1: Hello Player2!\nPlayer 2: Hello!");
         chatBox.setBackground(new Color(153,153,153));
-        chatBox.setPreferredSize(new Dimension(size.width/2,100));
+        chatBox.setPreferredSize(new Dimension(size.width/2-50,100));
         JScrollPane chatScroll = new JScrollPane(chatBox);
         chatPanel.add(chatScroll,c);
         c.gridy = 1;
-        JTextField chatField = new JTextField("Enter message...");
+        JTextField chatField = new JTextField();
+        chatField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    Message message = new Message(UUID.randomUUID().toString(), currentLobby.getName(), chatField.getText(), "now", Config.getInstance().getName());
+                    chatField.setText("");
+                    chatBox.append(getChatBoxMessage(message));
+                    RESTRequestManager.postMesage(message);
+                }
+            }
+        });
         chatField.setPreferredSize(new Dimension(size.width/2,30));
         chatPanel.add(chatField,c);
         return chatPanel;
@@ -171,6 +211,10 @@ public class LobbyScreen extends JPanel implements Screen {
         return listPanel;
     }
 
+    private String getChatBoxMessage(Message message){
+        return message.getAuthor() + ": " + message.getMessage() + "\n";
+    }
+
     private void kick() {
 
     }
@@ -180,6 +224,7 @@ public class LobbyScreen extends JPanel implements Screen {
     }
 
     private void startGame() {
+        messageGetter.stop();
         CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 
         if ( getCurrentLobby().getMode().equals(Lobby.MODE_CLASSIC) ){
@@ -220,6 +265,7 @@ public class LobbyScreen extends JPanel implements Screen {
             accountListModel.addElement(currentLobby.getPlayers().get(i));
         playerList.setModel(accountListModel);
 
+        messageGetter.start();
 
     }
 
