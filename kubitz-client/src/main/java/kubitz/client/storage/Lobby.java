@@ -119,6 +119,11 @@ public class Lobby {
     }
 
     public void addPlayer(Account a) {
+        for(Account player : players){
+            if(player.getName().equals(a.getName())){
+                return;
+            }
+        }
         players.add(a);
     }
 }

@@ -142,11 +142,11 @@ public class LobbiesScreen extends JPanel implements Screen {
                             break;
                         }
                     }
-                    MainFrame.lobbyScreen.setCurrentLobby(lobby);
                     if (lobby != null) {
                         lobby.addPlayer(new Account(Config.getInstance().getId(), Config.getInstance().getName()));
                         RESTRequestManager.changeSettings(lobby);
                     }
+                    MainFrame.lobbyScreen.setCurrentLobby(lobby);
                     CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                     cardLayout.show(contentPane, MainFrame.LOBBY);
                 }
