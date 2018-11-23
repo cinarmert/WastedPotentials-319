@@ -2,6 +2,7 @@ package kubitz.client.gui;
 
 import kubitz.client.controllers.MoveController;
 import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.sound.SoundManager;
 import kubitz.client.storage.Account;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ public class MainFrame extends JFrame {
     private static MainFrame instance = null;
     private JPanel contentPane;
     private MoveController moveController;
+    private SoundManager soundManager;
 
     public static final String MAINMENU = "MAINMENU";
     public static final String PLAY = "PLAY";
@@ -50,6 +52,9 @@ public class MainFrame extends JFrame {
         filter = new Filter();
         initializeResources();
         initializeAccount();
+
+        soundManager = new SoundManager();
+        soundManager.startBackgroundMusic();
     }
 
     private void initializeAccount() {
