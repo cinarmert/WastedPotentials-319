@@ -66,19 +66,19 @@ public class CubeUI extends JPanel {
                     g.fillOval(0, 0, getWidth(), getHeight());
                     break;
                 case Cube.TRIANGLE_LD:
-                    g.fillPolygon( triangleLeft );
-                    break;
-                case Cube.TRIANGLE_LU:
                     setBackground(Color.RED);
                     g.setColor(Color.WHITE);
+                    g.fillPolygon( triangleRight );
+                    break;
+                case Cube.TRIANGLE_LU:
                     g.fillPolygon( triangleLeft );
                     break;
                 case Cube.TRIANGLE_RD:
-                    g.fillPolygon( triangleRight );
-                    break;
-                case Cube.TRIANGLE_RU:
                     setBackground(Color.RED);
                     g.setColor(Color.WHITE);
+                    g.fillPolygon( triangleLeft );
+                    break;
+                case Cube.TRIANGLE_RU:
                     g.fillPolygon( triangleRight );
                     break;
                 default:
