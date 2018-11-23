@@ -4,7 +4,9 @@ import kubitz.client.components.Card;
 import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
 import kubitz.client.controllers.PeriodicTimeController;
+import kubitz.client.gui.Config;
 import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.storage.Account;
 import kubitz.client.storage.GameState;
 import kubitz.client.storage.Lobby;
 
@@ -37,14 +39,23 @@ public class SwitchMode extends BaseGame {
 
     public Void switchGrids(Void v)
     {
-        this.grid = getOtherGame();
-        RESTRequestManager.postSwitchGameState(null); // TODO implement this
+        GameState gameState = new GameState(Config.getInstance().getId(), this.grid.getSize(), this.grid.getGridIntArray(), Config.getInstance().getName(), getOpponentName());
+        RESTRequestManager.postSwitchGameState(gameState);
         notifySwitchGrids.apply(null);
+
+        GameState opponent = RESTRequestManager.getSwitchOpponentGameState(getOponentID());
+        this.grid.setGrid(opponent.getState());
         return null;
     }
 
-    public Grid getOtherGame(){
 
-        return null; //TODO get this from server
+    private String getOpponentName()
+    {
+        return (lobby.getPlayers().get(0).getName()).equals(Config.getInstance().getName())?  lobby.getPlayers().get(1).getName() : lobby.getPlayers().get(0).getName();
+    }
+
+    private String getOponentID()
+    {
+        return (lobby.getPlayers().get(0).getId()).equals(Config.getInstance().getId())?  lobby.getPlayers().get(1).getId() : lobby.getPlayers().get(0).getId();
     }
 }
