@@ -9,9 +9,9 @@ import java.util.ArrayList;
 @Document(collection = "lobby")
 public class Lobby {
 
-    @Id
     private String id;
 
+    @Id
     private String name;
 
     private int maxPlayerLimit;
@@ -26,15 +26,7 @@ public class Lobby {
 
     public Lobby(){}
 
-    public Lobby(String id, String name, int maxPlayerLimit, String mode, boolean privateLobby, String status, ArrayList<Account> players) {
-        this.id = id;
-        this.name = name;
-        this.maxPlayerLimit = maxPlayerLimit;
-        this.mode = mode;
-        this.privateLobby = privateLobby;
-        this.status = status;
-        this.players = players;
-    }
+
 
     public String getId() {
         return id;
