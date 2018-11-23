@@ -48,6 +48,7 @@ public class LobbyScreen extends JPanel implements Screen {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         System.err.println(e.getMessage());
+                        messageGetter.stop();
                     }
                 }
             }
@@ -143,10 +144,10 @@ public class LobbyScreen extends JPanel implements Screen {
         chatPanel.setBackground( new Color(204,204,204));
         chatBox = new JTextArea();
         chatBox.setEditable(false);
-        chatBox.setText("Player 1: Hello Player2!\nPlayer 2: Hello!");
         chatBox.setBackground(new Color(153,153,153));
-        chatBox.setPreferredSize(new Dimension(size.width/2-50,100));
-        JScrollPane chatScroll = new JScrollPane(chatBox);
+        //chatBox.setPreferredSize(new Dimension(size.width/2-50,100));
+        JScrollPane chatScroll = new JScrollPane(chatBox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        chatScroll.setPreferredSize(new Dimension(size.width/2,100));
         chatPanel.add(chatScroll,c);
         c.gridy = 1;
         JTextField chatField = new JTextField();
