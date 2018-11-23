@@ -35,34 +35,7 @@ public class LobbyScreen extends JPanel implements Screen {
         this.size = size;
         initializeResources();
 
-        messageGetter = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    messageList = RESTRequestManager.getMessages(LobbyScreen.this.getCurrentLobby());
-                    Lobby lobby = RESTRequestManager.getLobbyByName(currentLobby.getName());
-                    if(lobby != null) {
-                        currentLobby = lobby;
-                    }
-                    try {
-                        chatBox.setText("");
-                        for(Message message : messageList) {
-                            chatBox.append(getChatBoxMessage(message));
-                        }
-                        if(lobby != null) {
-                            accountListModel.removeAllElements();
-                            for (Account account : currentLobby.getPlayers()) {
-                                accountListModel.addElement(account);
-                            }
-                        }
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        System.err.println(e.getMessage());
-                        messageGetter.stop();
-                    }
-                }
-            }
-        });
+        messageGetter = new Thread(new MessageThread());
     }
 
     private void initializeResources() {
@@ -276,6 +249,9 @@ public class LobbyScreen extends JPanel implements Screen {
             accountListModel.addElement(currentLobby.getPlayers().get(i));
         playerList.setModel(accountListModel);
 
+        if (messageGetter.isAlive())
+            messageGetter.stop();
+        messageGetter = new Thread(new MessageThread());
         messageGetter.start();
 
     }
@@ -288,6 +264,38 @@ public class LobbyScreen extends JPanel implements Screen {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage( MainFrame.background, 0, 0, getWidth(), getHeight(), this);
+    }
+
+    private class MessageThread implements Runnable{
+
+        @Override
+        public void run() {
+            while (true) {
+                messageList = RESTRequestManager.getMessages(LobbyScreen.this.getCurrentLobby());
+                Lobby lobby = RESTRequestManager.getLobbyByName(currentLobby.getName());
+                if(lobby != null) {
+                    currentLobby = lobby;
+                }
+                try {
+                    chatBox.setText("");
+                    for(Message message : messageList) {
+                        chatBox.append(getChatBoxMessage(message));
+                    }
+                    if(lobby != null) {
+                        accountListModel.removeAllElements();
+                        for (Account account : currentLobby.getPlayers()) {
+                            accountListModel.addElement(account);
+                        }
+                    }
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.err.println(e.getMessage());
+                    messageGetter.stop();
+                }
+            }
+        }
+
+
     }
 
 }
