@@ -140,7 +140,6 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
 
         JPanel cubePanel = new JPanel( new GridLayout(3,3));
         cubePanel.setOpaque(false);
-        //cubePanel.setLayout( new FlowLayout(FlowLayout.CENTER,0,0));
         cubePanel.setBorder(new LineBorder(Color.BLACK, 5));
 
         cubePanel.add(Box.createHorizontalStrut(MainFrame.getInstance().getResolution().height/12));
