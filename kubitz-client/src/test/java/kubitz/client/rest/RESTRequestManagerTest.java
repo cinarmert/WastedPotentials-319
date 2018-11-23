@@ -61,7 +61,7 @@ public class RESTRequestManagerTest {
 
     @Test
     public void getSwitchOpponentGameState() {
-        gameState = RESTRequestManager.getSwitchOpponentGameState(3);
+        gameState = RESTRequestManager.getSwitchOpponentGameState("3");
         assertThat(gameState != null).isEqualTo(true);
         assertThat(gameState.getState() != null).isEqualTo(true);
     }
@@ -72,7 +72,7 @@ public class RESTRequestManagerTest {
         gameState.setFrom("from");
         int[][] a = new int[2][2];
         gameState.setState(a);
-        gameState.setId(3);
+        gameState.setId("3");
         gameState.setSize(2);
         RESTRequestManager.postSwitchGameState(this.gameState);
     }
