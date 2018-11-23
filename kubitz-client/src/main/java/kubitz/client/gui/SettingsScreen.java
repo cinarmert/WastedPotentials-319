@@ -289,7 +289,6 @@ public class SettingsScreen extends JPanel implements Screen {
                     config.updateConfig(resolution, fullScreen, masterSound, effectsSound, musicSound);
 
                     MainFrame.getInstance().setResolution();
-                    SettingsScreen.this.size = resolution;
                 }
 
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
@@ -351,6 +350,8 @@ public class SettingsScreen extends JPanel implements Screen {
 
     @Override
     public void updateResolution(Dimension size) {
+
+        //ToDo handle size change
         this.size = size;
     }
 

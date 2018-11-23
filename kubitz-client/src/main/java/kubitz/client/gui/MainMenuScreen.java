@@ -162,6 +162,8 @@ public class MainMenuScreen extends JPanel implements Screen {
 
     @Override
     public void updateResolution(Dimension size) {
+
+        //ToDo handle size change
         this.size = size;
     }
 }
