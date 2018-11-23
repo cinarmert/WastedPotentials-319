@@ -39,19 +39,20 @@ public class LobbiesFilterScreen extends JPanel implements Screen {
         CustomButton backButton = new CustomButton("BACK");
         backButton.addActionListener(e -> {
 
+            // ToDo get original filters
             CardLayout cardLayout = (CardLayout) contentPane.getLayout();
             cardLayout.show(contentPane, MainFrame.LOBBIES);
 
         });
         c.insets = new Insets(20,20,0,0);
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.gridwidth = 3;
+/*        c.gridwidth = 3;*/
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
         this.add(backButton,c);
-        c.insets = new Insets(20,50,20,20);
+        c.insets = new Insets(0,50,20,20);
         c.anchor = GridBagConstraints.NORTH;
         c.gridx = 0;
         c.gridy = 1;
@@ -134,6 +135,7 @@ public class LobbiesFilterScreen extends JPanel implements Screen {
         filterOptions.add(new CustomButton("Apply"){{
             setPreferredSize( new Dimension(100,20));
             addActionListener(e-> setLobbyFilter());
+            LobbiesScreen.getInstance().refresh();
         }}, c);
 
         c.gridy = 8;

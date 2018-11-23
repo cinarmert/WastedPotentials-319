@@ -9,6 +9,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class SettingsScreen extends JPanel implements Screen {
     private JSlider masterSlider;
     private JSlider effectsSlider;
     private JSlider musicSlider;
+    private JTextField nickNameTextField;
 
     private Config config;
     private Dimension resolution;
@@ -69,6 +72,9 @@ public class SettingsScreen extends JPanel implements Screen {
                 SettingsScreen.this.masterSound = config.getMasterSound();
                 SettingsScreen.this.effectsSound = config.getEffectsSound();
                 SettingsScreen.this.musicSound = config.getMusicSound();
+                SettingsScreen.this.nickNameTextField.setText( config.getName());
+                SettingsScreen.this.nickNameTextField.setBackground(Color.GREEN);
+                SettingsScreen.this.nickNameTextField.setForeground(Color.BLACK);
 
                 resolutionSpinner.setValue( new Resolution(config.getResolution().width,config.getResolution().height));
                 fullScreenCheckBox.setSelected( config.isFullScreen());
@@ -119,13 +125,34 @@ public class SettingsScreen extends JPanel implements Screen {
         nickNamePanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         nickNamePanel.setOpaque(false);
 
-        JTextField nickNameTextField = new JTextField(config.getName(),20);
+        nickNameTextField = new JTextField(config.getName(),20);
+        nickNameTextField.setBackground(Color.GREEN);
+        nickNameTextField.setForeground(Color.BLACK);
+        nickNameTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyPressed(e);
+
+                if (config.getName().equals( nickNameTextField.getText() ) ){
+                    nickNameTextField.setBackground(Color.GREEN);
+                    nickNameTextField.setForeground(Color.BLACK);
+                }
+                else{
+                    nickNameTextField.setBackground(Color.RED);
+                    nickNameTextField.setForeground(Color.WHITE);
+                }
+
+            }
+        });
+
         CustomButton submitButton = new CustomButton("SUBMIT");
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 config.setName(nickNameTextField.getText());
                 RESTRequestManager.login(new Account(config.getId(), nickNameTextField.getText()));
+                nickNameTextField.setBackground(Color.GREEN);
+                nickNameTextField.setForeground(Color.BLACK);
             }
         });
 
@@ -262,6 +289,9 @@ public class SettingsScreen extends JPanel implements Screen {
                 SettingsScreen.this.masterSound = config.getMasterSound();
                 SettingsScreen.this.effectsSound = config.getEffectsSound();
                 SettingsScreen.this.musicSound = config.getMusicSound();
+                SettingsScreen.this.nickNameTextField.setText( config.getName());
+                SettingsScreen.this.nickNameTextField.setBackground(Color.GREEN);
+                SettingsScreen.this.nickNameTextField.setForeground(Color.BLACK);
 
                 resolutionSpinner.setValue( new Resolution(config.getResolution().width,config.getResolution().height));
                 fullScreenCheckBox.setSelected( config.isFullScreen());

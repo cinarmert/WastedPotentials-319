@@ -1,5 +1,6 @@
 package kubitz.client.gui;
 
+import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
 
@@ -144,7 +145,8 @@ public class CreateLobbyScreen extends JPanel implements Screen {
         namePanel.setBackground( new Color(204,204,204));
         namePanel.add(new JLabel("Lobby Name", JLabel.LEFT),BorderLayout.WEST);
         nameField = new JTextField("Enter name...");
-        nameField.setPreferredSize(BOXDIMENSION);
+        //nameField.setPreferredSize(BOXDIMENSION);
+        nameField.setColumns(20);
         namePanel.add(nameField,BorderLayout.EAST);
         return namePanel;
     }
@@ -154,6 +156,7 @@ public class CreateLobbyScreen extends JPanel implements Screen {
                 (int)noOfPlayersBox.getSelectedItem(), privateCheckBox.isSelected());
         lobby.addPlayer(new Account(Config.getInstance().getId(), Config.getInstance().getName()));
         MainFrame.lobbyScreen.setCurrentLobby(lobby);
+        RESTRequestManager.createLobby(lobby);
         CardLayout cardLayout = (CardLayout) contentPane.getLayout();
         cardLayout.show(contentPane, MainFrame.LOBBY);
     }
