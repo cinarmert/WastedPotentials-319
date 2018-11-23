@@ -10,4 +10,5 @@ import java.util.List;
 public interface AccountRepository extends MongoRepository<Account, Long> {
 
     List<Account> findAccountsByName(String name);
+    Account findAccountById(String id);
 }

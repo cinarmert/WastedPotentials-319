@@ -1,5 +1,6 @@
 package kubitz.server.controllers;
 
+import kubitz.server.database.accounts.repository.AccountRepository;
 import kubitz.server.database.dailychallenge.model.DailyChallenge;
 import kubitz.server.database.dailychallenge.repository.DailyChallengeRepository;
 import kubitz.server.database.leaderboard.model.LeaderboardUser;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/daily")
@@ -19,11 +21,13 @@ public class DailyChallengeController {
     private static final Logger logger = LoggerFactory.getLogger(DailyChallengeController.class);
     private final DailyChallengeRepository dailyChallengeRepository;
     private final LeaderboardRepository leaderboardRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public DailyChallengeController(DailyChallengeRepository dailyChallengeRepository, LeaderboardRepository leaderboardRepository) {
+    public DailyChallengeController(DailyChallengeRepository dailyChallengeRepository, LeaderboardRepository leaderboardRepository, AccountRepository accountRepository) {
         this.dailyChallengeRepository = dailyChallengeRepository;
         this.leaderboardRepository = leaderboardRepository;
+        this.accountRepository = accountRepository;
     }
 
 
@@ -53,7 +57,13 @@ public class DailyChallengeController {
     @RequestMapping(value = "/getLeaderboard", method = RequestMethod.GET)
     @ResponseBody
     public String getLeaderboard() {
-        String response = JsonUtil.toJson(leaderboardRepository.findAll());
+        List<LeaderboardUser> leaderboardUsers = leaderboardRepository.findAll();
+
+        for (LeaderboardUser leaderboardUser : leaderboardUsers) {
+            leaderboardUser.setName(accountRepository.findAccountById(leaderboardUser.getId()).getName());
+        }
+
+        String response = JsonUtil.toJson(leaderboardUsers);
         logger.info("returning the leaderboard: " + response);
         return response;
     }
