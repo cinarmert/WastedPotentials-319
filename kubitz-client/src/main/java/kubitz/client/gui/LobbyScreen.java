@@ -61,7 +61,7 @@ public class LobbyScreen extends JPanel implements Screen {
         GridBagConstraints c = new GridBagConstraints();
         CustomButton backButton = new CustomButton("BACK");
         backButton.addActionListener(e -> {
-
+            messageGetter.stop();
             CardLayout cardLayout = (CardLayout) contentPane.getLayout();
             cardLayout.show(contentPane, MainFrame.LOBBIES);
 
