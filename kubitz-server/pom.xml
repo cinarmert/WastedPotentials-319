@@ -7,6 +7,20 @@
     <groupId>kubitz.server</groupId>
     <artifactId>kubitz.server</artifactId>
     <version>1.0</version>
+
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <plugins>
             <plugin>
@@ -71,8 +85,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <version>2.1.0.RELEASE</version>
             <scope>test</scope>
-        </dependency>
 
+        </dependency>
 
     </dependencies>
 
