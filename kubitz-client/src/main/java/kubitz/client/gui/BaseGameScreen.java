@@ -16,6 +16,10 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
 
     protected GridUI gridUI;
     private CubeUI cubeUI;
+    private CubeUI cubeEastUI;
+    private CubeUI cubeWestUI;
+    private CubeUI cubeNorthUI;
+    private CubeUI cubeSouthUI;
     protected CardUI cardUI;
     private Dimension size;
     private BaseGame baseGame;
@@ -96,6 +100,24 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
         addGridListeners();
 
         cubeUI = new CubeUI(cube);
+        cubeEastUI = new CubeUI(new Cube(cubeUI.getCube().getCurrentFace()));
+        cubeEastUI.getCube().rotate(1,0,0);
+        cubeWestUI = new CubeUI(new Cube(cubeUI.getCube().getCurrentFace()));
+        cubeWestUI.getCube().rotate(-1,0,0);
+        cubeNorthUI = new CubeUI(new Cube(cubeUI.getCube().getCurrentFace()));
+        cubeNorthUI.getCube().rotate(0,1,0);
+        cubeSouthUI = new CubeUI(new Cube(cubeUI.getCube().getCurrentFace()));
+        cubeSouthUI.getCube().rotate(0,-1,0);
+
+        cubeEastUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
+                MainFrame.getInstance().getResolution().height/12));
+        cubeWestUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
+                MainFrame.getInstance().getResolution().height/12));
+        cubeNorthUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
+                MainFrame.getInstance().getResolution().height/12));
+        cubeSouthUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
+                MainFrame.getInstance().getResolution().height/12));
+
         cubeUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/10,
                 MainFrame.getInstance().getResolution().height/10));
         cubeUI.addMouseListener(new MouseAdapter() {
@@ -116,12 +138,21 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
         cubeGridPanel.setLayout( new FlowLayout(FlowLayout.CENTER, 20, 20));
         cubeGridPanel.setOpaque(false);
 
-        JPanel cubePanel = new JPanel();
+        JPanel cubePanel = new JPanel( new GridLayout(3,3));
         cubePanel.setOpaque(false);
-        cubePanel.setLayout( new FlowLayout(FlowLayout.CENTER,0,0));
+        //cubePanel.setLayout( new FlowLayout(FlowLayout.CENTER,0,0));
         cubePanel.setBorder(new LineBorder(Color.BLACK, 5));
 
-        cubePanel.add(cubeUI);
+        cubePanel.add(Box.createHorizontalStrut(MainFrame.getInstance().getResolution().height/12));
+        cubePanel.add(cubeNorthUI);
+        cubePanel.add(Box.createHorizontalStrut(MainFrame.getInstance().getResolution().height/12));
+        cubePanel.add(cubeWestUI, BorderLayout.WEST);
+        cubePanel.add(cubeUI, BorderLayout.CENTER);
+        cubePanel.add(cubeEastUI, BorderLayout.EAST);
+        cubePanel.add(Box.createHorizontalStrut(MainFrame.getInstance().getResolution().height/12));
+        cubePanel.add(cubeSouthUI, BorderLayout.SOUTH);
+        cubePanel.add(Box.createHorizontalStrut(MainFrame.getInstance().getResolution().height/12));
+
         cubeGridPanel.add(cubePanel);
         cubeGridPanel.add( Box.createHorizontalStrut( MainFrame.getInstance().getResolution().width/4)) ;
         cubeGridPanel.add(gridUI);
@@ -139,6 +170,22 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
 
     }
 
+    public void updateCubes()
+    {
+        cubeEastUI.setCube(new Cube(cubeUI.getCube().getCurrentFace()));
+        cubeEastUI.getCube().rotate(-1,0,0);
+        cubeWestUI.setCube(new Cube(cubeUI.getCube().getCurrentFace()));
+        cubeWestUI.getCube().rotate(1,0,0);
+        cubeNorthUI.setCube(new Cube(cubeUI.getCube().getCurrentFace()));
+        cubeNorthUI.getCube().rotate(0,1,0);
+        cubeSouthUI.setCube(new Cube(cubeUI.getCube().getCurrentFace()));
+        cubeSouthUI.getCube().rotate(0,-1,0);
+        cubeNorthUI.repaint();
+        cubeSouthUI.repaint();
+        cubeWestUI.repaint();
+        cubeEastUI.repaint();
+
+    }
     private void addGridListeners(){
 
         Component[] cubes = gridUI.getComponents();
@@ -207,9 +254,11 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
 
     public void newCube(){
 
+
         baseGame.setCube( Cube.getRandomCube() );
         cubeUI.setCube( baseGame.getCube() );
         selectedCube = baseGame.getCube();
+        updateCubes();
         cubeUI.repaint();
 
     }

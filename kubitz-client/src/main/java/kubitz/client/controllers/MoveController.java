@@ -53,7 +53,7 @@ public class MoveController implements KeyListener, MouseListener {
                 default:
                     break;
             }
-
+            baseGameScreen.updateCubes();
             baseGameScreen.repaint();
 
         }
