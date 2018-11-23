@@ -55,7 +55,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
     public void createGame(){
         MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
 
-        SurvivalMode sm = new SurvivalMode(new Grid(4), new Cube(0), this::onGameFinished );
+        SurvivalMode sm = new SurvivalMode(new Grid(4), new Cube(0), this::gameFinished );
         setGame(sm);
         startTimer();
     }
@@ -114,7 +114,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
     }
 
 
-    public Void onGameFinished( Void v){
+    public Void gameFinished( Void v){
 
         timer.stop();
 

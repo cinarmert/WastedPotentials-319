@@ -3,17 +3,11 @@ package kubitz.client.gui;
 import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Leaderboard;
 import kubitz.client.storage.LeaderboardUser;
-import kubitz.client.storage.Lobby;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -23,8 +17,15 @@ public class LeaderboardScreen extends JPanel implements Screen {
     Dimension size;
     private Leaderboard leaderboard;
 
+    public static LeaderboardScreen getInstance() {
+        return instance;
+    }
+
+    private static LeaderboardScreen instance;
+
     public LeaderboardScreen(JPanel contentPane, Dimension size) {
         super();
+        instance = this;
         this.contentPane = contentPane;
         this.size = size;
         initializeResources();
@@ -32,7 +33,7 @@ public class LeaderboardScreen extends JPanel implements Screen {
 
     private void initializeResources(){
 
-        setLeaderBoard();
+        setupLeaderBoard();
         this.setSize( size );
         this.setBackground( new Color(0,0,0,0));
         this.setLayout( new GridBagLayout());
@@ -63,7 +64,7 @@ public class LeaderboardScreen extends JPanel implements Screen {
 
     }
 
-    private void setLeaderBoard(){
+    public void setupLeaderBoard(){
         leaderboard = RESTRequestManager.getDailyChallengeLeaderboard();
         if (leaderboard == null) {
             leaderboard = new Leaderboard();
@@ -71,6 +72,7 @@ public class LeaderboardScreen extends JPanel implements Screen {
         Collections.sort(leaderboard.getLeaderboard(), new LeaderBoardUserScoreComparator());
         leaderboard.setLeaderboard(leaderboard.getLeaderboard());
 
+        repaint();
     }
     
     private JPanel initializeLeaderboard(){

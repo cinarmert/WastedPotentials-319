@@ -178,6 +178,7 @@ public class SettingsScreen extends JPanel implements Screen {
 
             }
         });
+        fullScreenCheckBox.setBackground(Color.WHITE);
 
         //====================================================Sound==========================================================
         JLabel soundText = new JLabel("SOUND");
@@ -194,6 +195,7 @@ public class SettingsScreen extends JPanel implements Screen {
                 0, 100, config.getMasterSound());
         masterSlider.setLabelTable(labels);
         masterSlider.setPaintLabels(true);
+        masterSlider.setBackground(Color.WHITE);
         masterSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -211,6 +213,7 @@ public class SettingsScreen extends JPanel implements Screen {
                 0, 100, config.getEffectsSound());
         effectsSlider.setLabelTable(labels);
         effectsSlider.setPaintLabels(true);
+        effectsSlider.setBackground(Color.WHITE);
         effectsSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -228,6 +231,7 @@ public class SettingsScreen extends JPanel implements Screen {
                 0, 100, config.getMasterSound());
         musicSlider.setLabelTable(labels);
         musicSlider.setPaintLabels(true);
+        musicSlider.setBackground(Color.WHITE);
         musicSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {

@@ -89,6 +89,7 @@ public class MainMenuScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                LeaderboardScreen.getInstance().setupLeaderBoard();
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                 cardLayout.show(contentPane, MainFrame.LEADERBOARD);
 
