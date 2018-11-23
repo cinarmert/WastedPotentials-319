@@ -4,6 +4,7 @@ import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
 import kubitz.client.logic.BaseGame;
 import kubitz.client.logic.ClassicMode;
+import kubitz.client.storage.Lobby;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,10 +45,10 @@ public class ClassicModeScreen extends BaseGameScreen {
         });
     }
 
-    public void createGame(){
+    public void createGame(Lobby lobby){
         MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
 
-        ClassicMode cm = new ClassicMode(new Grid(4), new Cube(0));
+        ClassicMode cm = new ClassicMode(new Grid(4), new Cube(0), lobby);
         setGame(cm);
     }
 

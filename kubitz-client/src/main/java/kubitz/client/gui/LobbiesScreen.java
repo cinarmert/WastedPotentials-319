@@ -1,5 +1,6 @@
 package kubitz.client.gui;
 
+import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Lobby;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class LobbiesScreen extends JPanel implements Screen {
@@ -19,11 +21,13 @@ public class LobbiesScreen extends JPanel implements Screen {
     private Dimension size;
     private Filter filter;
     private JTable table;
+    private static LobbiesScreen instance = null;
 
 
     public LobbiesScreen(JPanel contentPane, Dimension size, Filter filter) {
 
         super();
+        instance = this;
         this.filter = filter;
         this.contentPane = contentPane;
         this.size = size;
@@ -165,28 +169,23 @@ public class LobbiesScreen extends JPanel implements Screen {
     private ArrayList<Lobby> getLobbies(){
 
 
-        ArrayList<Lobby> lobbies = new ArrayList();
+        List<Lobby> gottenLobbies = RESTRequestManager.getLobbies();
+        ArrayList<Lobby> lobbies = null;
 
-        for(int i = 0; i < 20;i++){
-            if(i < 5)
-                lobbies.add(new Lobby("Test Lobby" + i, Lobby.MODE_SWITCH, 2,false,  i%4 + 1,Lobby.STATUS_WAITING));
-            else
-                lobbies.add(new Lobby("Test Lobby" + i, Lobby.MODE_CLASSIC, 4,false,i%4 + 1, Lobby.STATUS_WAITING));
+        if (gottenLobbies != null) {
+            lobbies = new ArrayList<>(gottenLobbies);
+
+            lobbies.removeIf(l -> !(Arrays.asList(filter.getFilteredModeList()).contains(l.getMode())));
+            lobbies.removeIf(l -> l.isFull() && !filter.getShowFull());
+            lobbies.removeIf(l -> l.isPrivate() && !filter.getShowPrivate());
+            lobbies.removeIf(l -> l.isPlaying() && !filter.getShowPlaying());
+
         }
-
-
-        lobbies.removeIf(l -> !(Arrays.asList(filter.getFilteredModeList()).contains(l.getMode())));
-        lobbies.removeIf(l -> l.isFull() && !filter.getShowFull());
-        lobbies.removeIf(l -> l.isPrivate() && !filter.getShowPrivate());
-        lobbies.removeIf(l-> l.isPlaying() &&  !filter.getShowPlaying());
-
-
         return lobbies;
     }
 
-    private void refresh(){
+    public void refresh(){
         table.setModel(new LobbyTableModel());
-
     }
 
     @Override
@@ -207,10 +206,18 @@ public class LobbiesScreen extends JPanel implements Screen {
         this.size = size;
     }
 
+    public static LobbiesScreen getInstance() {
+        return instance;
+    }
+
     class LobbyTableModel extends AbstractTableModel {
         private String[] columns = {"Name", "Players", "Mode", "Status"};
 
-        ArrayList<Lobby> lobbies = getLobbies();
+        ArrayList<Lobby> lobbies;
+
+        public LobbyTableModel(){
+            lobbies = getLobbies();
+        }
 
         public String getColumnName(int col) {
             return columns[col];
@@ -234,9 +241,9 @@ public class LobbiesScreen extends JPanel implements Screen {
                     break;
                 case 1 : obj = lobbies.get(rowIndex).getPlayerCount() + "/" + lobbies.get(rowIndex).getMaxPlayerLimit();
                     break;
-                case 2 : obj = lobbies.get(rowIndex).getMode();
+                case 2 : obj = lobbies.get(rowIndex).getMode().substring(11);
                     break;
-                case 3 : obj = lobbies.get(rowIndex).getStatus();
+                case 3 : obj = lobbies.get(rowIndex).getStatus().substring(13);
                     break;
                 default : obj = null;
                     break;

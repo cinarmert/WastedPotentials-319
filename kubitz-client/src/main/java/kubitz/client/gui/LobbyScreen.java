@@ -15,10 +15,12 @@ public class LobbyScreen extends JPanel implements Screen {
     private JList<Account> playerList;
     private DefaultListModel<Account> accountListModel;
     private static final Dimension BUTTONSIZE = new Dimension(150,20);
+    private static LobbyScreen instance = null;
 
 
     public LobbyScreen(JPanel contentPane, Dimension size) {
         super();
+        instance = this;
         this.contentPane = contentPane;
         this.size = size;
         initializeResources();
@@ -178,7 +180,16 @@ public class LobbyScreen extends JPanel implements Screen {
     }
 
     private void startGame() {
+        CardLayout cardLayout = (CardLayout) contentPane.getLayout();
 
+        if ( getCurrentLobby().getMode().equals(Lobby.MODE_CLASSIC) ){
+            ((ClassicModeScreen) contentPane.getComponent(MainFrame.CLASSICMODEINDEX)).createGame( getCurrentLobby());
+            cardLayout.show(contentPane, MainFrame.CLASSICMODE);
+        }
+        else if (getCurrentLobby().getMode().equals(Lobby.MODE_SWITCH)){
+            ((SwitchModeScreen) contentPane.getComponent(MainFrame.SWITCHMODEINDEX)).createGame(getCurrentLobby());
+            cardLayout.show(contentPane, MainFrame.CLASSICMODE);
+        }
     }
 
     private void invite(String name) {
@@ -211,6 +222,11 @@ public class LobbyScreen extends JPanel implements Screen {
 
 
     }
+
+    public static LobbyScreen getInstance() {
+        return instance;
+    }
+
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);

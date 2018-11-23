@@ -73,6 +73,7 @@ public class PlayScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                LobbiesScreen.getInstance().refresh();
                 CardLayout cardLayout = (CardLayout) contentPane.getLayout();
                 cardLayout.show(contentPane, MainFrame.LOBBIES);
 

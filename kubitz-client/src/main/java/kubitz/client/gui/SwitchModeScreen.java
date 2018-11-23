@@ -4,6 +4,7 @@ import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
 import kubitz.client.logic.BaseGame;
 import kubitz.client.logic.SwitchMode;
+import kubitz.client.storage.Lobby;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,10 +45,10 @@ public class SwitchModeScreen extends BaseGameScreen{
         });
     }
 
-    public void createGame(){
+    public void createGame(Lobby lobby){
         MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
 
-        SwitchMode sm = new SwitchMode(new Grid(4), new Cube(0), this::switchGames );
+        SwitchMode sm = new SwitchMode(new Grid(4), new Cube(0), lobby, this::switchGames );
         setGame(sm);
 
         ((SwitchMode)getGame()).start();
