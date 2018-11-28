@@ -6,57 +6,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
-public class PlayScreen extends JPanel implements Screen {
+public class PlayScreen extends BaseScreen{
 
-    JPanel contentPane;
-    Dimension size;
 
-    public PlayScreen(JPanel contentPane, Dimension size) {
-        super();
-        this.contentPane = contentPane;
-        this.size = size;
+    public PlayScreen(Dimension resolution) {
+        super(resolution);
         initializeResources();
-
     }
 
-    private void initializeResources(){
-
-        this.setSize( size );
-        this.setBackground( new Color(0,0,0,0));
-        this.setLayout( new GridBagLayout());
+    @Override
+    protected void initializeResources(){
 
         GridBagConstraints c = new GridBagConstraints();
 
         JLabel playLabel = new JLabel("PLAY");
         playLabel.setFont( new Font( playLabel.getFont().getName(), Font.PLAIN, 50));
-        CustomButton backButton = new CustomButton("BACK");
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.MAINMENU);
+        setBackButton(true);
 
-            }
-        });
-
-        c.insets = new Insets(20,20,0,0);
-        c.anchor = GridBagConstraints.NORTHWEST;
-        c.gridwidth = 3;
+        c.anchor = GridBagConstraints.NORTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add( backButton,c);
-
-        c.anchor = GridBagConstraints.NORTH;
-        c.gridwidth = 1;
-        c.gridx = 1;
-        c.gridy = 1;
         this.add( playLabel, c);
 
-        c.gridx = 1;
-        c.gridy = 2;
+        c.gridx = 0;
+        c.gridy = 1;
         this.add( initializeButtons(),c);
 
     }
@@ -65,7 +41,7 @@ public class PlayScreen extends JPanel implements Screen {
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout( new GridLayout(3,1, 10, 10));
-        buttonsPanel.setMaximumSize(new Dimension( getWidth()/5, 30));
+        buttonsPanel.setMaximumSize(new Dimension( getRightWidth()/5, 30));
         buttonsPanel.setBackground( new Color(0,0,0, 0));
 
         CustomButton multiplayerButton = new CustomButton("Multiplayer (Classic / Switch)");
@@ -73,10 +49,7 @@ public class PlayScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                LobbiesScreen.getInstance().refresh();
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.LOBBIES);
-
+                // ToDO open lobbies screen
             }
         });
 
@@ -85,7 +58,7 @@ public class PlayScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (Config.getInstance().getLastPlayedDailyChallenge() != 1 && (LocalDate.now().getDayOfYear() - Config.getInstance().getLastPlayedDailyChallenge()) < 1){
+                if (Config.getLastPlayedDailyChallenge() != 1 && (LocalDate.now().getDayOfYear() - Config.getLastPlayedDailyChallenge()) < 1){
                     JOptionPane.showMessageDialog( PlayScreen.this,
                             "You have already played the challenge of the day",
                             "Warning!",
@@ -93,10 +66,7 @@ public class PlayScreen extends JPanel implements Screen {
                     return;
                 }
 
-                ((DailyChallengeScreen)contentPane.getComponent(MainFrame.DAILYCHALLENGEMODEINDEX) ).createGame();
-
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.DAILYCHALLENGEMODE);
+                // ToDO open daily challenge screen
 
             }
         });
@@ -107,10 +77,7 @@ public class PlayScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                ((SurvivalModeScreen)contentPane.getComponent(MainFrame.SURVIVALMODEINDEX) ).createGame();
-
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.SURVIVALMODE);
+                // ToDO open survival challenge screen
 
             }
         });
@@ -119,24 +86,7 @@ public class PlayScreen extends JPanel implements Screen {
         buttonsPanel.add(dailyChallengeButton);
         buttonsPanel.add(survivalButton);
 
-
         return buttonsPanel;
     }
 
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.drawImage( MainFrame.background, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void updateResolution(Dimension size) {
-        //ToDo handle size change
-        this.size = size;
-    }
 }

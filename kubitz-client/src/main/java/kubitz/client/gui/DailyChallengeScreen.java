@@ -12,14 +12,12 @@ import java.awt.event.ActionListener;
 
 public class DailyChallengeScreen extends BaseGameScreen{
 
-    private JPanel contentPane;
     private JLabel time;
     private Timer timer;
     private JPanel timerPanel;
 
-    public DailyChallengeScreen( JPanel contentPane, Dimension size) {
-        super(size);
-        this.contentPane = contentPane;
+    public DailyChallengeScreen( Dimension resolution) {
+        super(resolution);
 
         time = new JLabel("00:00:00");
         time.setForeground(Color.BLACK);
@@ -31,13 +29,10 @@ public class DailyChallengeScreen extends BaseGameScreen{
         timerPanel.setOpaque(false);
     }
 
-
-
     public void startTimer(){
 
         ((DailyChallengeMode)getGame()).setTime();
 
-//        int refreshRate = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
         timer = new Timer( 1000/60,new ActionListener(){
 
             @Override
@@ -58,26 +53,26 @@ public class DailyChallengeScreen extends BaseGameScreen{
         timerPanel.add(time);
         super.cardPanel.add(timerPanel, 0);
 
-        addBackListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+    }
 
-                int quit = JOptionPane.showConfirmDialog( DailyChallengeScreen.this,
-                        "Are you sure you want to leave the game?",
-                        "Leave?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE);
+    @Override
+    public void backButtonAction(){
+        int quit = JOptionPane.showConfirmDialog( DailyChallengeScreen.this,
+                "Are you sure you want to leave the game?",
+                "Leave?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
 
-                if( quit == 0 ) {
-                    CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                    cardLayout.show(contentPane, MainFrame.PLAY);
-                    timer.stop();
-                    setGame(null);
-                    MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
-                }
+        if( quit == 0 ) {
 
-            }
-        });
+            //ToDO go play screen
+
+            timer.stop();
+            setGame(null);
+            MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+        }
+
+
     }
 
     public void createGame(){
@@ -99,13 +94,8 @@ public class DailyChallengeScreen extends BaseGameScreen{
                 "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
 
-        CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-        cardLayout.show(contentPane, MainFrame.LEADERBOARD);
+        //ToDo open leaderboard
 
     }
 
-    @Override
-    public void update() {
-
-    }
 }

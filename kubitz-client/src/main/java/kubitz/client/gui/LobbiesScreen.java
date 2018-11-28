@@ -16,72 +16,55 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class LobbiesScreen extends JPanel implements Screen {
+public class LobbiesScreen extends BaseScreen {
 
-    private JPanel contentPane;
-    private Dimension size;
     private Filter filter;
     private JTable table;
-    private static LobbiesScreen instance = null;
 
+    public LobbiesScreen(Dimension resolution, Filter filter) {
 
-    public LobbiesScreen(JPanel contentPane, Dimension size, Filter filter) {
-
-        super();
-        instance = this;
+        super(resolution);
         this.filter = filter;
-        this.contentPane = contentPane;
-        this.size = size;
-        initializeResources();
+        //initializeResources();
 
     }
 
-    private void initializeResources(){
+    @Override
+    protected void initializeResources(){
 
-        setSize(size);
-        setBackground( new Color(204,204,204));
-        setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        CustomButton backButton = new CustomButton("BACK");
-        backButton.addActionListener(e -> {
 
-            CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-            cardLayout.show(contentPane, MainFrame.PLAY);
+        setBackButton(true);
 
-        });
-        c.insets = new Insets(20,20,0,0);
-        c.anchor = GridBagConstraints.NORTHWEST;
-        c.gridwidth = 3;
-        c.weightx = 1.0;
+        c.insets = new Insets(30,30,0,0);
+        c.anchor = GridBagConstraints.NORTH;
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add(backButton,c);
-        c.insets = new Insets(30,30,0,0);
-        c.anchor = GridBagConstraints.NORTH;
-        c.gridx = 0;
-        c.gridy = 1;
         this.add(initializeContainer(),c);
     }
 
     private JPanel initializeContainer(){
-        JPanel lobbies = new JPanel(){{
-            setLayout(new BorderLayout());
-            setBackground( new Color(204,204,204));
-            setBorder(new LineBorder(Color.BLACK, 2));
-            setPreferredSize( new Dimension( size.width-(size.width/3), size.height-(size.width/3)));
-            add(initializeList(), BorderLayout.LINE_START);
-            add(initializeButtons(), BorderLayout.CENTER);
-        }};
+        JPanel lobbies = new JPanel();
+
+        lobbies.setLayout(new BorderLayout());
+        lobbies.setBackground( new Color(204,204,204));
+        lobbies.setBorder(new LineBorder(Color.BLACK, 2));
+        lobbies.setPreferredSize( new Dimension( getRightWidth()-(getRightWidth()/3), getRightHeight()-(getRightHeight()/3)));
+
+        lobbies.add(initializeList(), BorderLayout.LINE_START);
+        lobbies.add(initializeButtons(), BorderLayout.CENTER);
+
         return lobbies;
     }
 
     private JPanel initializeButtons(){
-        JPanel buttonPanel = new JPanel(){{
-            setBackground( new Color(204,204,204));
-            setLayout(new GridBagLayout());
-        }};
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground( new Color(204,204,204));
+        buttonPanel.setLayout(new GridBagLayout());
+
         GridBagConstraints c = new GridBagConstraints();
+
         c.anchor = GridBagConstraints.PAGE_START;
         c.gridx = 0;
         c.gridy = 0;
@@ -89,29 +72,30 @@ public class LobbiesScreen extends JPanel implements Screen {
             setPreferredSize( new Dimension(100,20));
             addActionListener(e->{
 
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.CREATELOBBY);
+                //ToDo open create lobby screen
 
             });
         }}, c);
+
         c.insets = new Insets(20,0,0,0);
         c.gridy = 1;
         buttonPanel.add(new CustomButton("Refresh"){{
             setPreferredSize( new Dimension(100,20));
             addActionListener(e-> refresh());
         }}, c);
+
         c.gridy = 2;
         buttonPanel.add(new CustomButton("Filter"){{
             setPreferredSize( new Dimension(100,20));
             addActionListener(e->{
 
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.LOBBIESFILTER);
+                // ToDO open lobbies filter screen
 
             });
         }}, c);
         c.gridy = 3;
-        buttonPanel.add( Box.createVerticalStrut( size.height/4),c);
+        buttonPanel.add( Box.createVerticalStrut( getRightHeight()/4),c);
+
         return buttonPanel;
     }
 
@@ -124,17 +108,18 @@ public class LobbiesScreen extends JPanel implements Screen {
                 Color whiteColor = Color.WHITE;
                 if (!returnComp.getBackground().equals(getSelectionBackground())){
                     Color bg = (row % 2 == 0 ? alternateColor : whiteColor);
-                    returnComp .setBackground(bg);
-                    bg = null;
+                    returnComp.setBackground(bg);
                 }
                 return returnComp;
             }
         };
+
         table.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
                 if (e.getClickCount() == 2){
                     String lobbyName = (String)table.getValueAt(table.getSelectedRow(),0);
                     Lobby lobby = null;
+
                     for(Lobby l : getLobbies())
                     {
                         if(l.getName().equals(lobbyName)) {
@@ -142,13 +127,16 @@ public class LobbiesScreen extends JPanel implements Screen {
                             break;
                         }
                     }
+
                     if (lobby != null) {
-                        lobby.addPlayer(new Account(Config.getInstance().getId(), Config.getInstance().getName()));
+                        lobby.addPlayer(new Account(Config.getId(), Config.getName()));
                         RESTRequestManager.changeSettings(lobby);
                     }
-                    MainFrame.lobbyScreen.setCurrentLobby(lobby);
-                    CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                    cardLayout.show(contentPane, MainFrame.LOBBY);
+
+                    // ToDO wtf?
+                    //MainFrame.lobbyScreen.setCurrentLobby(lobby);
+
+                    //ToDo open Lobby screen
                 }
             }
         } );
@@ -161,18 +149,17 @@ public class LobbiesScreen extends JPanel implements Screen {
         table.setOpaque(true);
         table.setRowSelectionAllowed(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(new Color(221,221,221));
         scrollPane.setOpaque(false);
         list.add(scrollPane);
 
-
         return list;
     }
 
     private ArrayList<Lobby> getLobbies(){
-
 
         List<Lobby> gottenLobbies = RESTRequestManager.getLobbies();
         ArrayList<Lobby> lobbies = null;
@@ -193,27 +180,6 @@ public class LobbiesScreen extends JPanel implements Screen {
         table.setModel(new LobbyTableModel());
     }
 
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.drawImage( MainFrame.background, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void updateResolution(Dimension size) {
-
-        //ToDo handle size change
-        this.size = size;
-    }
-
-    public static LobbiesScreen getInstance() {
-        return instance;
-    }
 
     class LobbyTableModel extends AbstractTableModel {
         private String[] columns = {"Name", "Players", "Mode", "Status"};
@@ -255,6 +221,11 @@ public class LobbiesScreen extends JPanel implements Screen {
             }
             return obj;
         }
+    }
+
+    @Override
+    public void updateResolution(Dimension resolution){
+        // ToDo delete this
     }
 }
 

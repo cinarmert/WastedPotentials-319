@@ -5,31 +5,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainMenuScreen extends JPanel implements Screen {
+public class MainMenuScreen extends BaseScreen{
 
-    JPanel contentPane;
-    Dimension size;
-
-    public MainMenuScreen( JPanel contentPane, Dimension size) {
-        super();
-        this.contentPane = contentPane;
-        this.size = size;
+    public MainMenuScreen( Dimension resolution) {
+        super( resolution);
         initializeResources();
     }
 
-    private void initializeResources(){
-
-        this.setSize( size );
-        this.setBackground( new Color(0,0,0,0));
-        this.setLayout( new GridBagLayout());
+    @Override
+    protected void initializeResources(){
 
         GridBagConstraints c = new GridBagConstraints();
-
-        c.gridx = 1;
+        c.gridx = 0;
         c.gridy = 0;
         this.add( initializeLogo(), c);
 
-        c.gridx = 1;
+        c.gridx = 0;
         c.gridy = 1;
         this.add( initializeButtons(),c);
 
@@ -38,7 +29,7 @@ public class MainMenuScreen extends JPanel implements Screen {
     private JPanel initializeLogo(){
         JPanel logoPanel = new JPanel();
         logoPanel.setLayout( new GridLayout(2,1));
-        logoPanel.setMaximumSize( new Dimension( getWidth()/3, getHeight()/8));
+        logoPanel.setMaximumSize( new Dimension( getRightWidth()/3, getRightHeight()/8));
         logoPanel.setBackground( new Color(0,0,0,0));
 
         JLabel kubitz = new JLabel("ku-Bitz");
@@ -58,7 +49,7 @@ public class MainMenuScreen extends JPanel implements Screen {
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout( new GridLayout(5,1, 10, 10));
-        buttonsPanel.setMaximumSize(new Dimension( getWidth()/5, 30));
+        buttonsPanel.setMaximumSize(new Dimension( getRightWidth(), 30));
         buttonsPanel.setBackground( new Color(0,0,0, 0));
 
         CustomButton playButton = new CustomButton("Play");
@@ -66,9 +57,7 @@ public class MainMenuScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.PLAY);
-
+                ScreenManager.show(ScreenManager.PLAY_SCREEN);
             }
         });
 
@@ -77,9 +66,7 @@ public class MainMenuScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.HOWTOPLAY);
-
+                ScreenManager.show(ScreenManager.HOW_TO_PLAY_SCREEN);
             }
         });
 
@@ -89,9 +76,7 @@ public class MainMenuScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                LeaderboardScreen.getInstance().setupLeaderBoard();
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.LEADERBOARD);
+                ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
 
             }
         });
@@ -101,8 +86,7 @@ public class MainMenuScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.SETTINGS);
+                ScreenManager.show(ScreenManager.SETTINGS_SCREEN);
 
             }
         });
@@ -112,8 +96,7 @@ public class MainMenuScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.CREDITS);
+                ScreenManager.show(ScreenManager.CREDITS_SCREEN);
 
             }
         });
@@ -150,21 +133,4 @@ public class MainMenuScreen extends JPanel implements Screen {
         return buttonsPanel;
     }
 
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.drawImage( MainFrame.background, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void updateResolution(Dimension size) {
-
-        //ToDo handle size change
-        this.size = size;
-    }
 }

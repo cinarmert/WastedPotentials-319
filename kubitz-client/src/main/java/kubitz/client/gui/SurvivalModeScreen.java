@@ -15,13 +15,10 @@ public class SurvivalModeScreen extends BaseGameScreen {
     private JLabel time;
     private Timer timer;
     private JPanel timerPanel;
-    private JPanel contentPane;
 
-    public SurvivalModeScreen( JPanel contentPane, Dimension size) {
+    public SurvivalModeScreen( Dimension resolution) {
 
-        super(size);
-
-        this.contentPane = contentPane;
+        super(resolution);
 
         time = new JLabel("00:00:00");
         time.setForeground(Color.BLACK);
@@ -66,31 +63,24 @@ public class SurvivalModeScreen extends BaseGameScreen {
         timerPanel.add(time);
         super.cardPanel.add(timerPanel, 0);
 
-        addBackListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                int quit = JOptionPane.showConfirmDialog( SurvivalModeScreen.this,
-                        "Are you sure you want to leave the game?",
-                        "Leave?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE);
-
-                if( quit == 0 ) {
-                    CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                    cardLayout.show(contentPane, MainFrame.PLAY);
-                    timer.stop();
-                    setGame(null);
-                    MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
-                }
-
-            }
-        });
-
     }
 
     @Override
-    public void update() {
+    public void backButtonAction(){
+        int quit = JOptionPane.showConfirmDialog( this,
+                "Are you sure you want to leave the game?",
+                "Leave?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        if( quit == 0 ) {
+
+            //ToDO open playScreen
+
+            timer.stop();
+            setGame(null);
+            MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+        }
 
     }
 
@@ -135,8 +125,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
             createGame();
         }
         else {
-            CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-            cardLayout.show(contentPane, MainFrame.PLAY);
+            //ToDO open play screen
             setGame(null);
             MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
         }

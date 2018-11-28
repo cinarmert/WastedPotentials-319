@@ -3,20 +3,15 @@ package kubitz.client.gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class LobbySettingsScreen extends JPanel implements Screen {
+public class LobbySettingsScreen extends BaseScreen {
 
-    public LobbySettingsScreen(JPanel contentPane, Dimension size) {
+    public LobbySettingsScreen(Dimension resolution) {
+        super(resolution);
+        initializeResources();
     }
 
     @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void updateResolution(Dimension size) {
-
-        //ToDo handle size change
+    protected void initializeResources(){
 
     }
 }

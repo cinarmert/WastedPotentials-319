@@ -13,36 +13,26 @@ import java.awt.event.ActionListener;
 
 public class ClassicModeScreen extends BaseGameScreen {
 
-    private JPanel contentPane;
-
-    public ClassicModeScreen(JPanel contentPane, Dimension size) {
-        super( size);
-        this.contentPane = contentPane;
+    public ClassicModeScreen(Dimension resolution) {
+        super( resolution);
     }
 
     @Override
-    public void setGame( BaseGame classicMode){
-        super.setGame(classicMode);
+    public void backButtonAction(){
+        int quit = JOptionPane.showConfirmDialog( ClassicModeScreen.this,
+                "Are you sure you want to leave the game?",
+                "Leave?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
 
-        addBackListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        if( quit == 0 ) {
 
-                int quit = JOptionPane.showConfirmDialog( ClassicModeScreen.this,
-                        "Are you sure you want to leave the game?",
-                        "Leave?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE);
+            //ToDo go lobbies
 
-                if( quit == 0 ) {
-                    CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                    cardLayout.show(contentPane, MainFrame.LOBBIES);
-                    setGame(null);
-                    MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
-                }
+            setGame(null);
+            MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+        }
 
-            }
-        });
     }
 
     public void createGame(Lobby lobby){
@@ -50,11 +40,6 @@ public class ClassicModeScreen extends BaseGameScreen {
 
         ClassicMode cm = new ClassicMode(new Grid(4), new Cube(0), lobby);
         setGame(cm);
-    }
-
-    @Override
-    public void update() {
-
     }
 
     @Override

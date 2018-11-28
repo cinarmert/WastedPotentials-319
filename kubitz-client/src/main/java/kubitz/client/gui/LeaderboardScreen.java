@@ -11,60 +11,34 @@ import java.awt.*;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class LeaderboardScreen extends JPanel implements Screen {
+public class LeaderboardScreen extends BaseScreen {
 
-    JPanel contentPane;
-    Dimension size;
     private Leaderboard leaderboard;
 
-    public static LeaderboardScreen getInstance() {
-        return instance;
+    public LeaderboardScreen(Dimension resolution) {
+        super(resolution);
+        //initializeResources();
     }
 
-    private static LeaderboardScreen instance;
-
-    public LeaderboardScreen(JPanel contentPane, Dimension size) {
-        super();
-        instance = this;
-        this.contentPane = contentPane;
-        this.size = size;
-        initializeResources();
-    }
-
-    private void initializeResources(){
+    @Override
+    protected void initializeResources(){
 
         setupLeaderBoard();
-        this.setSize( size );
-        this.setBackground( new Color(0,0,0,0));
-        this.setLayout( new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
-        CustomButton backButton = new CustomButton("BACK");
-        backButton.addActionListener(e -> {
-
-            CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-            cardLayout.show(contentPane, MainFrame.MAINMENU);
-
-        });
-
-        c.insets = new Insets(20,20,0,0);
-        c.anchor = GridBagConstraints.NORTHWEST;
-        c.weightx = 0.1;
-        c.weighty = 1.0;
-        c.gridx = 0;
-        c.gridy = 0;
-        this.add( backButton,c);
+        setBackButton(true);
 
         c.anchor = GridBagConstraints.CENTER;
         c.weightx = 1.0;
+        c.weighty = 1.0;
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 0;
         this.add( initializeLeaderboard(),c);
 
     }
 
-    public void setupLeaderBoard(){
+    private void setupLeaderBoard(){
         leaderboard = RESTRequestManager.getDailyChallengeLeaderboard();
         if (leaderboard == null) {
             leaderboard = new Leaderboard();
@@ -79,8 +53,9 @@ public class LeaderboardScreen extends JPanel implements Screen {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new GridLayout(1,1, 10, 10));
-        mainPanel.setPreferredSize(new Dimension( getWidth()-250, getHeight()-200));
+        mainPanel.setPreferredSize(new Dimension( getRightWidth()-50, getRightHeight()-50));
         mainPanel.setBackground(new Color(0,0,0,200));
+
         JTable table = new JTable(new LobbyTableModel()){
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
                 Component returnComp = super.prepareRenderer(renderer, row, column);
@@ -93,7 +68,8 @@ public class LeaderboardScreen extends JPanel implements Screen {
                 }
                 return returnComp;
             }
-        };;
+        };
+
         table.setAutoCreateRowSorter(true);
         table.setShowGrid(false);
         table.setRowHeight(30);
@@ -102,35 +78,18 @@ public class LeaderboardScreen extends JPanel implements Screen {
         table.setOpaque(true);
         table.setRowSelectionAllowed(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(new Color(221,221,221));
         scrollPane.setOpaque(false);
+
         mainPanel.add(scrollPane);
         return mainPanel;
         
     }
 
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.drawImage( MainFrame.background, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void updateResolution(Dimension size) {
-        //ToDo handle size change
-        this.size = size;
-    }
-
     class LobbyTableModel extends AbstractTableModel {
-
-
 
         private String[] columns = {"Place", "Name", "Score"};
 
@@ -177,5 +136,10 @@ public class LeaderboardScreen extends JPanel implements Screen {
             else
                 return 1;
         }
+    }
+
+    @Override
+    public void updateResolution(Dimension resolution){
+        // Todo delete this
     }
 }

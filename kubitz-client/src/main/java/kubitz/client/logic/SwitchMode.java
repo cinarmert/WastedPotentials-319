@@ -39,7 +39,7 @@ public class SwitchMode extends BaseGame {
 
     public Void switchGrids(Void v)
     {
-        GameState gameState = new GameState(Config.getInstance().getId(), this.grid.getSize(), this.grid.getGridIntArray(), Config.getInstance().getName(), getOpponentName());
+        GameState gameState = new GameState(Config.getId(), this.grid.getSize(), this.grid.getGridIntArray(), Config.getName(), getOpponentName());
         RESTRequestManager.postSwitchGameState(gameState);
         notifySwitchGrids.apply(null);
 
@@ -51,11 +51,11 @@ public class SwitchMode extends BaseGame {
 
     private String getOpponentName()
     {
-        return (lobby.getPlayers().get(0).getName()).equals(Config.getInstance().getName())?  lobby.getPlayers().get(1).getName() : lobby.getPlayers().get(0).getName();
+        return (lobby.getPlayers().get(0).getName()).equals(Config.getName())?  lobby.getPlayers().get(1).getName() : lobby.getPlayers().get(0).getName();
     }
 
     private String getOponentID()
     {
-        return (lobby.getPlayers().get(0).getId()).equals(Config.getInstance().getId())?  lobby.getPlayers().get(1).getId() : lobby.getPlayers().get(0).getId();
+        return (lobby.getPlayers().get(0).getId()).equals(Config.getId())?  lobby.getPlayers().get(1).getId() : lobby.getPlayers().get(0).getId();
     }
 }

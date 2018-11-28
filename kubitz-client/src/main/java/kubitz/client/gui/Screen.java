@@ -4,5 +4,5 @@ import java.awt.*;
 
 public interface Screen {
     public void update();
-    public void updateResolution(Dimension size);
+    public void updateResolution(Dimension resolution);
 }

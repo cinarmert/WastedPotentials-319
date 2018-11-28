@@ -6,10 +6,8 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.IOException;
 
-public class LobbiesFilterScreen extends JPanel implements Screen {
+public class LobbiesFilterScreen extends BaseScreen {
 
-    private JPanel contentPane;
-    private Dimension size;
     private Filter filter;
     private boolean classicMode;
     private boolean switchMode;
@@ -17,67 +15,67 @@ public class LobbiesFilterScreen extends JPanel implements Screen {
     private boolean showPlaying;
     private boolean showFull;
 
-    public LobbiesFilterScreen(JPanel contentPane, Dimension size, Filter filter) {
+    public LobbiesFilterScreen(Dimension resolution, Filter filter) {
 
-        super();
+        super(resolution);
         this.filter = filter;
+        initializeResources();
+    }
+
+    @Override
+    protected void initializeResources() {
+
         classicMode = filter.getClassicMode();
         switchMode = filter.getSwitchMode();
         showPrivate = filter.getShowPrivate();
         showPlaying = filter.getShowPlaying();
         showFull = filter.getShowFull();
-        this.contentPane = contentPane;
-        this.size = size;
-        initializeResources();
-    }
 
-    private void initializeResources() {
-        setSize(size);
-        setBackground( new Color(0,0,0, 0));
-        setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        CustomButton backButton = new CustomButton("BACK");
-        backButton.addActionListener(e -> {
 
-            // ToDo get original filters
-            CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-            cardLayout.show(contentPane, MainFrame.LOBBIES);
+        setBackButton(true);
 
-        });
-        c.insets = new Insets(20,20,0,0);
-        c.anchor = GridBagConstraints.NORTHWEST;
-/*        c.gridwidth = 3;*/
+        c.insets = new Insets(0,50,20,20);
+        c.anchor = GridBagConstraints.NORTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add(backButton,c);
-        c.insets = new Insets(0,50,20,20);
-        c.anchor = GridBagConstraints.NORTH;
-        c.gridx = 0;
-        c.gridy = 1;
         this.add(initializeContainer(),c);
 
+    }
+
+    @Override
+    public void backButtonAction(){
+
+        // ToDo get original filters
+
+        super.backButtonAction();
     }
 
     private JPanel initializeContainer() {
         JPanel container = new JPanel( new GridBagLayout());
         container.setBackground(new Color(204,204,204));
         container.setBorder(new LineBorder(Color.BLACK, 2));
-        setPreferredSize( new Dimension( size.width-(size.width/3), size.height-(size.width/3)));
+
+        container.setPreferredSize( new Dimension( getRightWidth()-(getRightWidth()/3), getRightHeight()-(getRightHeight()/3)));
+
         GridBagConstraints c = new GridBagConstraints();
+
         c.insets = new Insets(10,40,0,0);
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = GridBagConstraints.NORTHWEST;
         container.add(initializeHeader(), c);
+
         c.gridx = 0;
         c.gridy = 1;
         c.insets = new Insets(10, 80, 0,0);
         container.add(initializeFilterOptions(),c);
+
         c.gridx = 1;
         c.gridy = 0;
-        container.add(Box.createHorizontalStrut( size.height/4),c);
+        container.add(Box.createHorizontalStrut( getRightWidth()/4),c);
 
         return container;
     }
@@ -86,12 +84,13 @@ public class LobbiesFilterScreen extends JPanel implements Screen {
         JPanel filterOptions = new JPanel();
         filterOptions.setBackground(new Color(204,204,204));
         filterOptions.setLayout(new GridBagLayout());
+
         GridBagConstraints c = new GridBagConstraints();
+
         c.anchor = GridBagConstraints.WEST;
         c.gridx = 0;
         c.gridy = 0;
         c.insets = new Insets(30,0,0,0);
-
         filterOptions.add(new JLabel("Game Modes"){{
             setFont(getFont().deriveFont(getFont().getStyle() | Font.BOLD));
         }}, c);
@@ -134,13 +133,13 @@ public class LobbiesFilterScreen extends JPanel implements Screen {
 
         filterOptions.add(new CustomButton("Apply"){{
             setPreferredSize( new Dimension(100,20));
-            addActionListener(e-> setLobbyFilter());
-            LobbiesScreen.getInstance().refresh();
+            addActionListener(e-> setLobbyFilterAction());
+            //ToDo refresh lobbies
         }}, c);
 
         c.gridy = 8;
 
-        filterOptions.add(Box.createVerticalStrut( size.height/6),c);
+        filterOptions.add(Box.createVerticalStrut( getRightHeight()/6),c);
 
         return filterOptions;
     }
@@ -159,29 +158,12 @@ public class LobbiesFilterScreen extends JPanel implements Screen {
         return header;
     }
 
-    private void setLobbyFilter(){
+    private void setLobbyFilterAction(){
 
         filter.updateConfig(classicMode,switchMode,showPrivate,showPlaying,showFull);
-        CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-        cardLayout.show(contentPane, MainFrame.LOBBIES);
+
+        super.backButtonAction();
 
     }
 
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.drawImage( MainFrame.background, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void updateResolution(Dimension size) {
-        //ToDo handle size change
-        this.size = size;
-
-    }
 }

@@ -14,10 +14,7 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
-public class SettingsScreen extends JPanel implements Screen {
-
-    private JPanel contentPane;
-    private static Dimension size;
+public class SettingsScreen extends BaseScreen{
 
     private JSpinner resolutionSpinner;
     private JCheckBox fullScreenCheckBox;
@@ -26,7 +23,6 @@ public class SettingsScreen extends JPanel implements Screen {
     private JSlider musicSlider;
     private JTextField nickNameTextField;
 
-    private Config config;
     private Dimension resolution;
     private boolean fullScreen;
     private int masterSound;
@@ -35,72 +31,29 @@ public class SettingsScreen extends JPanel implements Screen {
 
     private boolean applied;
 
-
-    public SettingsScreen(JPanel contentPane, Dimension size, Config config) {
-        super();
-        this.contentPane = contentPane;
-        this.size = size;
-        this.config = config;
-        this.resolution = config.getResolution();
-        this.fullScreen = config.isFullScreen();
-        this.masterSound = config.getMasterSound();
-        this.effectsSound = config.getEffectsSound();
-        this.musicSound = config.getMusicSound();
-        this.applied = false;
+    public SettingsScreen(Dimension resolution) {
+        super(resolution);
+        this.applied = true;
         initializeResources();
     }
 
-    private void initializeResources(){
+    @Override
+    protected void initializeResources(){
 
-        if( MainFrame.getInstance() != null & config.isFullScreen()){
-            ScreenDevice.setFullScreen();
-        }
+        this.resolution = Config.getResolution();
+        this.fullScreen = Config.isFullScreen();
+        this.masterSound = Config.getMasterSound();
+        this.effectsSound = Config.getEffectsSound();
+        this.musicSound = Config.getMusicSound();
 
-        this.setSize( size );
-        this.setBackground( new Color(0,0,0,0));
-        this.setLayout( new GridBagLayout());
+        setBackButton(true);
 
         GridBagConstraints c = new GridBagConstraints();
 
-        CustomButton backButton = new CustomButton("BACK");
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                SettingsScreen.this.resolution = config.getResolution();
-                SettingsScreen.this.fullScreen = config.isFullScreen();
-                SettingsScreen.this.masterSound = config.getMasterSound();
-                SettingsScreen.this.effectsSound = config.getEffectsSound();
-                SettingsScreen.this.musicSound = config.getMusicSound();
-                SettingsScreen.this.nickNameTextField.setText( config.getName());
-                SettingsScreen.this.nickNameTextField.setBackground(Color.GREEN);
-                SettingsScreen.this.nickNameTextField.setForeground(Color.BLACK);
-
-                resolutionSpinner.setValue( new Resolution(config.getResolution().width,config.getResolution().height));
-                fullScreenCheckBox.setSelected( config.isFullScreen());
-                masterSlider.setValue( config.getMasterSound());
-                effectsSlider.setValue(config.getEffectsSound());
-                musicSlider.setValue(config.getMusicSound());
-
-                applied = false;
-
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.MAINMENU);
-
-            }
-        });
-
-        c.insets = new Insets(20,20,0,0);
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.weightx = 0.1;
+        c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridx = 0;
-        c.gridy = 0;
-        this.add( backButton,c);
-
-        c.weightx = 1.0;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.gridx = 1;
         c.gridy = 0;
         this.add( initializeSettings(),c);
 
@@ -109,9 +62,9 @@ public class SettingsScreen extends JPanel implements Screen {
     private JPanel initializeSettings() {
 
         JPanel settingsPanel = new JPanel();
-        settingsPanel.setLayout( new GridLayout(11,1, 10, 5));
-        settingsPanel.setMinimumSize(new Dimension( getWidth()*4/5, getHeight()-20));
-        settingsPanel.setBackground( new Color(0,200,0, 0));
+        settingsPanel.setLayout( new GridLayout(12,1, 10, 5));
+        settingsPanel.setOpaque(false);
+        settingsPanel.setPreferredSize(new Dimension(getResolution().width/2, getResolution().height));
 
         JLabel settingsText = new JLabel("SETTINGS");
         settingsText.setFont( new Font(settingsText.getFont().getName(), Font.BOLD, 34));
@@ -121,11 +74,11 @@ public class SettingsScreen extends JPanel implements Screen {
         nickNameText.setFont( new Font( nickNameText.getFont().getName(), Font.BOLD, 16));
 
         JPanel nickNamePanel = new JPanel();
-        nickNamePanel.setSize( new Dimension( getWidth()/3,30));
+        nickNamePanel.setSize( new Dimension( getRightWidth()/3,30));
         nickNamePanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         nickNamePanel.setOpaque(false);
 
-        nickNameTextField = new JTextField(config.getName(),20);
+        nickNameTextField = new JTextField(Config.getName(),20);
         nickNameTextField.setBackground(Color.GREEN);
         nickNameTextField.setForeground(Color.BLACK);
         nickNameTextField.addKeyListener(new KeyAdapter() {
@@ -133,7 +86,7 @@ public class SettingsScreen extends JPanel implements Screen {
             public void keyReleased(KeyEvent e) {
                 super.keyPressed(e);
 
-                if (config.getName().equals( nickNameTextField.getText() ) ){
+                if (Config.getName().equals( nickNameTextField.getText() ) ){
                     nickNameTextField.setBackground(Color.GREEN);
                     nickNameTextField.setForeground(Color.BLACK);
                 }
@@ -149,8 +102,8 @@ public class SettingsScreen extends JPanel implements Screen {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                config.setName(nickNameTextField.getText());
-                RESTRequestManager.login(new Account(config.getId(), nickNameTextField.getText()));
+                Config.setName(nickNameTextField.getText());
+                RESTRequestManager.login(new Account(Config.getId(), nickNameTextField.getText()));
                 nickNameTextField.setBackground(Color.GREEN);
                 nickNameTextField.setForeground(Color.BLACK);
             }
@@ -164,7 +117,7 @@ public class SettingsScreen extends JPanel implements Screen {
         graphicsText.setFont( new Font( graphicsText.getFont().getName(), Font.BOLD, 16));
 
         JPanel resolutionPanel = new JPanel();
-        resolutionPanel.setSize( new Dimension( getWidth()/3,30));
+        resolutionPanel.setSize( new Dimension( getRightWidth()/3,30));
         resolutionPanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         resolutionPanel.setOpaque(false);
 
@@ -173,18 +126,14 @@ public class SettingsScreen extends JPanel implements Screen {
 
         List<Resolution> spinnerList = getResolutions();
         resolutionSpinner = new JSpinner( new SpinnerListModel( spinnerList ) );
-        resolutionSpinner.setValue( new Resolution(config.getResolution().width,config.getResolution().height));
+        resolutionSpinner.setValue( new Resolution(Config.getResolution().width,Config.getResolution().height));
         ((JSpinner.DefaultEditor)resolutionSpinner.getEditor()).getTextField().setColumns(6);
         ((JSpinner.DefaultEditor)resolutionSpinner.getEditor()).getTextField().setEditable(false);
 
         resolutionSpinner.addChangeListener(new ChangeListener() {
-
-            // for testing
-            // in real game resolution will be updated after apply or save
             @Override
             public void stateChanged(ChangeEvent e) {
                 resolution = (Dimension) ((JSpinner)e.getSource()).getValue();
-
                 applied = false;
             }
         });
@@ -192,15 +141,13 @@ public class SettingsScreen extends JPanel implements Screen {
         resolutionPanel.add(resolutionText);
         resolutionPanel.add(resolutionSpinner);
 
-        fullScreenCheckBox = new JCheckBox( "Full Screen", config.isFullScreen());
+        fullScreenCheckBox = new JCheckBox( "Full Screen", Config.isFullScreen());
         fullScreenCheckBox.setFont(new Font( resolutionText.getFont().getName(), Font.PLAIN, 14));
         fullScreenCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // this is absolutely not the best way to make full screen
                 fullScreen = fullScreenCheckBox.isSelected();
-
                 applied = false;
 
             }
@@ -219,7 +166,7 @@ public class SettingsScreen extends JPanel implements Screen {
         UIManager.put("Slider.paintValue", true);
 
         masterSlider = new JSlider(JSlider.HORIZONTAL,
-                0, 100, config.getMasterSound());
+                0, 100, Config.getMasterSound());
         masterSlider.setLabelTable(labels);
         masterSlider.setPaintLabels(true);
         masterSlider.setBackground(Color.WHITE);
@@ -229,15 +176,12 @@ public class SettingsScreen extends JPanel implements Screen {
 
                 JSlider source = (JSlider)e.getSource();
                 if (!source.getValueIsAdjusting())
-                    masterSound = (int)source.getValue();
-
-                applied = false;
-
+                    masterSound = sliderAction(e);
             }
         });
 
         effectsSlider = new JSlider(JSlider.HORIZONTAL,
-                0, 100, config.getEffectsSound());
+                0, 100, Config.getEffectsSound());
         effectsSlider.setLabelTable(labels);
         effectsSlider.setPaintLabels(true);
         effectsSlider.setBackground(Color.WHITE);
@@ -247,15 +191,12 @@ public class SettingsScreen extends JPanel implements Screen {
 
                 JSlider source = (JSlider)e.getSource();
                 if (!source.getValueIsAdjusting())
-                    effectsSound = (int)source.getValue();
-
-                applied = false;
-
+                    effectsSound = sliderAction(e);
             }
         });
 
         musicSlider = new JSlider(JSlider.HORIZONTAL,
-                0, 100, config.getMasterSound());
+                0, 100, Config.getMasterSound());
         musicSlider.setLabelTable(labels);
         musicSlider.setPaintLabels(true);
         musicSlider.setBackground(Color.WHITE);
@@ -265,10 +206,7 @@ public class SettingsScreen extends JPanel implements Screen {
 
                 JSlider source = (JSlider)e.getSource();
                 if (!source.getValueIsAdjusting())
-                    musicSound = (int)source.getValue();
-
-                applied = false;
-
+                    musicSound = sliderAction(e);
             }
         });
 
@@ -284,27 +222,7 @@ public class SettingsScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                SettingsScreen.this.resolution = config.getResolution();
-                SettingsScreen.this.fullScreen = config.isFullScreen();
-                SettingsScreen.this.masterSound = config.getMasterSound();
-                SettingsScreen.this.effectsSound = config.getEffectsSound();
-                SettingsScreen.this.musicSound = config.getMusicSound();
-                SettingsScreen.this.nickNameTextField.setText( config.getName());
-                SettingsScreen.this.nickNameTextField.setBackground(Color.GREEN);
-                SettingsScreen.this.nickNameTextField.setForeground(Color.BLACK);
-
-                resolutionSpinner.setValue( new Resolution(config.getResolution().width,config.getResolution().height));
-                fullScreenCheckBox.setSelected( config.isFullScreen());
-                masterSlider.setValue( config.getMasterSound());
-                effectsSlider.setValue(config.getEffectsSound());
-                musicSlider.setValue(config.getMusicSound());
-
-                applied = false;
-
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.MAINMENU);
-
-
+                backButtonAction();
             }
         });
 
@@ -313,20 +231,8 @@ public class SettingsScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (!applied) {
-                    if (fullScreen) {
-                        ScreenDevice.setFullScreen();
-                    } else {
-                        ScreenDevice.restoreScreen();
-                    }
-
-                    config.updateConfig(resolution, fullScreen, masterSound, effectsSound, musicSound);
-
-                    MainFrame.getInstance().setResolution();
-                }
-
-                CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                cardLayout.show(contentPane, MainFrame.MAINMENU);
+                applyAction();
+                SettingsScreen.super.backButtonAction();
 
             }
         });
@@ -336,18 +242,7 @@ public class SettingsScreen extends JPanel implements Screen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                applied = true;
-                if (fullScreen) {
-                    ScreenDevice.setFullScreen();
-                }
-                else {
-                    ScreenDevice.restoreScreen();
-                }
-
-                MainFrame.getInstance().setResolution();
-                config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
-
-                SettingsScreen.this.size = resolution;
+                applyAction();
 
             }
         });
@@ -371,23 +266,46 @@ public class SettingsScreen extends JPanel implements Screen {
         return settingsPanel;
     }
 
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.drawImage( MainFrame.background, 0, 0, getWidth(), getHeight(), this);
+    private int sliderAction(ChangeEvent e){
+        JSlider source = (JSlider)e.getSource();
+
+        applied = false;
+
+        return source.getValue();
+    }
+
+    private void applyAction(){
+
+        Config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
+
+        if (fullScreen) {
+            MainFrame.getInstance().setVisible(false);
+            setFullScreen();
+            MainFrame.getInstance().setVisible(true);
+        }
+        else {
+            restoreScreen();
+        }
+
+        MainFrame.getInstance().setResolution();
+        applied = true;
+
     }
 
     @Override
-    public void update() {
+    protected void backButtonAction(){
 
+        resolutionSpinner.setValue( new Resolution(Config.getResolution().width,Config.getResolution().height));
+        fullScreenCheckBox.setSelected( Config.isFullScreen());
+        masterSlider.setValue( Config.getMasterSound());
+        effectsSlider.setValue(Config.getEffectsSound());
+        musicSlider.setValue(Config.getMusicSound());
+
+        applied = false;
+
+        super.backButtonAction();
     }
 
-    @Override
-    public void updateResolution(Dimension size) {
-
-        //ToDo handle size change
-        this.size = size;
-    }
 
     public List<Resolution> getResolutions(){
 
@@ -408,7 +326,28 @@ public class SettingsScreen extends JPanel implements Screen {
 
             return resolutions;
 
+    }
 
+    public static void setFullScreen(){
+
+        Frame mainFrame = MainFrame.getInstance();
+
+        GraphicsDevice device = mainFrame.getGraphicsConfiguration().getDevice();
+
+        if (device.isFullScreenSupported()) {
+
+            try {
+                device.setFullScreenWindow(mainFrame);
+                device.setDisplayMode(new DisplayMode( Config.getResolution().width, Config.getResolution().height,
+                        device.getDisplayMode().getBitDepth(), device.getDisplayMode().getRefreshRate()));
+            }catch (Exception e){
+                device.setFullScreenWindow(null);
+            }
+        }
+    }
+
+    public static void restoreScreen(){
+        MainFrame.getInstance().getGraphicsConfiguration().getDevice().setFullScreenWindow(null);
     }
 
     protected class Resolution extends Dimension implements Comparable{
@@ -441,30 +380,4 @@ public class SettingsScreen extends JPanel implements Screen {
         }
     }
 
-    public static class ScreenDevice{
-
-        public static void setFullScreen(){
-
-            Frame mainFrame = MainFrame.getInstance();
-
-            GraphicsDevice device = mainFrame.getGraphicsConfiguration().getDevice();
-
-            if (device.isFullScreenSupported()) {
-
-                try {
-                    device.setFullScreenWindow(mainFrame);
-                    device.setDisplayMode(new DisplayMode( size.width, size.height,
-                            device.getDisplayMode().getBitDepth(), device.getDisplayMode().getRefreshRate()));
-                }catch (Exception e){
-                    device.setFullScreenWindow(null);
-                }
-            }
-        }
-
-        public static void restoreScreen(){
-            MainFrame.getInstance().getGraphicsConfiguration().getDevice().setFullScreenWindow(null);
-        }
-
-
-    }
 }

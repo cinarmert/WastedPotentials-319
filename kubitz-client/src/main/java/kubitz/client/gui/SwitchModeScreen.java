@@ -13,36 +13,27 @@ import java.awt.event.ActionListener;
 
 public class SwitchModeScreen extends BaseGameScreen{
 
-    private JPanel contentPane;
-
-    public SwitchModeScreen(JPanel contentPane, Dimension size) {
-        super(size);
-        this.contentPane = contentPane;
+    public SwitchModeScreen( Dimension resolution) {
+        super(resolution);
     }
 
     @Override
-    public void setGame( BaseGame classicMode){
-        super.setGame(classicMode);
+    public void backButtonAction(){
 
-        addBackListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        int quit = JOptionPane.showConfirmDialog( SwitchModeScreen.this,
+                "Are you sure you want to leave the game?",
+                "Leave?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
 
-                int quit = JOptionPane.showConfirmDialog( SwitchModeScreen.this,
-                        "Are you sure you want to leave the game?",
-                        "Leave?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE);
+        if( quit == 0 ) {
 
-                if( quit == 0 ) {
-                    CardLayout cardLayout = (CardLayout) contentPane.getLayout();
-                    cardLayout.show(contentPane, MainFrame.LOBBIES);
-                    setGame(null);
-                    MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
-                }
+            //ToDo go lobbies
 
-            }
-        });
+            setGame(null);
+            MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+        }
+
     }
 
     public void createGame(Lobby lobby){
@@ -60,11 +51,6 @@ public class SwitchModeScreen extends BaseGameScreen{
         //setGame( ((SwitchMode)getGame()).getOtherGame() );
         ((SwitchMode)getGame()).start();
         return null;
-
-    }
-
-    @Override
-    public void update() {
 
     }
 

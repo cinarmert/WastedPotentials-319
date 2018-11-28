@@ -6,13 +6,11 @@ import kubitz.client.components.Grid;
 import kubitz.client.logic.BaseGame;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public abstract class BaseGameScreen extends JPanel implements Screen{
+public abstract class BaseGameScreen extends BaseScreen{
 
     protected GridUI gridUI;
     private CubeUI cubeUI;
@@ -21,57 +19,23 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
     private CubeUI cubeNorthUI;
     private CubeUI cubeSouthUI;
     protected CardUI cardUI;
-    private Dimension size;
     private BaseGame baseGame;
     public Image background;
     protected JPanel cardPanel;
-    private CustomButton backButton;
     private Cube selectedCube;
     private int[] selectedCubePos;
 
-    public BaseGameScreen( Dimension size) {
+    public BaseGameScreen( Dimension resolution) {
 
-        super();
-        this.size = size;
+        super(resolution);
 
-        this.setOpaque(false);
         background = new ImageIcon(getClass().getResource("/backgrounds/game_background.jpg")).getImage();
 
     }
 
-    public void addBackListener( ActionListener listener){
-        if (this.baseGame != null)
-            backButton.addActionListener(listener);
-    }
-
     public void setGame( BaseGame baseGame){
-        removeAll();
         this.baseGame = baseGame;
-        if (this.baseGame != null) {
-
-            this.setLayout( new GridBagLayout());
-
-            GridBagConstraints c = new GridBagConstraints();
-
-            backButton = new CustomButton("BACK");
-
-            c.insets = new Insets(20,20,0,0);
-            c.anchor = GridBagConstraints.NORTHWEST;
-            c.weightx = 0.1;
-            c.weighty = 0.1;
-            c.gridx = 0;
-            c.gridy = 0;
-            this.add( backButton,c);
-
-            c.anchor = GridBagConstraints.NORTH;
-            c.fill = GridBagConstraints.BOTH;
-            c.weightx = 1.0;
-            c.weighty = 1.0;
-            c.gridx = 1;
-            c.gridy = 0;
-            this.add( initializeResources(),c);
-
-        }
+        initializeResources();
     }
 
     public BaseGame getGame(){
@@ -79,10 +43,30 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
     }
 
 
-    private JPanel initializeResources(){
+    @Override
+    protected void initializeResources(){
+        removeAll();
+        if (this.baseGame != null) {
+
+            GridBagConstraints c = new GridBagConstraints();
+
+            setBackButton(true);
+
+            c.anchor = GridBagConstraints.NORTH;
+            c.fill = GridBagConstraints.BOTH;
+            c.weightx = 1.0;
+            c.weighty = 1.0;
+            c.gridx = 0;
+            c.gridy = 0;
+            this.add( initializeContent(),c);
+
+        }
+    }
+
+    private JPanel initializeContent(){
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setPreferredSize(size);
+        mainPanel.setPreferredSize(new Dimension(getRightWidth(), getRightHeight()));
         mainPanel.setOpaque(false);
 
         mainPanel.setLayout( new BorderLayout() );
@@ -108,6 +92,7 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
                 g.fillRect(0,0,getWidth(),getHeight());
             }
         };
+
         cubeEastUI.getCube().rotate(1,0,0);
         cubeWestUI = new CubeUI(new Cube(cubeUI.getCube().getCurrentFace())){
             @Override
@@ -116,7 +101,8 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
                 g.setColor(new Color(0,0,0,120));
                 g.fillRect(0,0,getWidth(),getHeight());
             }
-        };;
+        };
+
         cubeWestUI.getCube().rotate(-1,0,0);
         cubeNorthUI = new CubeUI(new Cube(cubeUI.getCube().getCurrentFace())){
             @Override
@@ -125,7 +111,8 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
                 g.setColor(new Color(0,0,0,120));
                 g.fillRect(0,0,getWidth(),getHeight());
             }
-        };;
+        };
+
         cubeNorthUI.getCube().rotate(0,1,0);
         cubeSouthUI = new CubeUI(new Cube(cubeUI.getCube().getCurrentFace())){
             @Override
@@ -134,20 +121,19 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
                 g.setColor( new Color(0,0,0,120));
                 g.fillRect(0,0,getWidth(),getHeight());
             }
-        };;
+        };
+
         cubeSouthUI.getCube().rotate(0,-1,0);
 
-        cubeEastUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
-                MainFrame.getInstance().getResolution().height/12));
-        cubeWestUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
-                MainFrame.getInstance().getResolution().height/12));
-        cubeNorthUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
-                MainFrame.getInstance().getResolution().height/12));
-        cubeSouthUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/12,
-                MainFrame.getInstance().getResolution().height/12));
+        Dimension cubeDimension = new Dimension(getRightHeight()/12,
+                getRightHeight()/12);
 
-        cubeUI.setPreferredSize( new Dimension(MainFrame.getInstance().getResolution().height/10,
-                MainFrame.getInstance().getResolution().height/10));
+        cubeEastUI.setPreferredSize( cubeDimension);
+        cubeWestUI.setPreferredSize( cubeDimension);
+        cubeNorthUI.setPreferredSize( cubeDimension);
+        cubeSouthUI.setPreferredSize( cubeDimension);
+
+        cubeUI.setPreferredSize( new Dimension(getRightHeight()/10, getRightHeight()/10));
         cubeUI.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -289,24 +275,11 @@ public abstract class BaseGameScreen extends JPanel implements Screen{
 
     }
 
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void updateResolution(Dimension size) {
-
-        //ToDo handle size change
-        //ToDo size change for grid card and cube
-
-    }
-
     public abstract void onGameFinished();
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage( background, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage( background, 0, 0, getRightWidth(), getRightHeight(), this);
     }
 }
