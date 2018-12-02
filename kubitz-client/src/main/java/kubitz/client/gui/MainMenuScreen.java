@@ -76,6 +76,7 @@ public class MainMenuScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN).update();
                 ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
 
             }

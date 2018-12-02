@@ -6,9 +6,9 @@ import javax.sound.sampled.Clip;
 
 public class SoundManager {
 
-    private final String BACKGROUND_MUSIC_1 = "/sounds/music/m1.wav";
+    private static final String BACKGROUND_MUSIC_1 = "/sounds/music/m1.wav";
 
-    private Clip backgroundMusic1;
+    private static Clip backgroundMusic1;
 
     public SoundManager(){
         getSoundFiles();
@@ -16,8 +16,7 @@ public class SoundManager {
 
     private void getSoundFiles(){
 
-        backgroundMusic1 = setMusic(BACKGROUND_MUSIC_1);
-        backgroundMusic1.loop(Clip.LOOP_CONTINUOUSLY);
+        SoundManager.backgroundMusic1 = setMusic(BACKGROUND_MUSIC_1);
 
     }
 
@@ -36,12 +35,12 @@ public class SoundManager {
         return clip;
     }
 
-    public void startBackgroundMusic(){
-        backgroundMusic1.start();
+    public static void startBackgroundMusic(){
+        SoundManager.backgroundMusic1.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public void stopBackgroundMusic(){
-        backgroundMusic1.stop();
+    public static void stopBackgroundMusic(){
+        SoundManager.backgroundMusic1.stop();
     }
 
 }

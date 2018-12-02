@@ -36,7 +36,10 @@ public class LobbyScreen extends BaseScreen {
     protected void backButtonAction(){
 
         //ToDo leave lobby
-        super.backButtonAction();
+        ScreenManager.back();
+        if (ScreenManager.getCurrentScreen() instanceof CreateLobbyScreen){
+            ScreenManager.back();
+        }
     }
 
     @Override

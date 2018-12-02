@@ -49,7 +49,7 @@ public class PlayScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                ((LobbiesScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).refresh();
+                ((LobbiesScreen)ScreenManager.getScreen(ScreenManager.LOBBIES_SCREEN)).refresh();
                 ScreenManager.show(ScreenManager.LOBBIES_SCREEN);
             }
         });

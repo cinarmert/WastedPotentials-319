@@ -1,15 +1,11 @@
 package kubitz.client.gui;
 
 import kubitz.client.components.Cube;
-import kubitz.client.components.Grid;
-import kubitz.client.logic.BaseGame;
 import kubitz.client.logic.ClassicMode;
 import kubitz.client.storage.Lobby;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ClassicModeScreen extends BaseGameScreen {
 
@@ -28,7 +24,7 @@ public class ClassicModeScreen extends BaseGameScreen {
 
         if( quit == 0 ) {
 
-            ScreenManager.closeGameScreen();
+            ScreenManager.doubleBack();
 
             setGame(null);
             MainFrame.getInstance().getMoveController().setBaseGameScreen(null);

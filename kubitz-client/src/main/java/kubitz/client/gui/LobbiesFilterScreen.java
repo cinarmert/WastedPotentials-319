@@ -134,9 +134,6 @@ public class LobbiesFilterScreen extends BaseScreen {
         filterOptions.add(new CustomButton("Apply"){{
             setPreferredSize( new Dimension(100,20));
             addActionListener(e-> setLobbyFilterAction());
-
-            ((LobbiesScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).refresh();
-
         }}, c);
 
         c.gridy = 8;
@@ -163,6 +160,8 @@ public class LobbiesFilterScreen extends BaseScreen {
     private void setLobbyFilterAction(){
 
         filter.updateConfig(classicMode,switchMode,showPrivate,showPlaying,showFull);
+
+        ((LobbiesScreen)ScreenManager.getScreen(ScreenManager.LOBBIES_SCREEN)).refresh();
 
         super.backButtonAction();
 

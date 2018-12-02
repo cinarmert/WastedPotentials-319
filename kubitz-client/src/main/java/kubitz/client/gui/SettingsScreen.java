@@ -279,12 +279,12 @@ public class SettingsScreen extends BaseScreen{
         if (applied)
             return;
 
+        MainFrame.getInstance().setVisible(false);
+
         Config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
 
         if (fullScreen) {
-            MainFrame.getInstance().setVisible(false);
             setFullScreen();
-            MainFrame.getInstance().setVisible(true);
         }
         else {
             restoreScreen();
@@ -293,6 +293,7 @@ public class SettingsScreen extends BaseScreen{
         MainFrame.getInstance().setResolution();
         applied = true;
 
+        MainFrame.getInstance().setVisible(true);
     }
 
     @Override
@@ -304,7 +305,7 @@ public class SettingsScreen extends BaseScreen{
         effectsSlider.setValue(Config.getEffectsSound());
         musicSlider.setValue(Config.getMusicSound());
 
-        applied = false;
+        applied = true;
 
         super.backButtonAction();
     }

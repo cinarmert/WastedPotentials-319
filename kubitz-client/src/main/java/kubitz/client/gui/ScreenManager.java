@@ -90,7 +90,7 @@ public class ScreenManager extends JPanel {
 
     }
 
-    public static void closeGameScreen(){
+    public static void doubleBack(){
 
         stack.pop();
         ScreenManager.back();
