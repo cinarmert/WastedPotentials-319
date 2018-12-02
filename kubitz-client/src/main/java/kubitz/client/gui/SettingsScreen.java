@@ -276,6 +276,9 @@ public class SettingsScreen extends BaseScreen{
 
     private void applyAction(){
 
+        if (applied)
+            return;
+
         Config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
 
         if (fullScreen) {
@@ -330,7 +333,7 @@ public class SettingsScreen extends BaseScreen{
 
     public static void setFullScreen(){
 
-        Frame mainFrame = MainFrame.getInstance();
+        JFrame mainFrame = MainFrame.getInstance();
 
         GraphicsDevice device = mainFrame.getGraphicsConfiguration().getDevice();
 

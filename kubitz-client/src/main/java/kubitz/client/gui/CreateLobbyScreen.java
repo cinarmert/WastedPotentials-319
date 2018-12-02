@@ -160,10 +160,9 @@ public class CreateLobbyScreen extends BaseScreen{
         lobby.addPlayer(new Account(Config.getId(), Config.getName()));
         RESTRequestManager.createLobby(lobby);
 
-        //ToDo make a function
-        //MainFrame.lobbyScreen.setCurrentLobby(lobby);
+        ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(lobby);
 
-        // ToDO open lobby screen
+        ScreenManager.show(ScreenManager.LOBBY_SCREEN);
     }
 
 }

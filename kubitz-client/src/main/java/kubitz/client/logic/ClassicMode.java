@@ -9,9 +9,11 @@ public class ClassicMode extends BaseGame {
 
     Lobby lobby;
 
-    public ClassicMode(Grid grid, Cube cube, Lobby lobby) {
-        super(grid, cube);
+    public ClassicMode(Cube cube, Lobby lobby) {
+        super(cube);
         this.lobby = lobby;
+
+        //ToDo get Card from server
         setCard(new Card(new Grid(4)));
     }
 

@@ -134,7 +134,9 @@ public class LobbiesFilterScreen extends BaseScreen {
         filterOptions.add(new CustomButton("Apply"){{
             setPreferredSize( new Dimension(100,20));
             addActionListener(e-> setLobbyFilterAction());
-            //ToDo refresh lobbies
+
+            ((LobbiesScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).refresh();
+
         }}, c);
 
         c.gridy = 8;

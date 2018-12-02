@@ -280,6 +280,6 @@ public abstract class BaseGameScreen extends BaseScreen{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage( background, 0, 0, getRightWidth(), getRightHeight(), this);
+        g.drawImage( background, 0, 0, getWidth(), getHeight(), this);
     }
 }

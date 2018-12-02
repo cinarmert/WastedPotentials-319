@@ -13,8 +13,9 @@ import java.awt.event.ActionListener;
 
 public class ClassicModeScreen extends BaseGameScreen {
 
-    public ClassicModeScreen(Dimension resolution) {
+    public ClassicModeScreen(Dimension resolution, Lobby lobby) {
         super( resolution);
+        createGame(lobby);
     }
 
     @Override
@@ -27,7 +28,7 @@ public class ClassicModeScreen extends BaseGameScreen {
 
         if( quit == 0 ) {
 
-            //ToDo go lobbies
+            ScreenManager.closeGameScreen();
 
             setGame(null);
             MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
@@ -38,7 +39,7 @@ public class ClassicModeScreen extends BaseGameScreen {
     public void createGame(Lobby lobby){
         MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
 
-        ClassicMode cm = new ClassicMode(new Grid(4), new Cube(0), lobby);
+        ClassicMode cm = new ClassicMode(new Cube(0), lobby);
         setGame(cm);
     }
 
@@ -56,6 +57,8 @@ public class ClassicModeScreen extends BaseGameScreen {
                 "You lose!",
                 "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
+
+        ScreenManager.back();
 
     }
 }

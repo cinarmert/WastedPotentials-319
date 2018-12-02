@@ -25,7 +25,7 @@ public class LobbiesScreen extends BaseScreen {
 
         super(resolution);
         this.filter = filter;
-        //initializeResources();
+        initializeResources();
 
     }
 
@@ -72,7 +72,7 @@ public class LobbiesScreen extends BaseScreen {
             setPreferredSize( new Dimension(100,20));
             addActionListener(e->{
 
-                //ToDo open create lobby screen
+                ScreenManager.show(ScreenManager.CREATE_LOBBY_SCREEN);
 
             });
         }}, c);
@@ -89,7 +89,7 @@ public class LobbiesScreen extends BaseScreen {
             setPreferredSize( new Dimension(100,20));
             addActionListener(e->{
 
-                // ToDO open lobbies filter screen
+                ScreenManager.show(ScreenManager.LOBBIES_FILTER_SCREEN);
 
             });
         }}, c);
@@ -133,10 +133,9 @@ public class LobbiesScreen extends BaseScreen {
                         RESTRequestManager.changeSettings(lobby);
                     }
 
-                    // ToDO wtf?
-                    //MainFrame.lobbyScreen.setCurrentLobby(lobby);
+                    ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(lobby);
 
-                    //ToDo open Lobby screen
+                    ScreenManager.show(ScreenManager.LOBBY_SCREEN);
                 }
             }
         } );
@@ -221,11 +220,6 @@ public class LobbiesScreen extends BaseScreen {
             }
             return obj;
         }
-    }
-
-    @Override
-    public void updateResolution(Dimension resolution){
-        // ToDo delete this
     }
 }
 

@@ -13,8 +13,9 @@ import java.awt.event.ActionListener;
 
 public class SwitchModeScreen extends BaseGameScreen{
 
-    public SwitchModeScreen( Dimension resolution) {
+    public SwitchModeScreen( Dimension resolution, Lobby lobby) {
         super(resolution);
+        createGame(lobby);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class SwitchModeScreen extends BaseGameScreen{
 
         if( quit == 0 ) {
 
-            //ToDo go lobbies
+            ScreenManager.closeGameScreen();
 
             setGame(null);
             MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
@@ -39,7 +40,7 @@ public class SwitchModeScreen extends BaseGameScreen{
     public void createGame(Lobby lobby){
         MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
 
-        SwitchMode sm = new SwitchMode(new Grid(4), new Cube(0), lobby, this::switchGames );
+        SwitchMode sm = new SwitchMode(new Cube(0), lobby, this::switchGames );
         setGame(sm);
 
         ((SwitchMode)getGame()).start();
@@ -71,7 +72,7 @@ public class SwitchModeScreen extends BaseGameScreen{
                     JOptionPane.INFORMATION_MESSAGE);
 
 
-        // ToDO go to the lobby
+        ScreenManager.back();
 
     }
 }

@@ -49,7 +49,8 @@ public class PlayScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // ToDO open lobbies screen
+                ((LobbiesScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).refresh();
+                ScreenManager.show(ScreenManager.LOBBIES_SCREEN);
             }
         });
 
@@ -66,7 +67,9 @@ public class PlayScreen extends BaseScreen{
                     return;
                 }
 
-                // ToDO open daily challenge screen
+                DailyChallengeScreen screen = new DailyChallengeScreen( MainFrame.getResolution() );
+
+                ScreenManager.openGameScreen( screen );
 
             }
         });
@@ -77,7 +80,9 @@ public class PlayScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // ToDO open survival challenge screen
+                SurvivalModeScreen screen = new SurvivalModeScreen( MainFrame.getResolution() );
+
+                ScreenManager.openGameScreen( screen );
 
             }
         });

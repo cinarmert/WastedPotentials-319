@@ -20,12 +20,14 @@ public class SwitchMode extends BaseGame {
     private Function<Void, Void> notifySwitchGrids;
     private Lobby lobby;
   
-    public SwitchMode(Grid grid, Cube cube, Lobby lobby, Function<Void, Void> notifySwitchGrids) {
-        super(grid, cube);
+    public SwitchMode(Cube cube, Lobby lobby, Function<Void, Void> notifySwitchGrids) {
+        super(cube);
         this.lobby = lobby;
         period = PERIOD; //ToDo proper period, -consider random-
         ptc = new PeriodicTimeController(period, this::switchGrids);
         this.notifySwitchGrids = notifySwitchGrids;
+
+        //ToDo get Card from server
         setCard(new Card(new Grid(4)));
     }
 

@@ -20,10 +20,10 @@ public class ScreenManager extends JPanel {
     public static final int LOBBIES_FILTER_SCREEN = 8;
     public static final int CREATE_LOBBY_SCREEN = 9;
     public static final int LEADERBOARD_SCREEN = 10;
-    public static final int DAILY_CHALLENGE_SCREEN = 11;
+/*    public static final int DAILY_CHALLENGE_SCREEN = 11;
     public static final int SURVICAL_SCREEN = 12;
     public static final int CLASSIC_MODE_SCREEN = 13;
-    public static final int SWITCH_MODE_SCREEN = 14;
+    public static final int SWITCH_MODE_SCREEN = 14;*/
 
     private Filter filter;
 
@@ -48,10 +48,10 @@ public class ScreenManager extends JPanel {
         ScreenManager.screens.add( LOBBIES_FILTER_SCREEN, new LobbiesFilterScreen(MainFrame.getResolution(), filter ));
         ScreenManager.screens.add( CREATE_LOBBY_SCREEN, new CreateLobbyScreen(MainFrame.getResolution()));
         ScreenManager.screens.add( LEADERBOARD_SCREEN, new LeaderboardScreen(MainFrame.getResolution()));
-        ScreenManager.screens.add( DAILY_CHALLENGE_SCREEN, new DailyChallengeScreen(MainFrame.getResolution()));
+/*        ScreenManager.screens.add( DAILY_CHALLENGE_SCREEN, new DailyChallengeScreen(MainFrame.getResolution()));
         ScreenManager.screens.add( SURVICAL_SCREEN, new SurvivalModeScreen(MainFrame.getResolution()));
         ScreenManager.screens.add( CLASSIC_MODE_SCREEN, new ClassicModeScreen(MainFrame.getResolution()));
-        ScreenManager.screens.add( SWITCH_MODE_SCREEN, new SwitchModeScreen(MainFrame.getResolution()));
+        ScreenManager.screens.add( SWITCH_MODE_SCREEN, new SwitchModeScreen(MainFrame.getResolution()));*/
 
         show(MAIN_MENU_SCREEN);
     }
@@ -65,6 +65,7 @@ public class ScreenManager extends JPanel {
         instance.removeAll();
         instance.add(stack.peek());
 
+        MainFrame.getInstance().revalidate();
         MainFrame.getInstance().repaint();
     }
 
@@ -76,6 +77,24 @@ public class ScreenManager extends JPanel {
 
         MainFrame.getInstance().revalidate();
         MainFrame.getInstance().repaint();
+    }
+
+    public static void openGameScreen(BaseGameScreen screen){
+
+        instance.removeAll();
+        stack.push( screen);
+        instance.add(stack.peek());
+
+        MainFrame.getInstance().revalidate();
+        MainFrame.getInstance().repaint();
+
+    }
+
+    public static void closeGameScreen(){
+
+        stack.pop();
+        ScreenManager.back();
+
     }
 
     public static BaseScreen getCurrentScreen(){

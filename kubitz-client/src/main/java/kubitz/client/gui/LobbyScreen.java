@@ -33,8 +33,9 @@ public class LobbyScreen extends BaseScreen {
     }
 
     @Override
-    public void backButtonAction(){
+    protected void backButtonAction(){
 
+        //ToDo leave lobby
         super.backButtonAction();
     }
 
@@ -214,11 +215,13 @@ public class LobbyScreen extends BaseScreen {
 
         if ( getCurrentLobby().getMode().equals(Lobby.MODE_CLASSIC) ){
 
-            //ToDO open classic Game Screen
+            ClassicModeScreen cms = new ClassicModeScreen(MainFrame.getResolution(), getCurrentLobby());
+            ScreenManager.openGameScreen(cms);
         }
         else if (getCurrentLobby().getMode().equals(Lobby.MODE_SWITCH)){
 
-            //ToDo Open switch game screen
+            SwitchModeScreen sms = new SwitchModeScreen(MainFrame.getResolution(), getCurrentLobby());
+            ScreenManager.openGameScreen(sms);
         }
     }
 

@@ -10,8 +10,7 @@ public abstract class BaseGame {
     Cube cube;
     Card card;
 
-    public BaseGame(Grid grid, Cube cube) {
-        this.grid = grid;
+    public BaseGame(Cube cube) {
         this.cube = cube;
     }
 
@@ -31,6 +30,7 @@ public abstract class BaseGame {
 
     public void setCard(Card card) {
         this.card = card;
+        this.grid = new Grid(card.getSize());
     }
 
     public boolean isGameFinished()

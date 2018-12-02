@@ -27,6 +27,8 @@ public class DailyChallengeScreen extends BaseGameScreen{
         timerPanel.setLayout( new FlowLayout( FlowLayout.LEFT));
         timerPanel.setPreferredSize( new Dimension(300,80));
         timerPanel.setOpaque(false);
+
+        this.createGame();
     }
 
     public void startTimer(){
@@ -52,11 +54,10 @@ public class DailyChallengeScreen extends BaseGameScreen{
         super.setGame(game);
         timerPanel.add(time);
         super.cardPanel.add(timerPanel, 0);
-
     }
 
     @Override
-    public void backButtonAction(){
+    protected void backButtonAction(){
         int quit = JOptionPane.showConfirmDialog( DailyChallengeScreen.this,
                 "Are you sure you want to leave the game?",
                 "Leave?",
@@ -65,7 +66,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
 
         if( quit == 0 ) {
 
-            //ToDO go play screen
+            super.backButtonAction();
 
             timer.stop();
             setGame(null);
@@ -78,7 +79,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
     public void createGame(){
         MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
 
-        DailyChallengeMode dm = new DailyChallengeMode(new Grid(4), new Cube(0));
+        DailyChallengeMode dm = new DailyChallengeMode(new Cube(0));
         setGame(dm);
         startTimer();
     }
@@ -94,7 +95,8 @@ public class DailyChallengeScreen extends BaseGameScreen{
                 "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
 
-        //ToDo open leaderboard
+        //ToDo go main manu then show leaderboard?
+        ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
 
     }
 

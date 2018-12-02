@@ -17,7 +17,7 @@ public class LeaderboardScreen extends BaseScreen {
 
     public LeaderboardScreen(Dimension resolution) {
         super(resolution);
-        //initializeResources();
+        initializeResources();
     }
 
     @Override
@@ -136,10 +136,5 @@ public class LeaderboardScreen extends BaseScreen {
             else
                 return 1;
         }
-    }
-
-    @Override
-    public void updateResolution(Dimension resolution){
-        // Todo delete this
     }
 }

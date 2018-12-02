@@ -28,6 +28,8 @@ public class SurvivalModeScreen extends BaseGameScreen {
         timerPanel.setLayout( new FlowLayout( FlowLayout.LEFT));
         timerPanel.setPreferredSize( new Dimension(300,80));
         timerPanel.setOpaque(false);
+
+        createGame();
     }
 
     public void startTimer(){
@@ -52,7 +54,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
     public void createGame(){
         MainFrame.getInstance().getMoveController().setBaseGameScreen(this);
 
-        SurvivalMode sm = new SurvivalMode(new Grid(4), new Cube(0), this::gameFinished );
+        SurvivalMode sm = new SurvivalMode(new Cube(0), this::gameFinished );
         setGame(sm);
         startTimer();
     }
@@ -75,7 +77,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
         if( quit == 0 ) {
 
-            //ToDO open playScreen
+            super.backButtonAction();
 
             timer.stop();
             setGame(null);
@@ -125,7 +127,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
             createGame();
         }
         else {
-            //ToDO open play screen
+            super.backButtonAction();
             setGame(null);
             MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
         }

@@ -14,13 +14,15 @@ public class SurvivalMode extends BaseGame {
     int score;
     Function<Void, Void> onGameFinished;
   
-    public SurvivalMode(Grid grid, Cube cube, Function<Void, Void> onGameFinished) {
-        super(grid, cube);
+    public SurvivalMode(Cube cube, Function<Void, Void> onGameFinished) {
+        super(cube);
 
         time = 150000; //ToDo reasonable time period
         ctc = new CountdownTimeController(time, onGameFinished);
         this.onGameFinished = onGameFinished;
-        setCard(Card.getRandomCard(grid.getSize()));
+
+        // ToDo card size
+        setCard(Card.getRandomCard(4));
     }
 
     public boolean isGameFinished() {

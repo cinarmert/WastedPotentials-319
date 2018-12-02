@@ -117,7 +117,7 @@ public abstract class BaseScreen extends JPanel implements Screen {
 
     @Override
     public void update(){
-        super.removeAll();
+        this.removeAll();
         initializeResources();
         revalidate();
         repaint();

@@ -27,10 +27,11 @@ public class MainFrame extends JFrame {
         instance = this;
 
         soundManager = new SoundManager();
-        soundManager.startBackgroundMusic();
 
         initializeAccount();
         initializeResources();
+
+        soundManager.startBackgroundMusic();
     }
 
     private void initializeAccount() {
@@ -94,7 +95,6 @@ public class MainFrame extends JFrame {
         setSize(resolution);
 
         ScreenManager.updateResolutions();
-
     }
 
 }

@@ -20,8 +20,8 @@ public class DailyChallengeMode extends BaseGame {
     int score = -1;
 
     //ToDo support for multiple daily challenge
-    public DailyChallengeMode(Grid grid, Cube cube) {
-        super(grid, cube);
+    public DailyChallengeMode(Cube cube) {
+        super(cube);
         tc = new TimeController();
 
         DailyChallenges dailyChallenges = RESTRequestManager.getDailyChallenge();
