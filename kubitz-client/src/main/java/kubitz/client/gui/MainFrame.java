@@ -27,6 +27,8 @@ public class MainFrame extends JFrame {
         instance = this;
 
         soundManager = new SoundManager();
+        soundManager.initializeVolumes((double)Config.getMasterSound(),
+                (double)Config.getEffectsSound(), (double)Config.getMusicSound());
 
         initializeAccount();
         initializeResources();
@@ -97,4 +99,8 @@ public class MainFrame extends JFrame {
         ScreenManager.updateResolutions();
     }
 
+    public SoundManager getSoundManager()
+    {
+        return soundManager;
+    }
 }

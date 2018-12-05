@@ -62,7 +62,7 @@ public class SettingsScreen extends BaseScreen{
     private JPanel initializeSettings() {
 
         JPanel settingsPanel = new JPanel();
-        settingsPanel.setLayout( new GridLayout(12,1, 10, 5));
+        settingsPanel.setLayout( new GridLayout(14,1, 10, 5));
         settingsPanel.setOpaque(false);
         settingsPanel.setPreferredSize(new Dimension(getResolution().width/2, getResolution().height));
 
@@ -156,6 +156,9 @@ public class SettingsScreen extends BaseScreen{
 
         //====================================================Sound==========================================================
         JLabel soundText = new JLabel("SOUND");
+        JLabel masterVolumeLabel = new JLabel("Master Volume");
+        JLabel effectsVolumeLabel = new JLabel("Effects Volume");
+        JLabel musicVolumeLabel = new JLabel("Music Volume");
         soundText.setFont( new Font( soundText.getFont().getName(), Font.BOLD, 16));
 
         Hashtable labels = new Hashtable();
@@ -175,8 +178,13 @@ public class SettingsScreen extends BaseScreen{
             public void stateChanged(ChangeEvent e) {
 
                 JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting())
-                    masterSound = sliderAction(e);
+                if (!source.getValueIsAdjusting()) {
+                    masterSound = (int) source.getValue();
+                    MainFrame.getInstance().getSoundManager().changeMusicVolume(
+                            (double)((masterSlider.getValue()*musicSlider.getValue())/100));
+                    MainFrame.getInstance().getSoundManager().changeEffectsVolume(
+                            (double)((masterSlider.getValue()*effectsSlider.getValue())/100));
+                }
             }
         });
 
@@ -190,8 +198,11 @@ public class SettingsScreen extends BaseScreen{
             public void stateChanged(ChangeEvent e) {
 
                 JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting())
-                    effectsSound = sliderAction(e);
+                if (!source.getValueIsAdjusting()) {
+                    effectsSound = (int) source.getValue();
+                    MainFrame.getInstance().getSoundManager().changeEffectsVolume(
+                            (double)((masterSlider.getValue()*effectsSlider.getValue())/100));
+                }
             }
         });
 
@@ -205,8 +216,11 @@ public class SettingsScreen extends BaseScreen{
             public void stateChanged(ChangeEvent e) {
 
                 JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting())
-                    musicSound = sliderAction(e);
+                if (!source.getValueIsAdjusting()) {
+                    musicSound = (int) source.getValue();
+                    MainFrame.getInstance().getSoundManager().changeMusicVolume(
+                            (double)((masterSlider.getValue()*musicSlider.getValue())/100));
+                }
             }
         });
 
@@ -259,8 +273,11 @@ public class SettingsScreen extends BaseScreen{
         settingsPanel.add(resolutionPanel);
         settingsPanel.add(fullScreenCheckBox);
         settingsPanel.add(soundText);
+        settingsPanel.add(masterVolumeLabel);
         settingsPanel.add(masterSlider);
+        settingsPanel.add(effectsVolumeLabel);
         settingsPanel.add(effectsSlider);
+        settingsPanel.add(musicVolumeLabel);
         settingsPanel.add(musicSlider);
         settingsPanel.add(buttonsPanel);
         return settingsPanel;
@@ -304,6 +321,8 @@ public class SettingsScreen extends BaseScreen{
         masterSlider.setValue( Config.getMasterSound());
         effectsSlider.setValue(Config.getEffectsSound());
         musicSlider.setValue(Config.getMusicSound());
+        MainFrame.getInstance().getSoundManager().initializeVolumes((double)Config.getMasterSound(),
+                (double)Config.getEffectsSound(), (double)Config.getMusicSound());
 
         applied = true;
 

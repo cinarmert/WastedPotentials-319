@@ -1,8 +1,7 @@
 package kubitz.client.gui;
 
 
-import com.sun.corba.se.spi.logging.CORBALogDomains;
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
+import kubitz.client.sound.SoundManager;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -12,11 +11,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class CustomButton extends JButton {
-
+    private SoundManager soundManager;
 
     public CustomButton(String label) {
 
         super(label);
+
+        soundManager = new SoundManager();
+        addActionListener(e->{
+            soundManager.startMenuClickSound();
+        });
 
         setUI( new CustomButtonUI());
         setFocusable( false);
