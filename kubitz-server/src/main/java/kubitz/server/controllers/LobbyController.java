@@ -44,19 +44,6 @@ public class LobbyController {
         return response;
     }
 
-    @RequestMapping(value = "/kickPlayer", method = RequestMethod.POST)
-    @ResponseBody
-    public void kickPlayer(@RequestBody String body) {
-        Lobby lobby = null;
-        try {
-            lobby = JsonUtil.fromJson(body, Lobby.class);
-        } catch (IOException e) {
-            logger.error("could not parse the body to lobby, body: " + body);
-            return;
-        }
-        lobbyRepository.save(lobby);
-    }
-
     @RequestMapping(value = "/changeSettings", method = RequestMethod.POST)
     @ResponseBody
     public void changeSettings(@RequestBody String body) {
