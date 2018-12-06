@@ -9,14 +9,14 @@ import java.util.ArrayList;
 @Document(collection = "lobby")
 public class Lobby {
 
-    private String id;
-
     @Id
     private String name;
 
     private int maxPlayerLimit;
 
     private String mode;
+
+    private int playerCount;
 
     private boolean privateLobby;
 
@@ -26,10 +26,12 @@ public class Lobby {
 
     public Lobby(){}
 
+    public int getPlayerCount() {
+        return playerCount;
+    }
 
-
-    public String getId() {
-        return id;
+    public void setPlayerCount(int playerCount) {
+        this.playerCount = playerCount;
     }
 
     public String getName() {
@@ -52,10 +54,6 @@ public class Lobby {
         return status;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -66,10 +64,6 @@ public class Lobby {
 
     public void setMode(String mode) {
         this.mode = mode;
-    }
-
-    public void setPrivateLobby(Boolean privateLobby) {
-        this.privateLobby = privateLobby;
     }
 
     public void setStatus(String status) {
@@ -90,5 +84,19 @@ public class Lobby {
 
     public void setPlayers(ArrayList<Account> players) {
         this.players = players;
+    }
+
+    public void addPlayer(Account player) {
+        players.add(player);
+        playerCount++;
+    }
+
+    public void removePlayer(Account player) {
+        players.remove(player);
+        playerCount--;
+    }
+
+    public boolean isFull() {
+        return playerCount >= maxPlayerLimit;
     }
 }
