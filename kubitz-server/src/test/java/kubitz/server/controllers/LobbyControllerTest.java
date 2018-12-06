@@ -34,7 +34,7 @@ public class LobbyControllerTest {
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-        lobby = new Lobby("4", "test", "Switch", false);
+        lobby = new Lobby();
         lobby.setStatus("Waiting");
         lobby.setMaxPlayerLimit(4);
     }
@@ -57,7 +57,6 @@ public class LobbyControllerTest {
     @Test
     public void kickPlayer() throws Exception {
         lobby.setMaxPlayerLimit(3);
-        lobby.setId("3");
         String body = JsonUtil.toJson(lobby);
 
         mockMvc.perform(post("/lobby/createLobby")
@@ -69,7 +68,6 @@ public class LobbyControllerTest {
     @Test
     public void changeSettings() throws Exception {
         lobby.setMode("Classic");
-        lobby.setId("2");
         String body = JsonUtil.toJson(lobby);
 
         mockMvc.perform(post("/lobby/createLobby")
