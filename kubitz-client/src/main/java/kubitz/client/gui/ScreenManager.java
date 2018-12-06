@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.rest.RESTRequestManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -61,14 +63,19 @@ public class ScreenManager extends JPanel {
         MainFrame.getInstance().repaint();
     }
 
-    public static void show(int screen){
-
+    public static boolean show(int screen){
+        BaseScreen screenToShow = screens.get(screen);
+        if(screenToShow.doesRequireConnection() && !RESTRequestManager.checkServerConnection())
+            return false;
         instance.removeAll();
-        stack.push( screens.get(screen));
+
+        screenToShow.onShow();
+        stack.push(screenToShow);
         instance.add(stack.peek());
 
         MainFrame.getInstance().revalidate();
         MainFrame.getInstance().repaint();
+        return true;
     }
 
     public static void openGameScreen(BaseGameScreen screen){

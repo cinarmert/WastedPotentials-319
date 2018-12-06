@@ -11,6 +11,7 @@ public class SwitchModeScreen extends BaseGameScreen{
 
     public SwitchModeScreen( Dimension resolution, Lobby lobby) {
         super(resolution);
+        this.requiresConnection = true;
         createGame(lobby);
     }
 

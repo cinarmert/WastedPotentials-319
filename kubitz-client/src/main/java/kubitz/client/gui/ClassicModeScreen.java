@@ -7,10 +7,13 @@ import kubitz.client.storage.Lobby;
 import javax.swing.*;
 import java.awt.*;
 
-public class ClassicModeScreen extends BaseGameScreen {
+public class ClassicModeScreen extends BaseGameScreen{
+
+
 
     public ClassicModeScreen(Dimension resolution, Lobby lobby) {
         super( resolution);
+        this.requiresConnection = true;
         createGame(lobby);
     }
 

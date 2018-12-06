@@ -18,7 +18,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
 
     public DailyChallengeScreen( Dimension resolution) {
         super(resolution);
-
+        this.requiresConnection = true;
         time = new JLabel("00:00:00");
         time.setForeground(Color.BLACK);
         time.setFont( new Font( time.getFont().getName(), Font.PLAIN, 50));

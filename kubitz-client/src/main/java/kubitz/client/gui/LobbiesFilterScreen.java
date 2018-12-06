@@ -18,6 +18,7 @@ public class LobbiesFilterScreen extends BaseScreen {
     public LobbiesFilterScreen(Dimension resolution, Filter filter) {
 
         super(resolution);
+        this.requiresConnection = true;
         this.filter = filter;
         initializeResources();
     }

@@ -25,9 +25,16 @@ public class LobbiesScreen extends BaseScreen {
     public LobbiesScreen(Dimension resolution, Filter filter) {
 
         super(resolution);
+        this.requiresConnection = true;
         this.filter = filter;
         initializeResources();
 
+    }
+
+    @Override
+    public void onShow()
+    {
+        refresh();
     }
 
     @Override
@@ -102,7 +109,7 @@ public class LobbiesScreen extends BaseScreen {
 
     private JPanel initializeList(){
         JPanel list = new JPanel();
-        table = new JTable(new LobbyTableModel()){
+        table = new JTable(null){
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
                 Component returnComp = super.prepareRenderer(renderer, row, column);
                 Color alternateColor = new Color(221,221,221);

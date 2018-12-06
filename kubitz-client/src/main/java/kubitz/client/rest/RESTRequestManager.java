@@ -187,4 +187,18 @@ public class RESTRequestManager {
         return response.readEntity(String.class);
     }
 
+    public static boolean checkServerConnection()
+    {
+        DailyChallenges challenge;
+        try
+        {
+            challenge = getDailyChallenge(); //TODO: implement simple hello message instead
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        return challenge != null;
+    }
+
 }
