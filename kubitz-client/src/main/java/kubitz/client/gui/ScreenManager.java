@@ -1,6 +1,7 @@
 package kubitz.client.gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class ScreenManager extends JPanel {
@@ -20,13 +21,6 @@ public class ScreenManager extends JPanel {
     public static final int LOBBIES_FILTER_SCREEN = 8;
     public static final int CREATE_LOBBY_SCREEN = 9;
     public static final int LEADERBOARD_SCREEN = 10;
-/*    public static final int DAILY_CHALLENGE_SCREEN = 11;
-    public static final int SURVICAL_SCREEN = 12;
-    public static final int CLASSIC_MODE_SCREEN = 13;
-    public static final int SWITCH_MODE_SCREEN = 14;*/
-
-    private Filter filter;
-
 
     public ScreenManager() {
         super();
@@ -35,7 +29,7 @@ public class ScreenManager extends JPanel {
 
         stack = new ScreenStack();
         screens = new ArrayList<>();
-        filter = new Filter();
+        Filter filter = new Filter();
 
         ScreenManager.screens.add( MAIN_MENU_SCREEN, new MainMenuScreen(MainFrame.getResolution()));
         ScreenManager.screens.add( PLAY_SCREEN, new PlayScreen(MainFrame.getResolution()));
@@ -48,10 +42,8 @@ public class ScreenManager extends JPanel {
         ScreenManager.screens.add( LOBBIES_FILTER_SCREEN, new LobbiesFilterScreen(MainFrame.getResolution(), filter ));
         ScreenManager.screens.add( CREATE_LOBBY_SCREEN, new CreateLobbyScreen(MainFrame.getResolution()));
         ScreenManager.screens.add( LEADERBOARD_SCREEN, new LeaderboardScreen(MainFrame.getResolution()));
-/*        ScreenManager.screens.addMain( DAILY_CHALLENGE_SCREEN, new DailyChallengeScreen(MainFrame.getResolution()));
-        ScreenManager.screens.addMain( SURVICAL_SCREEN, new SurvivalModeScreen(MainFrame.getResolution()));
-        ScreenManager.screens.addMain( CLASSIC_MODE_SCREEN, new ClassicModeScreen(MainFrame.getResolution()));
-        ScreenManager.screens.addMain( SWITCH_MODE_SCREEN, new SwitchModeScreen(MainFrame.getResolution()));*/
+
+        setLayout( new BorderLayout());
 
         show(MAIN_MENU_SCREEN);
     }
