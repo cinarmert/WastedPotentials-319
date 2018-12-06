@@ -45,7 +45,7 @@ public abstract class BaseGameScreen extends BaseScreen{
 
     @Override
     protected void initializeResources(){
-        removeAll();
+        removeMainAll();
         if (this.baseGame != null) {
 
             GridBagConstraints c = new GridBagConstraints();
@@ -58,7 +58,7 @@ public abstract class BaseGameScreen extends BaseScreen{
             c.weighty = 1.0;
             c.gridx = 0;
             c.gridy = 0;
-            this.add( initializeContent(),c);
+            this.addMain( initializeContent(),c);
 
         }
     }
@@ -66,7 +66,7 @@ public abstract class BaseGameScreen extends BaseScreen{
     private JPanel initializeContent(){
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setPreferredSize(new Dimension(getRightWidth(), getRightHeight()));
+        mainPanel.setPreferredSize(new Dimension(getMainWidth(), getMainHeight()));
         mainPanel.setOpaque(false);
 
         mainPanel.setLayout( new BorderLayout() );
@@ -125,15 +125,15 @@ public abstract class BaseGameScreen extends BaseScreen{
 
         cubeSouthUI.getCube().rotate(0,-1,0);
 
-        Dimension cubeDimension = new Dimension(getRightHeight()/12,
-                getRightHeight()/12);
+        Dimension cubeDimension = new Dimension(getMainHeight()/12,
+                getMainHeight()/12);
 
         cubeEastUI.setPreferredSize( cubeDimension);
         cubeWestUI.setPreferredSize( cubeDimension);
         cubeNorthUI.setPreferredSize( cubeDimension);
         cubeSouthUI.setPreferredSize( cubeDimension);
 
-        cubeUI.setPreferredSize( new Dimension(getRightHeight()/10, getRightHeight()/10));
+        cubeUI.setPreferredSize( new Dimension(getMainHeight()/10, getMainHeight()/10));
         cubeUI.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

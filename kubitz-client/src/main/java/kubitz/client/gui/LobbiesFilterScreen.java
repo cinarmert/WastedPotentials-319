@@ -41,7 +41,7 @@ public class LobbiesFilterScreen extends BaseScreen {
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add(initializeContainer(),c);
+        this.addMain(initializeContainer(),c);
 
     }
 
@@ -58,7 +58,7 @@ public class LobbiesFilterScreen extends BaseScreen {
         container.setBackground(new Color(204,204,204));
         container.setBorder(new LineBorder(Color.BLACK, 2));
 
-        container.setPreferredSize( new Dimension( getRightWidth()-(getRightWidth()/3), getRightHeight()-(getRightHeight()/3)));
+        container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -75,7 +75,7 @@ public class LobbiesFilterScreen extends BaseScreen {
 
         c.gridx = 1;
         c.gridy = 0;
-        container.add(Box.createHorizontalStrut( getRightWidth()/4),c);
+        container.add(Box.createHorizontalStrut( getMainWidth()/4),c);
 
         return container;
     }
@@ -138,7 +138,7 @@ public class LobbiesFilterScreen extends BaseScreen {
 
         c.gridy = 8;
 
-        filterOptions.add(Box.createVerticalStrut( getRightHeight()/6),c);
+        filterOptions.add(Box.createVerticalStrut( getMainHeight()/6),c);
 
         return filterOptions;
     }

@@ -29,11 +29,11 @@ public class PlayScreen extends BaseScreen{
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add( playLabel, c);
+        this.addMain( playLabel, c);
 
         c.gridx = 0;
         c.gridy = 1;
-        this.add( initializeButtons(),c);
+        this.addMain( initializeButtons(),c);
 
     }
 
@@ -41,7 +41,7 @@ public class PlayScreen extends BaseScreen{
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout( new GridLayout(3,1, 10, 10));
-        buttonsPanel.setMaximumSize(new Dimension( getRightWidth()/5, 30));
+        buttonsPanel.setMaximumSize(new Dimension( getMainWidth()/5, 30));
         buttonsPanel.setBackground( new Color(0,0,0, 0));
 
         CustomButton multiplayerButton = new CustomButton("Multiplayer (Classic / Switch)");

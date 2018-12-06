@@ -54,7 +54,7 @@ public class LobbyScreen extends BaseScreen {
         c.gridx = 0;
         c.gridy = 0;
 
-        this.add(initializeContainer(),c);
+        this.addMain(initializeContainer(),c);
     }
 
     private JPanel initializeContainer() {
@@ -133,7 +133,7 @@ public class LobbyScreen extends BaseScreen {
         chatBox.setBackground(new Color(153,153,153));
 
         JScrollPane chatScroll = new JScrollPane(chatBox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        chatScroll.setPreferredSize(new Dimension(getRightWidth()/2,100));
+        chatScroll.setPreferredSize(new Dimension(getMainWidth()/2,100));
         chatPanel.add(chatScroll,c);
 
         c.gridy = 1;
@@ -149,7 +149,7 @@ public class LobbyScreen extends BaseScreen {
                 }
             }
         });
-        chatField.setPreferredSize(new Dimension(getRightWidth()/2,30));
+        chatField.setPreferredSize(new Dimension(getMainWidth()/2,30));
         chatPanel.add(chatField,c);
 
         return chatPanel;
@@ -196,7 +196,7 @@ public class LobbyScreen extends BaseScreen {
         playerList.setFixedCellHeight(30);
 
         listPanel.add(playerList);
-        playerList.setPreferredSize(new Dimension(getRightWidth()/2, getRightHeight()/6));
+        playerList.setPreferredSize(new Dimension(getMainWidth()/2, getMainHeight()/6));
 
         return listPanel;
     }

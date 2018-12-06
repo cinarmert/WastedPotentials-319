@@ -55,14 +55,14 @@ public class SettingsScreen extends BaseScreen{
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add( initializeSettings(),c);
+        this.addMain( initializeSettings(),c);
 
     }
 
     private JPanel initializeSettings() {
 
         JPanel settingsPanel = new JPanel();
-        settingsPanel.setLayout( new GridLayout(14,1, 10, 5));
+        settingsPanel.setLayout( new GridLayout(16,1, 10, 5));
         settingsPanel.setOpaque(false);
         settingsPanel.setPreferredSize(new Dimension(getResolution().width/2, getResolution().height));
 
@@ -74,7 +74,7 @@ public class SettingsScreen extends BaseScreen{
         nickNameText.setFont( new Font( nickNameText.getFont().getName(), Font.BOLD, 16));
 
         JPanel nickNamePanel = new JPanel();
-        nickNamePanel.setSize( new Dimension( getRightWidth()/3,30));
+        nickNamePanel.setSize( new Dimension( getMainWidth()/3,30));
         nickNamePanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         nickNamePanel.setOpaque(false);
 
@@ -117,7 +117,7 @@ public class SettingsScreen extends BaseScreen{
         graphicsText.setFont( new Font( graphicsText.getFont().getName(), Font.BOLD, 16));
 
         JPanel resolutionPanel = new JPanel();
-        resolutionPanel.setSize( new Dimension( getRightWidth()/3,30));
+        resolutionPanel.setSize( new Dimension( getMainWidth()/3,30));
         resolutionPanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         resolutionPanel.setOpaque(false);
 

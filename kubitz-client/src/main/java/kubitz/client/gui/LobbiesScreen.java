@@ -41,7 +41,7 @@ public class LobbiesScreen extends BaseScreen {
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add(initializeContainer(),c);
+        this.addMain(initializeContainer(),c);
     }
 
     private JPanel initializeContainer(){
@@ -50,7 +50,7 @@ public class LobbiesScreen extends BaseScreen {
         lobbies.setLayout(new BorderLayout());
         lobbies.setBackground( new Color(204,204,204));
         lobbies.setBorder(new LineBorder(Color.BLACK, 2));
-        lobbies.setPreferredSize( new Dimension( getRightWidth()-(getRightWidth()/3), getRightHeight()-(getRightHeight()/3)));
+        lobbies.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
 
         lobbies.add(initializeList(), BorderLayout.LINE_START);
         lobbies.add(initializeButtons(), BorderLayout.CENTER);
@@ -94,7 +94,7 @@ public class LobbiesScreen extends BaseScreen {
             });
         }}, c);
         c.gridy = 3;
-        buttonPanel.add( Box.createVerticalStrut( getRightHeight()/4),c);
+        buttonPanel.add( Box.createVerticalStrut( getMainHeight()/4),c);
 
         return buttonPanel;
     }

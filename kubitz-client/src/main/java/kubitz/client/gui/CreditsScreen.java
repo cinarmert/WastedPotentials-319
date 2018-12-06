@@ -29,14 +29,14 @@ public class CreditsScreen extends BaseScreen{
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add( initializeCredits(),c);
+        this.addMain( initializeCredits(),c);
 
     }
 
     private JPanel initializeCredits() {
 
         JPanel creditsPanel = new JPanel();
-        creditsPanel.setMaximumSize(new Dimension( getRightWidth()/2, getRightHeight()));
+        creditsPanel.setMaximumSize(new Dimension( getMainWidth()/2, getMainHeight()));
         creditsPanel.setOpaque(false);
         creditsPanel.setLayout( new GridBagLayout());
 
@@ -78,7 +78,7 @@ public class CreditsScreen extends BaseScreen{
     public JPanel nameBox( String name){
         return new JPanel( new BorderLayout()){{
             add(new JLabel(name,JLabel.CENTER), BorderLayout.CENTER);
-            setPreferredSize( new Dimension( getRightWidth()/5, getRightHeight()/20));
+            setPreferredSize( new Dimension( getMainWidth()/5, getMainHeight()/20));
             setBorder(new LineBorder(Color.BLACK));
             setBackground(Color.WHITE);
         }};

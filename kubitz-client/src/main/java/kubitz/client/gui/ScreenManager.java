@@ -48,10 +48,10 @@ public class ScreenManager extends JPanel {
         ScreenManager.screens.add( LOBBIES_FILTER_SCREEN, new LobbiesFilterScreen(MainFrame.getResolution(), filter ));
         ScreenManager.screens.add( CREATE_LOBBY_SCREEN, new CreateLobbyScreen(MainFrame.getResolution()));
         ScreenManager.screens.add( LEADERBOARD_SCREEN, new LeaderboardScreen(MainFrame.getResolution()));
-/*        ScreenManager.screens.add( DAILY_CHALLENGE_SCREEN, new DailyChallengeScreen(MainFrame.getResolution()));
-        ScreenManager.screens.add( SURVICAL_SCREEN, new SurvivalModeScreen(MainFrame.getResolution()));
-        ScreenManager.screens.add( CLASSIC_MODE_SCREEN, new ClassicModeScreen(MainFrame.getResolution()));
-        ScreenManager.screens.add( SWITCH_MODE_SCREEN, new SwitchModeScreen(MainFrame.getResolution()));*/
+/*        ScreenManager.screens.addMain( DAILY_CHALLENGE_SCREEN, new DailyChallengeScreen(MainFrame.getResolution()));
+        ScreenManager.screens.addMain( SURVICAL_SCREEN, new SurvivalModeScreen(MainFrame.getResolution()));
+        ScreenManager.screens.addMain( CLASSIC_MODE_SCREEN, new ClassicModeScreen(MainFrame.getResolution()));
+        ScreenManager.screens.addMain( SWITCH_MODE_SCREEN, new SwitchModeScreen(MainFrame.getResolution()));*/
 
         show(MAIN_MENU_SCREEN);
     }

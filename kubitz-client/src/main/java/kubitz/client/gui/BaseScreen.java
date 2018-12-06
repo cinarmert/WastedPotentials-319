@@ -10,24 +10,25 @@ public abstract class BaseScreen extends JPanel implements Screen {
     private Dimension resolution;
     private CustomButton backButton;
     private boolean isBackButton;
-    private JPanel left;
-    private JPanel right;
+    private JPanel up;
+    private JPanel down;
 
     public BaseScreen(Dimension resolution) {
 
         this.resolution = resolution;
         this.isBackButton = false;
-        this.left = new JPanel();
-        this.right = new JPanel();
+        this.up = new JPanel();
+        this.down = new JPanel();
 
         setLayout( new GridBagLayout());
-        right.setLayout( new GridBagLayout());
+        down.setLayout( new GridBagLayout());
 
-        left.setOpaque(false);
-        right.setOpaque(false);
+        up.setOpaque(false);
+        down.setOpaque(false);
 
         createBackButton();
-        left.add(backButton);
+        up.setLayout( new FlowLayout(FlowLayout.LEFT));
+        up.add(backButton);
 
         setOpaque(false);
         setSize(resolution);
@@ -35,29 +36,27 @@ public abstract class BaseScreen extends JPanel implements Screen {
         setMinimumSize(resolution);
         setPreferredSize(resolution);
 
-        right.setPreferredSize(MainFrame.getResolution());
-        left.setPreferredSize( new Dimension( backButton.getPreferredSize().width+20, resolution.height));
+        down.setPreferredSize(resolution);
+        up.setPreferredSize( new Dimension( resolution.width, backButton.getPreferredSize().height + 10));
 
         setBackButton(isBackButton);
 
     }
 
-    public int getRightWidth(){
-        return right.getPreferredSize().width;
+    public int getMainWidth(){
+        return down.getPreferredSize().width;
     }
 
-    public int getRightHeight(){
-        return right.getPreferredSize().height;
+    public int getMainHeight(){
+        return down.getPreferredSize().height;
     }
 
-    @Override
-    public void removeAll(){
-        right.removeAll();
+    public void removeMainAll(){
+        down.removeAll();
     }
 
-    @Override
-    public void add(Component component, Object constraints){
-        right.add(component, constraints);
+    public void addMain(Component component, Object constraints){
+        down.add(component, constraints);
     }
 
     private void createBackButton(){
@@ -88,21 +87,23 @@ public abstract class BaseScreen extends JPanel implements Screen {
         GridBagConstraints c = new GridBagConstraints();
 
         if (isBackButton) {
-            super.removeAll();
+            removeAll();
 
-            right.setPreferredSize( new Dimension( getWidth() - 20 - backButton.getPreferredSize().width, resolution.height));
+            down.setPreferredSize( new Dimension( getWidth() - 20 - backButton.getPreferredSize().width, resolution.height));
 
-            c.fill = GridBagConstraints.VERTICAL;
-            c.weightx = 0.001;
-            c.weighty = 1.0;
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.anchor = GridBagConstraints.NORTH;
+            c.weightx = 1.0;
+            c.weighty = 0.001;
             c.gridx = 0;
             c.gridy = 0;
-            super.add(left,c);
+            add(up,c);
 
             c.fill = GridBagConstraints.BOTH;
-            c.weightx = 1.0;
-            c.gridx = 1;
-            super.add(right, c);
+            c.weighty = 1.0;
+            c.gridy = 1;
+            add(down, c);
+
         }
         else {
             super.removeAll();
@@ -111,13 +112,13 @@ public abstract class BaseScreen extends JPanel implements Screen {
             c.weighty = 1.0;
             c.fill = GridBagConstraints.BOTH;
 
-            super.add(right, c);
+            super.add(down, c);
         }
     }
 
     @Override
     public void update(){
-        this.removeAll();
+        this.removeMainAll();
         initializeResources();
         revalidate();
         repaint();

@@ -35,7 +35,7 @@ public class CreateLobbyScreen extends BaseScreen{
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add(initializeContainer(),c);
+        this.addMain(initializeContainer(),c);
 
     }
 
@@ -46,7 +46,7 @@ public class CreateLobbyScreen extends BaseScreen{
         container.setBackground( new Color(204,204,204));
 
         container.setBorder( new LineBorder(Color.BLACK, 2));
-        container.setPreferredSize( new Dimension( getRightWidth()-(getRightWidth()/3), getRightHeight()-(getRightHeight()/3)));
+        container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -54,17 +54,17 @@ public class CreateLobbyScreen extends BaseScreen{
         c.anchor = GridBagConstraints.NORTH;
         c.gridx = 1;
         c.gridy = 0;
-        c.gridwidth = getRightWidth() - (getRightWidth()/3);
+        c.gridwidth = getMainWidth() - (getMainWidth()/3);
 
         container.add(new JLabel("Create Lobby"){{
             setFont(new Font("Calibri", Font.BOLD, 26));
         }},c);
 
         c.gridx = 0;
-        container.add(Box.createHorizontalStrut( getRightWidth()/2),c);
+        container.add(Box.createHorizontalStrut( getMainWidth()/2),c);
 
         c.gridx = 2;
-        container.add(Box.createHorizontalStrut( getRightWidth()/2),c);
+        container.add(Box.createHorizontalStrut( getMainWidth()/2),c);
 
         c.gridx = 1;
         c.insets = new Insets(60,0,0,0);
@@ -90,7 +90,7 @@ public class CreateLobbyScreen extends BaseScreen{
 
         c.gridy = 6;
         c.insets = new Insets(20,0,0,0);
-        container.add(Box.createVerticalStrut(getRightHeight()/6),c);
+        container.add(Box.createVerticalStrut(getMainHeight()/6),c);
         return container;
     }
 

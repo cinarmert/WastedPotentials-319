@@ -18,18 +18,18 @@ public class MainMenuScreen extends BaseScreen{
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
-        this.add( initializeLogo(), c);
+        this.addMain( initializeLogo(), c);
 
         c.gridx = 0;
         c.gridy = 1;
-        this.add( initializeButtons(),c);
+        this.addMain( initializeButtons(),c);
 
     }
 
     private JPanel initializeLogo(){
         JPanel logoPanel = new JPanel();
         logoPanel.setLayout( new GridLayout(2,1));
-        logoPanel.setMaximumSize( new Dimension( getRightWidth()/3, getRightHeight()/8));
+        logoPanel.setMaximumSize( new Dimension( getMainWidth()/3, getMainHeight()/8));
         logoPanel.setBackground( new Color(0,0,0,0));
 
         JLabel kubitz = new JLabel("ku-Bitz");
@@ -49,7 +49,7 @@ public class MainMenuScreen extends BaseScreen{
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout( new GridLayout(5,1, 10, 10));
-        buttonsPanel.setMaximumSize(new Dimension( getRightWidth(), 30));
+        buttonsPanel.setMaximumSize(new Dimension( getMainWidth(), 30));
         buttonsPanel.setBackground( new Color(0,0,0, 0));
 
         CustomButton playButton = new CustomButton("Play");

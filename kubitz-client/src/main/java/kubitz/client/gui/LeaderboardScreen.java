@@ -34,7 +34,7 @@ public class LeaderboardScreen extends BaseScreen {
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
-        this.add( initializeLeaderboard(),c);
+        this.addMain( initializeLeaderboard(),c);
 
     }
 
@@ -53,7 +53,7 @@ public class LeaderboardScreen extends BaseScreen {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new GridLayout(1,1, 10, 10));
-        mainPanel.setPreferredSize(new Dimension( getRightWidth()-50, getRightHeight()-50));
+        mainPanel.setPreferredSize(new Dimension( getMainWidth()-50, getMainHeight()-50));
         mainPanel.setBackground(new Color(0,0,0,200));
 
         JTable table = new JTable(new LobbyTableModel()){

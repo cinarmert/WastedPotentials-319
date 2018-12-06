@@ -27,7 +27,7 @@ public class HowToPlayScreen extends BaseScreen {
         c.gridx = 0;
         c.gridy = 1;
         c.anchor = GridBagConstraints.NORTH;
-        this.add( initializeHowToPlay(),c);
+        this.addMain( initializeHowToPlay(),c);
 
     }
 
@@ -35,7 +35,7 @@ public class HowToPlayScreen extends BaseScreen {
 
         JPanel howToPlayPanel = new JPanel();
         howToPlayPanel.setLayout( new GridLayout(1,1, 10, 10));
-        howToPlayPanel.setMaximumSize(new Dimension( getRightWidth()-20, 30));
+        howToPlayPanel.setMaximumSize(new Dimension( getMainWidth()-20, 30));
         howToPlayPanel.setBackground( new Color(0,0,0, 0));
         howToPlayPanel.add(initializeTabbedPane());
 
@@ -46,7 +46,7 @@ public class HowToPlayScreen extends BaseScreen {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setBorder(new LineBorder(Color.BLACK,2));
         tabbedPane.setBackground(new Color(204,204,204));
-        tabbedPane.setPreferredSize(new Dimension(getRightWidth()-(getRightWidth()/5), getRightHeight()-(getRightHeight()/5)));
+        tabbedPane.setPreferredSize(new Dimension(getMainWidth()-(getMainWidth()/5), getMainHeight()-(getMainHeight()/5)));
 
         tabbedPane.addTab("Classic", initializeClassicTutorial());
         tabbedPane.addTab("Switch", initializeSwitchTutorial());
@@ -74,8 +74,8 @@ public class HowToPlayScreen extends BaseScreen {
             e.printStackTrace();
         }
 
-        Image reSizedKeys = keys.getScaledInstance(getRightWidth()/4, getRightHeight()/4, Image.SCALE_SMOOTH);
-        Image reSizedMouse = mouse.getScaledInstance(getRightWidth()/4, getRightHeight()/4, Image.SCALE_SMOOTH);
+        Image reSizedKeys = keys.getScaledInstance(getMainWidth()/4, getMainHeight()/4, Image.SCALE_SMOOTH);
+        Image reSizedMouse = mouse.getScaledInstance(getMainWidth()/4, getMainHeight()/4, Image.SCALE_SMOOTH);
         mouseIcon.setIcon(new ImageIcon(reSizedMouse));
         keysIcon.setIcon(new ImageIcon(reSizedKeys));
         controlsTutorialPanel.add(keysIcon);
@@ -115,8 +115,8 @@ public class HowToPlayScreen extends BaseScreen {
             e.printStackTrace();
         }
 
-        Image reSizedTutorialImage = tutorialImage.getScaledInstance(getRightWidth()-(getRightWidth()/5),
-                getRightHeight()-(getRightHeight()/2), Image.SCALE_SMOOTH);
+        Image reSizedTutorialImage = tutorialImage.getScaledInstance(getMainWidth()-(getMainWidth()/5),
+                getMainHeight()-(getMainHeight()/2), Image.SCALE_SMOOTH);
         tutorial.setIcon(new ImageIcon(reSizedTutorialImage));
         survivalTutorialPanel.add(tutorial,BorderLayout.NORTH);
 
@@ -147,8 +147,8 @@ public class HowToPlayScreen extends BaseScreen {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Image reSizedTutorialImage = tutorialImage.getScaledInstance(getRightWidth()-(getRightWidth()/5),
-                getRightHeight()-(getRightHeight()/2), Image.SCALE_SMOOTH);
+        Image reSizedTutorialImage = tutorialImage.getScaledInstance(getMainWidth()-(getMainWidth()/5),
+                getMainHeight()-(getMainHeight()/2), Image.SCALE_SMOOTH);
         tutorial.setIcon(new ImageIcon(reSizedTutorialImage));
         challengeTutorialPanel.add(tutorial,BorderLayout.NORTH);
 
