@@ -9,14 +9,14 @@ public class Account {
     @Id
     private String id;
 
+    private String name;
+
     public Account(){}
 
     public Account(String id, String name) {
         this.id = id;
         this.name = name;
     }
-
-    private String name;
 
     public String getId() {
         return id;
