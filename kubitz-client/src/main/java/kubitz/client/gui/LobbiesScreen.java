@@ -3,6 +3,7 @@ package kubitz.client.gui;
 import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
+import kubitz.client.websocket.WebSocketManager;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -116,27 +117,7 @@ public class LobbiesScreen extends BaseScreen {
 
         table.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                if (e.getClickCount() == 2){
-                    String lobbyName = (String)table.getValueAt(table.getSelectedRow(),0);
-                    Lobby lobby = null;
-
-                    for(Lobby l : getLobbies())
-                    {
-                        if(l.getName().equals(lobbyName)) {
-                            lobby = l;
-                            break;
-                        }
-                    }
-
-                    if (lobby != null) {
-                        lobby.addPlayer(new Account(Config.getId(), Config.getName()));
-                        RESTRequestManager.changeSettings(lobby);
-                    }
-
-                    ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(lobby);
-
-                    ScreenManager.show(ScreenManager.LOBBY_SCREEN);
-                }
+                joinLobby(e);
             }
         } );
 
@@ -156,6 +137,30 @@ public class LobbiesScreen extends BaseScreen {
         list.add(scrollPane);
 
         return list;
+    }
+
+    private void joinLobby(MouseEvent e){
+        if (e.getClickCount() == 2){
+            String lobbyName = (String)table.getValueAt(table.getSelectedRow(),0);
+            Lobby lobby = null;
+
+            for(Lobby l : getLobbies())
+            {
+                if(l.getName().equals(lobbyName)) {
+                    lobby = l;
+                    break;
+                }
+            }
+
+            if (lobby != null) {
+                lobby.addPlayer(new Account(Config.getId(), Config.getName()));
+                WebSocketManager.sendJoinLobbyMessage(lobby.getName());
+            }
+
+            ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(lobby);
+
+            ScreenManager.show(ScreenManager.LOBBY_SCREEN);
+        }
     }
 
     private ArrayList<Lobby> getLobbies(){

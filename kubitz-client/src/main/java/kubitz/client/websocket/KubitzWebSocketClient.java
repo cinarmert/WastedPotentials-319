@@ -1,5 +1,7 @@
 package kubitz.client.websocket;
 
+import kubitz.client.gui.LobbyScreen;
+import kubitz.client.gui.ScreenManager;
 import kubitz.client.main.Message;
 import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
@@ -20,7 +22,6 @@ public class KubitzWebSocketClient extends WebSocketClient {
     @Override
     public void onOpen( ServerHandshake handshake ) {
         System.out.println( "opened connection" );
-//        send("Selam moruk");
     }
 
     @Override
@@ -40,14 +41,6 @@ public class KubitzWebSocketClient extends WebSocketClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        Message obj = null;
-//        try {
-//            obj = JsonUtil.fromJson(message, Message.class);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.print(obj.getPayload());
     }
 
     @Override
@@ -88,6 +81,10 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleJoinMessage(LobbyMessage lm) throws IOException {
         JoinMessage joinMessage = JsonUtil.fromJson(lm.getPayload().toString(), JoinMessage.class);
 
+        LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
+        Lobby lobby = lobbyScreen.getCurrentLobby();
+        lobby.addPlayer(joinMessage.getAccount());
+        lobbyScreen.setCurrentLobby(lobby);
     }
 
     private void handleInviteMessage(LobbyMessage lm) throws IOException {

@@ -1,5 +1,7 @@
 package kubitz.client.gui;
 
+import kubitz.client.storage.Account;
+
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Path;
@@ -141,6 +143,10 @@ public class Config {
 
     public static int getEffectsSound(){
         return effectsSound;
+    }
+
+    public static Account getAccount() {
+        return new Account(getId(), getName());
     }
 
     public static int getMusicSound() {

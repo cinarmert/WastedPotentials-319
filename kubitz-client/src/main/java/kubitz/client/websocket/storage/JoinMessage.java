@@ -14,6 +14,14 @@ public class JoinMessage {
     @JsonProperty
     private Account account;
 
+    public JoinMessage(String playerId, String lobbyId, Account account) {
+        this.playerId = playerId;
+        this.lobbyId = lobbyId;
+        this.account = account;
+    }
+
+    public JoinMessage(){}
+
     public Account getAccount() {
         return account;
     }
