@@ -7,6 +7,7 @@ public class LobbySettingsScreen extends BaseScreen {
 
     public LobbySettingsScreen(Dimension resolution) {
         super(resolution);
+        this.requiresConnection = true;
         initializeResources();
     }
 

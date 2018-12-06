@@ -14,16 +14,16 @@ import java.util.Comparator;
 public class LeaderboardScreen extends BaseScreen {
 
     private Leaderboard leaderboard;
+    private JTable table;
 
     public LeaderboardScreen(Dimension resolution) {
         super(resolution);
+        this.requiresConnection = true;
         initializeResources();
     }
 
     @Override
     protected void initializeResources(){
-
-        setupLeaderBoard();
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -36,6 +36,13 @@ public class LeaderboardScreen extends BaseScreen {
         c.gridy = 0;
         this.addMain( initializeLeaderboard(),c);
 
+    }
+
+    @Override
+    public void onShow()
+    {
+        setupLeaderBoard();
+        table.setModel(new LeaderboardTableModel());
     }
 
     private void setupLeaderBoard(){
@@ -56,7 +63,7 @@ public class LeaderboardScreen extends BaseScreen {
         mainPanel.setPreferredSize(new Dimension( getMainWidth()-50, getMainHeight()-50));
         mainPanel.setBackground(new Color(0,0,0,200));
 
-        JTable table = new JTable(new LobbyTableModel()){
+        table = new JTable(new LeaderboardTableModel()){
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
                 Component returnComp = super.prepareRenderer(renderer, row, column);
                 Color alternateColor = new Color(220,221,221);
@@ -89,7 +96,7 @@ public class LeaderboardScreen extends BaseScreen {
         
     }
 
-    class LobbyTableModel extends AbstractTableModel {
+    class LeaderboardTableModel extends AbstractTableModel {
 
         private String[] columns = {"Place", "Name", "Score"};
 
@@ -100,6 +107,8 @@ public class LeaderboardScreen extends BaseScreen {
 
         @Override
         public int getRowCount() {
+            if(leaderboard == null)
+                return 0;
             return leaderboard.getLeaderboard().size();
         }
 

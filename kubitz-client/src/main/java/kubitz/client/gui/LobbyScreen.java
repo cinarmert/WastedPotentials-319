@@ -28,6 +28,7 @@ public class LobbyScreen extends BaseScreen {
 
     public LobbyScreen(Dimension resolution) {
         super(resolution);
+        this.requiresConnection = true;
         initializeResources();
         messageGetter = new Thread(new MessageThread());
     }

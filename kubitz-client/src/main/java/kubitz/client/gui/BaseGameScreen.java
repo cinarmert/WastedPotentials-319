@@ -25,6 +25,7 @@ public abstract class BaseGameScreen extends BaseScreen{
     private Cube selectedCube;
     private int[] selectedCubePos;
 
+
     public BaseGameScreen( Dimension resolution) {
 
         super(resolution);
@@ -62,6 +63,8 @@ public abstract class BaseGameScreen extends BaseScreen{
 
         }
     }
+
+
 
     private JPanel initializeContent(){
 

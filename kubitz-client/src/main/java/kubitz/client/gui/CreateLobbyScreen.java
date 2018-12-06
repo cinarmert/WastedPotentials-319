@@ -19,6 +19,7 @@ public class CreateLobbyScreen extends BaseScreen{
     public CreateLobbyScreen( Dimension resolution) {
 
         super(resolution);
+        this.requiresConnection = true;
         initializeResources();
     }
 
