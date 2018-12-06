@@ -60,7 +60,9 @@ public class DailyChallengeController {
         List<LeaderboardUser> leaderboardUsers = leaderboardRepository.findAll();
 
         for (LeaderboardUser leaderboardUser : leaderboardUsers) {
-            leaderboardUser.setName(accountRepository.findAccountById(leaderboardUser.getId()).getName());
+            if (accountRepository.findAccountById(leaderboardUser.getId()).getName() != null) {
+                leaderboardUser.setName(accountRepository.findAccountById(leaderboardUser.getId()).getName());
+            }
         }
 
         String response = JsonUtil.toJson(leaderboardUsers);
