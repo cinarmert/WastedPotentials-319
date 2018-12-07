@@ -168,8 +168,8 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
         ArrayList<Account> participants = lobby.getPlayers();
         for (Account player : participants){
             for (WebSocketSession session : sessions) {
-                logger.info(session.getAttributes().get("playerId").toString());
-                if (player.getId().equals(session.getAttributes().get("playerId").toString())){
+                logger.info(getPlayerId(session.getUri().getPath()));
+                if (player.getId().equals(getPlayerId(session.getUri().getPath()))){
                     logger.info("sending message to " + player.getId());
                     session.sendMessage(getTextLobbyMessage(payload, type));
                 }
@@ -183,14 +183,15 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
     private WebSocketSession getSessionByPlayerId(String playerId){
         for(WebSocketSession s : sessions){
-            if(playerId.equals(s.getAttributes().get("playerId"))){
+            if (s.getUri() == null) continue;
+            if(playerId.equals(getPlayerId(s.getUri().getPath()))){
                 return s;
             }
         }
         return null;
     }
 
-    private String getLobbyId(String s){
+    private String getPlayerId(String s){
         return s.substring(s.lastIndexOf('/') + 1);
     }
 }
