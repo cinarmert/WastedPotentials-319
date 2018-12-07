@@ -23,6 +23,7 @@ public class ScreenManager extends JPanel {
     public static final int LOBBIES_FILTER_SCREEN = 8;
     public static final int CREATE_LOBBY_SCREEN = 9;
     public static final int LEADERBOARD_SCREEN = 10;
+    public static final int KEY_BINDING_SCREEN = 11;
 
     public ScreenManager() {
         super();
@@ -44,6 +45,7 @@ public class ScreenManager extends JPanel {
         ScreenManager.screens.add( LOBBIES_FILTER_SCREEN, new LobbiesFilterScreen(MainFrame.getResolution(), filter ));
         ScreenManager.screens.add( CREATE_LOBBY_SCREEN, new CreateLobbyScreen(MainFrame.getResolution()));
         ScreenManager.screens.add( LEADERBOARD_SCREEN, new LeaderboardScreen(MainFrame.getResolution()));
+        ScreenManager.screens.add( KEY_BINDING_SCREEN, new KeyBindingScreen(MainFrame.getResolution()));
 
         setLayout( new BorderLayout());
 
