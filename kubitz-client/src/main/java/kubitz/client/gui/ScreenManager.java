@@ -55,6 +55,8 @@ public class ScreenManager extends JPanel {
     }
 
     public static void back(){
+        BaseScreen screenToPop = getCurrentScreen();
+        screenToPop.onHide();
         stack.pop();
         instance.removeAll();
         instance.add(stack.peek());
@@ -90,7 +92,8 @@ public class ScreenManager extends JPanel {
     }
 
     public static void doubleBack(){
-
+        BaseScreen screenToPop = getCurrentScreen();
+        screenToPop.onHide();
         stack.pop();
         ScreenManager.back();
 

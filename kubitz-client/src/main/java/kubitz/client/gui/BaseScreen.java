@@ -49,6 +49,11 @@ public abstract class BaseScreen extends JPanel implements Screen {
 
     }
 
+    public void onHide()
+    {
+
+    }
+
     public boolean doesRequireConnection()
     {
         return requiresConnection;
