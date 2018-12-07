@@ -47,7 +47,6 @@ public class Filter {
             props.setProperty("showPlaying", "" + true);
             props.setProperty("showFull", "" + true);
 
-
             File f = new File( getClass().getResource("/").toURI().getPath() +  FILTER_NAME);
             OutputStream out = new FileOutputStream( f );
             props.store(out, "CONFIGURATION FILE");

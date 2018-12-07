@@ -62,7 +62,7 @@ public class SettingsScreen extends BaseScreen{
     private JPanel initializeSettings() {
 
         JPanel settingsPanel = new JPanel();
-        settingsPanel.setLayout( new GridLayout(16,1, 10, 5));
+        settingsPanel.setLayout( new GridLayout(17,1, 10, 5));
         settingsPanel.setOpaque(false);
         settingsPanel.setPreferredSize(new Dimension(getResolution().width/2, getResolution().height));
 
@@ -226,6 +226,12 @@ public class SettingsScreen extends BaseScreen{
 
 
         //====================================================Buttons==========================================================
+
+        CustomButton keyBindingsButton = new CustomButton("Key Bindings");
+        keyBindingsButton.addActionListener(e -> {
+            ScreenManager.show(ScreenManager.KEY_BINDING_SCREEN);
+        });
+
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout( new FlowLayout(FlowLayout.CENTER,10,10));
         buttonsPanel.setOpaque(false);
@@ -279,6 +285,7 @@ public class SettingsScreen extends BaseScreen{
         settingsPanel.add(effectsSlider);
         settingsPanel.add(musicVolumeLabel);
         settingsPanel.add(musicSlider);
+        settingsPanel.add(keyBindingsButton);
         settingsPanel.add(buttonsPanel);
         return settingsPanel;
     }
