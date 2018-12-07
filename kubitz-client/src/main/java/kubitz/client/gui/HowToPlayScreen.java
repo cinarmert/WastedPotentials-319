@@ -1,8 +1,11 @@
 package kubitz.client.gui;
 
+import sun.swing.SwingUtilities2;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -18,15 +21,15 @@ public class HowToPlayScreen extends BaseScreen {
     @Override
     protected void initializeResources(){
 
-        GridBagConstraints c = new GridBagConstraints();
-
         setBackButton(true);
+
+        GridBagConstraints c = new GridBagConstraints();
 
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridx = 0;
-        c.gridy = 1;
-        c.anchor = GridBagConstraints.NORTH;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.CENTER;
         this.addMain( initializeHowToPlay(),c);
 
     }
@@ -36,7 +39,7 @@ public class HowToPlayScreen extends BaseScreen {
         JPanel howToPlayPanel = new JPanel();
         howToPlayPanel.setLayout( new GridLayout(1,1, 10, 10));
         howToPlayPanel.setMaximumSize(new Dimension( getMainWidth()-20, 30));
-        howToPlayPanel.setBackground( new Color(0,0,0, 0));
+        howToPlayPanel.setOpaque(false);
         howToPlayPanel.add(initializeTabbedPane());
 
         return howToPlayPanel;
@@ -44,8 +47,6 @@ public class HowToPlayScreen extends BaseScreen {
 
     private JTabbedPane initializeTabbedPane() {
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setBorder(new LineBorder(Color.BLACK,2));
-        tabbedPane.setBackground(new Color(204,204,204));
         tabbedPane.setPreferredSize(new Dimension(getMainWidth()-(getMainWidth()/5), getMainHeight()-(getMainHeight()/5)));
 
         tabbedPane.addTab("Classic", initializeClassicTutorial());
@@ -54,6 +55,7 @@ public class HowToPlayScreen extends BaseScreen {
         tabbedPane.addTab("Survival", initializeSurvivalTutorial());
         tabbedPane.addTab("Controls", initializeControlsTutorial());
 
+        tabbedPane.setUI( new CustomTabbedPaneUI());
         return tabbedPane;
     }
 
@@ -186,5 +188,99 @@ public class HowToPlayScreen extends BaseScreen {
         classicTutorialPanel.add(new JLabel("Classic Tutorial"));
 
         return classicTutorialPanel;
+    }
+
+    private class CustomTabbedPaneUI extends BasicTabbedPaneUI {
+        private Color selectColor;
+        private Color deSelectColor;
+        private int inclTab = 4;
+        private int anchoFocoH = 4;
+
+        @Override
+        protected void installDefaults() {
+            super.installDefaults();
+            selectColor = Color.WHITE;
+            deSelectColor = Color.RED;
+
+        }
+
+        @Override
+        protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
+            int width = tabPane.getWidth();
+            int height = tabPane.getHeight();
+            Insets insets = tabPane.getInsets();
+
+            int x = insets.left;
+            int y = insets.top;
+            int w = width - insets.right - insets.left;
+            int h = height - insets.top - insets.bottom;
+
+            y += calculateTabAreaHeight(tabPlacement, runCount, maxTabHeight);
+            h -= (y - insets.top);
+
+            if ( tabPane.getTabCount() > 0  ) {
+                g.setColor(selectColor);
+                g.fillRect(x,y,w,h);
+            }
+
+
+        }
+
+        @Override
+        protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+            Graphics2D g2D = (Graphics2D) g;
+
+            if (isSelected) {
+                g2D.setColor(selectColor);
+            } else {
+                g2D.setColor(deSelectColor);
+
+            }
+
+            g2D.fillRect(x,y,w,h);
+
+        }
+
+        @Override
+        protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected) {
+            g.setFont(font);
+
+            if (isSelected) {
+                g.setColor(deSelectColor);
+            } else { // tab disabled
+                g.setColor(selectColor);
+            }
+
+            int mnemIndex = tabPane.getDisplayedMnemonicIndexAt(tabIndex);
+
+
+            SwingUtilities2.drawStringUnderlineCharAt(tabPane, g,
+                    title, mnemIndex,
+                    textRect.x, textRect.y + metrics.getAscent());
+        }
+
+        @Override
+        protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
+            return 30 + inclTab + super.calculateTabWidth(tabPlacement, tabIndex, metrics);
+        }
+
+        @Override
+        protected int calculateTabHeight(int tabPlacement, int tabIndex, int fontHeight) {
+            if (tabPlacement == LEFT || tabPlacement == RIGHT) {
+                return super.calculateTabHeight(tabPlacement, tabIndex, fontHeight);
+            } else {
+                return anchoFocoH + super.calculateTabHeight(tabPlacement, tabIndex, fontHeight);
+            }
+        }
+
+        @Override
+        protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+            Graphics2D g2D = (Graphics2D) g;
+
+            g2D.setStroke(new BasicStroke(2));
+            g2D.setColor(Color.BLACK);
+            g2D.drawRect(x,y,w,h);
+        }
+
     }
 }
