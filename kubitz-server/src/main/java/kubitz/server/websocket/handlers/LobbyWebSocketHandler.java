@@ -168,7 +168,9 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
         ArrayList<Account> participants = lobby.getPlayers();
         for (Account player : participants){
             for (WebSocketSession session : sessions) {
-                if (player.getId().equals(session.getAttributes().get("playerId"))){
+                logger.info(session.getAttributes().get("playerId").toString());
+                if (player.getId().equals(session.getAttributes().get("playerId").toString())){
+                    logger.info("sending message to " + player.getId());
                     session.sendMessage(getTextLobbyMessage(payload, type));
                 }
             }
