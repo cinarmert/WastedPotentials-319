@@ -23,12 +23,14 @@ public class SettingsScreen extends BaseScreen{
     private JSlider effectsSlider;
     private JSlider musicSlider;
     private JTextField nickNameTextField;
+    private JSpinner themeSpinner;
 
     private Dimension resolution;
     private boolean fullScreen;
     private int masterSound;
     private int effectsSound;
     private int musicSound;
+    private String theme;
 
     private boolean applied;
 
@@ -46,6 +48,7 @@ public class SettingsScreen extends BaseScreen{
         this.masterSound = Config.getMasterSound();
         this.effectsSound = Config.getEffectsSound();
         this.musicSound = Config.getMusicSound();
+        this.theme = Config.getTheme();
 
         setBackButton(true);
 
@@ -80,20 +83,20 @@ public class SettingsScreen extends BaseScreen{
         nickNamePanel.setOpaque(false);
 
         nickNameTextField = new JTextField(Config.getName(),20);
-        nickNameTextField.setBackground(Color.GREEN);
-        nickNameTextField.setForeground(Color.BLACK);
+        nickNameTextField.setBackground(Theme.goodColor);
+        nickNameTextField.setForeground(Theme.goodTextColor);
         nickNameTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 super.keyPressed(e);
 
                 if (Config.getName().equals( nickNameTextField.getText() ) ){
-                    nickNameTextField.setBackground(Color.GREEN);
-                    nickNameTextField.setForeground(Color.BLACK);
+                    nickNameTextField.setBackground(Theme.goodColor);
+                    nickNameTextField.setForeground(Theme.goodTextColor);
                 }
                 else{
-                    nickNameTextField.setBackground(Color.RED);
-                    nickNameTextField.setForeground(Color.WHITE);
+                    nickNameTextField.setBackground(Theme.badColor);
+                    nickNameTextField.setForeground(Theme.badTextColor);
                 }
 
             }
@@ -105,8 +108,8 @@ public class SettingsScreen extends BaseScreen{
             public void actionPerformed(ActionEvent e) {
                 Config.setName(nickNameTextField.getText());
                 RESTRequestManager.login(new Account(Config.getId(), nickNameTextField.getText()));
-                nickNameTextField.setBackground(Color.GREEN);
-                nickNameTextField.setForeground(Color.BLACK);
+                nickNameTextField.setBackground(Theme.goodColor);
+                nickNameTextField.setForeground(Theme.goodTextColor);
             }
         });
 
@@ -153,7 +156,24 @@ public class SettingsScreen extends BaseScreen{
 
             }
         });
-        fullScreenCheckBox.setBackground(Color.WHITE);
+        fullScreenCheckBox.setBackground(Color.WHITE);//todo
+
+        List<String> spinnerThemeList = new ArrayList<>();
+        spinnerThemeList.add(ThemeManager.RED_THEME);
+        spinnerThemeList.add(ThemeManager.BLUE_THEME);
+
+        themeSpinner = new JSpinner( new SpinnerListModel( spinnerThemeList ) );
+        themeSpinner.setValue( Config.getTheme());
+        ((JSpinner.DefaultEditor)themeSpinner.getEditor()).getTextField().setColumns(6);
+        ((JSpinner.DefaultEditor)themeSpinner.getEditor()).getTextField().setEditable(false);
+
+        themeSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                theme = (String) ((JSpinner)e.getSource()).getValue();
+                applied = false;
+            }
+        });
 
         //====================================================Sound==========================================================
         JLabel soundText = new JLabel("SOUND");
@@ -173,7 +193,7 @@ public class SettingsScreen extends BaseScreen{
                 0, 100, Config.getMasterSound());
         masterSlider.setLabelTable(labels);
         masterSlider.setPaintLabels(true);
-        masterSlider.setBackground(Color.WHITE);
+        masterSlider.setBackground(Color.WHITE);//todo
         masterSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -193,7 +213,7 @@ public class SettingsScreen extends BaseScreen{
                 0, 100, Config.getEffectsSound());
         effectsSlider.setLabelTable(labels);
         effectsSlider.setPaintLabels(true);
-        effectsSlider.setBackground(Color.WHITE);
+        effectsSlider.setBackground(Color.WHITE);//todo
         effectsSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -211,7 +231,7 @@ public class SettingsScreen extends BaseScreen{
                 0, 100, Config.getMusicSound());
         musicSlider.setLabelTable(labels);
         musicSlider.setPaintLabels(true);
-        musicSlider.setBackground(Color.WHITE);
+        musicSlider.setBackground(Color.WHITE);//todo
         musicSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -279,6 +299,7 @@ public class SettingsScreen extends BaseScreen{
         settingsPanel.add(graphicsText);
         settingsPanel.add(resolutionPanel);
         settingsPanel.add(fullScreenCheckBox);
+        settingsPanel.add(themeSpinner);
         settingsPanel.add(soundText);
         settingsPanel.add(masterVolumeLabel);
         settingsPanel.add(masterSlider);
@@ -304,6 +325,9 @@ public class SettingsScreen extends BaseScreen{
         MainFrame.getInstance().setVisible(false);
 
         Config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
+        Config.setTheme(theme);
+
+        ThemeManager.setTheme(theme);
 
         if (fullScreen) {
             setFullScreen();
@@ -322,6 +346,7 @@ public class SettingsScreen extends BaseScreen{
     protected void backButtonAction(){
 
         resolutionSpinner.setValue( new Resolution(Config.getResolution().width,Config.getResolution().height));
+        themeSpinner.setValue( Config.getTheme());
         fullScreenCheckBox.setSelected( Config.isFullScreen());
         masterSlider.setValue( Config.getMasterSound());
         effectsSlider.setValue(Config.getEffectsSound());

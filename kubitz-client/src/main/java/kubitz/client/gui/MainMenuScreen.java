@@ -30,7 +30,7 @@ public class MainMenuScreen extends BaseScreen{
         JPanel logoPanel = new JPanel();
         logoPanel.setLayout( new GridLayout(2,1));
         logoPanel.setMaximumSize( new Dimension( getMainWidth()/3, getMainHeight()/8));
-        logoPanel.setBackground( new Color(0,0,0,0));
+        logoPanel.setOpaque(false);
 
         JLabel kubitz = new JLabel("ku-Bitz");
         kubitz.setFont( new Font( kubitz.getFont().getName(), Font.PLAIN, 50));
@@ -50,7 +50,7 @@ public class MainMenuScreen extends BaseScreen{
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout( new GridLayout(5,1, 10, 10));
         buttonsPanel.setMaximumSize(new Dimension( getMainWidth(), 30));
-        buttonsPanel.setBackground( new Color(0,0,0, 0));
+        buttonsPanel.setOpaque(false);
 
         CustomButton playButton = new CustomButton("Play");
         playButton.addActionListener(new ActionListener() {
@@ -65,9 +65,6 @@ public class MainMenuScreen extends BaseScreen{
         howToPlayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                LoadingScreen.setMessage("Loading Leaderboard");
-                LoadingScreen.start();
 
                 ScreenManager.show(ScreenManager.HOW_TO_PLAY_SCREEN);
             }
@@ -137,7 +134,7 @@ public class MainMenuScreen extends BaseScreen{
         });
 
         JPanel settingsAndCredits = new JPanel(new GridLayout(1,2,10,0));
-        settingsAndCredits.setBackground( new Color(0,0,0,0));
+        settingsAndCredits.setOpaque(false);
         settingsAndCredits.add(settingsButton);
         settingsAndCredits.add(creditsButton);
 

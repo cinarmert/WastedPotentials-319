@@ -50,8 +50,8 @@ public class LobbiesScreen extends BaseScreen {
         JPanel lobbies = new JPanel();
 
         lobbies.setLayout(new BorderLayout());
-        lobbies.setBackground( new Color(204,204,204));
-        lobbies.setBorder(new LineBorder(Color.BLACK, 2));
+        lobbies.setBackground( Theme.tablePanelColor);
+        lobbies.setBorder(new LineBorder(Theme.borderColor, 2));
         lobbies.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
 
         lobbies.add(initializeList(), BorderLayout.LINE_START);
@@ -62,7 +62,7 @@ public class LobbiesScreen extends BaseScreen {
 
     private JPanel initializeButtons(){
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground( new Color(204,204,204));
+        buttonPanel.setBackground( Theme.tablePanelColor);
         buttonPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
@@ -106,10 +106,8 @@ public class LobbiesScreen extends BaseScreen {
         table = new JTable(null){
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
                 Component returnComp = super.prepareRenderer(renderer, row, column);
-                Color alternateColor = new Color(221,221,221);
-                Color whiteColor = Color.WHITE;
                 if (!returnComp.getBackground().equals(getSelectionBackground())){
-                    Color bg = (row % 2 == 0 ? alternateColor : whiteColor);
+                    Color bg = (row % 2 == 0 ? Theme.alternateColor1 : Theme.alternateColor2);
                     returnComp.setBackground(bg);
                 }
                 return returnComp;
@@ -125,15 +123,15 @@ public class LobbiesScreen extends BaseScreen {
         table.setAutoCreateRowSorter(true);
         table.setShowGrid(false);
         table.setRowHeight(30);
-        table.getTableHeader().setBackground(new Color(153,153,153));
-        table.setSelectionBackground(new Color(153,153,153));
+        table.getTableHeader().setBackground(Theme.tableHeaderColor);
+        table.setSelectionBackground(Theme.tableHeaderColor);
         table.setOpaque(true);
         table.setRowSelectionAllowed(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getViewport().setBackground(new Color(221,221,221));
+        scrollPane.getViewport().setBackground(Theme.alternateColor1);
         scrollPane.setOpaque(false);
         list.add(scrollPane);
 

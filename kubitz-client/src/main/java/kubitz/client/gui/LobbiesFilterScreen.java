@@ -55,8 +55,8 @@ public class LobbiesFilterScreen extends BaseScreen {
 
     private JPanel initializeContainer() {
         JPanel container = new JPanel( new GridBagLayout());
-        container.setBackground(new Color(204,204,204));
-        container.setBorder(new LineBorder(Color.BLACK, 2));
+        container.setBackground(Theme.tablePanelColor);
+        container.setBorder(new LineBorder(Theme.borderColor, 2));
 
         container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
 
@@ -82,7 +82,7 @@ public class LobbiesFilterScreen extends BaseScreen {
 
     private JPanel initializeFilterOptions() {
         JPanel filterOptions = new JPanel();
-        filterOptions.setBackground(new Color(204,204,204));
+        filterOptions.setBackground(Theme.tablePanelColor);
         filterOptions.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
@@ -145,7 +145,7 @@ public class LobbiesFilterScreen extends BaseScreen {
 
     private JPanel initializeHeader() {
         JPanel header = new JPanel(new GridLayout());
-        header.setBackground(new Color(204,204,204));
+        header.setBackground(Theme.tablePanelColor);
         JLabel filter = new JLabel("Filter");
         try {
             filter.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("/icons/filter.png"))));

@@ -21,6 +21,7 @@ public class Config {
     private static String id;
     private static String name;
     private static long lastPlayedDailyChallenge;
+    private static String theme;
 
     private static Properties readProps(){
         Properties props;
@@ -43,6 +44,11 @@ public class Config {
             Config.id = props.getProperty("id");
             Config.name = props.getProperty("name");
             Config.lastPlayedDailyChallenge = Long.parseLong(props.getProperty("lastPlayedDailyChallenge"));
+            Config.theme = props.getProperty("theme");
+
+            if ( resolution == null || theme  == null ){
+                return createDefaultConfig();
+            }
 
             return props;
 
@@ -53,8 +59,6 @@ public class Config {
     }
 
     private static Properties createDefaultConfig(){
-
-        Properties props;
 
         try {
             props = new Properties();
@@ -67,6 +71,7 @@ public class Config {
             props.setProperty("effects", ""+100);
             props.setProperty("music", ""+100);
             props.setProperty("lastPlayedDailyChallenge", ""+(-1));
+            props.setProperty("theme", ThemeManager.RED_THEME);
 
             updateFile();
 
@@ -75,6 +80,7 @@ public class Config {
             Config.masterSound = 100;
             Config.effectsSound = 100;
             Config.musicSound = 100;
+            Config.theme = props.getProperty("theme");
 
             return props;
         }
@@ -92,6 +98,16 @@ public class Config {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setTheme( String theme){
+        props.setProperty("theme", theme);
+        Config.theme = props.getProperty("theme");
+        updateFile();
+    }
+
+    public static String getTheme(){
+        return theme;
     }
 
     public static long getLastPlayedDailyChallenge() {

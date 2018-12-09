@@ -25,13 +25,6 @@ public class CustomButton extends JButton {
 
     private class CustomButtonUI extends BasicButtonUI implements MouseListener{
 
-        private final Color NORMALCOLOR = Color.WHITE;
-        private final Color HOVERCOLOR = Color.RED;
-        private final Color PRESSEDCOLOR = new Color( 140, 0, 0, 255);
-        private final Color NORMALFONTCOLOR = Color.RED;
-        private final Color HOVERFONTCOLOR = Color.WHITE;
-        private final Color PRESSEDFONTCOLOR = Color.WHITE;
-
         public CustomButtonUI() {
             super();
         }
@@ -51,8 +44,8 @@ public class CustomButton extends JButton {
         @Override
         protected void installDefaults(AbstractButton btn) {
             super.installDefaults(btn);
-            btn.setBackground(this.NORMALCOLOR);
-            btn.setForeground(this.NORMALFONTCOLOR);
+            btn.setBackground(Theme.normalColor);
+            btn.setForeground(Theme.normalFontColor);
             btn.setHorizontalTextPosition(SwingConstants.CENTER);
         }
 
@@ -63,27 +56,27 @@ public class CustomButton extends JButton {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), this.PRESSEDCOLOR, this.PRESSEDFONTCOLOR);
+            changeButtonStyle( (JButton) e.getComponent(), Theme.pressColor, Theme.pressFontColor);
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), this.PRESSEDCOLOR, this.PRESSEDFONTCOLOR);
+            changeButtonStyle( (JButton) e.getComponent(), Theme.pressColor, Theme.pressFontColor);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), this.NORMALCOLOR, this.NORMALFONTCOLOR);
+            changeButtonStyle( (JButton) e.getComponent(), Theme.normalColor, Theme.normalFontColor);
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), this.HOVERCOLOR, this.HOVERFONTCOLOR);
+            changeButtonStyle( (JButton) e.getComponent(), Theme.hoverColor, Theme.hoverFontColor);
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), this.NORMALCOLOR, this.NORMALFONTCOLOR);
+            changeButtonStyle( (JButton) e.getComponent(), Theme.normalColor, Theme.normalFontColor);
         }
 
 

@@ -20,7 +20,6 @@ public abstract class BaseGameScreen extends BaseScreen{
     private CubeUI cubeSouthUI;
     protected CardUI cardUI;
     private BaseGame baseGame;
-    public Image background;
     protected JPanel cardPanel;
     private Cube selectedCube;
     private int[] selectedCubePos;
@@ -29,8 +28,6 @@ public abstract class BaseGameScreen extends BaseScreen{
     public BaseGameScreen( Dimension resolution) {
 
         super(resolution);
-
-        background = new ImageIcon(getClass().getResource("/backgrounds/game_background.jpg")).getImage();
 
     }
 
@@ -91,7 +88,7 @@ public abstract class BaseGameScreen extends BaseScreen{
             @Override
             public void paintComponent(Graphics g){
                 super.paintComponent(g);
-                g.setColor(new Color(0,0,0,120));
+                g.setColor(Theme.maskColorLight);
                 g.fillRect(0,0,getWidth(),getHeight());
             }
         };
@@ -101,7 +98,7 @@ public abstract class BaseGameScreen extends BaseScreen{
             @Override
             public void paintComponent(Graphics g){
                 super.paintComponent(g);
-                g.setColor(new Color(0,0,0,120));
+                g.setColor(Theme.maskColorLight);
                 g.fillRect(0,0,getWidth(),getHeight());
             }
         };
@@ -111,7 +108,7 @@ public abstract class BaseGameScreen extends BaseScreen{
             @Override
             public void paintComponent(Graphics g){
                 super.paintComponent(g);
-                g.setColor(new Color(0,0,0,120));
+                g.setColor(Theme.maskColorLight);
                 g.fillRect(0,0,getWidth(),getHeight());
             }
         };
@@ -121,7 +118,7 @@ public abstract class BaseGameScreen extends BaseScreen{
             @Override
             public void paintComponent(Graphics g){
                 super.paintComponent(g);
-                g.setColor( new Color(0,0,0,120));
+                g.setColor( Theme.maskColorLight);
                 g.fillRect(0,0,getWidth(),getHeight());
             }
         };
@@ -283,6 +280,6 @@ public abstract class BaseGameScreen extends BaseScreen{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage( background, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage( Theme.gameBackgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 }

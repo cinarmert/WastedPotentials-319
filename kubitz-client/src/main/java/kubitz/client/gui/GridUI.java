@@ -19,8 +19,8 @@ public class GridUI extends JPanel {
         this.grid = grid;
 
         setLayout( new GridLayout(grid.getSize(), grid.getSize(), 10,10));
-        setBackground( Color.BLACK);
-        setBorder( new LineBorder(Color.BLACK, 20) );
+        setBackground( Theme.borderColor);
+        setBorder( new LineBorder(Theme.borderColor, 20) );
 
         cubes = new CubeUI[ grid.getSize() ][grid.getSize()];
 

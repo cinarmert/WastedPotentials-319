@@ -21,7 +21,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
         super(resolution);
 
         time = new JLabel("00:00:00");
-        time.setForeground(Color.BLACK);
+        time.setForeground(Theme.gameClockColor);
         time.setFont( new Font( time.getFont().getName(), Font.PLAIN, 50));
 
         timerPanel = new JPanel();

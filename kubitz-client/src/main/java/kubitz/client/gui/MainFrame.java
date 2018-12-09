@@ -16,7 +16,6 @@ import java.util.UUID;
 public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
-    private static Image background;
     private static Dimension resolution;
 
     private MoveController moveController;
@@ -25,6 +24,7 @@ public class MainFrame extends JFrame {
     public MainFrame(){
         instance = this;
 
+        ThemeManager.setTheme(Config.getTheme());
         new SoundManager();
         initializeAccount();
         initializeResources();
@@ -57,7 +57,6 @@ public class MainFrame extends JFrame {
     private void initializeResources(){
 
         resolution = Config.getResolution();
-        background = new ImageIcon(getClass().getResource("/backgrounds/background.png")).getImage();
         moveController = new MoveController();
 
         if( Config.isFullScreen()){
@@ -84,10 +83,6 @@ public class MainFrame extends JFrame {
 
     public static Dimension getResolution(){
         return resolution;
-    }
-
-    public static Image getBackgroundImage() {
-        return background;
     }
 
     public void setResolution(){

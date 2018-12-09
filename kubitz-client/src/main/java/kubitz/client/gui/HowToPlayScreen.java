@@ -87,8 +87,8 @@ public class HowToPlayScreen extends BaseScreen {
             setWrapStyleWord(true);
             setEditable(false);
             setFont(new Font("Calibri", Font.PLAIN,16));
-            setBackground(new Color(204,204,204));
-            setBorder(new LineBorder(Color.BLACK,2));
+            setBackground(Theme.tablePanelColor);
+            setBorder(new LineBorder(Theme.borderColor,2));
 
         }});
         controlsTutorialPanel.add(mouseIcon);
@@ -97,8 +97,8 @@ public class HowToPlayScreen extends BaseScreen {
             setWrapStyleWord(true);
             setEditable(false);
             setFont(new Font("Calibri", Font.PLAIN,16));
-            setBackground(new Color(204,204,204));
-            setBorder(new LineBorder(Color.BLACK,2));
+            setBackground(Theme.tablePanelColor);
+            setBorder(new LineBorder(Theme.borderColor,2));
         }});
 
         return controlsTutorialPanel;
@@ -130,7 +130,7 @@ public class HowToPlayScreen extends BaseScreen {
             setWrapStyleWord(true);
             setEditable(false);
             setFont(new Font("Calibri", Font.PLAIN,16));
-            setBackground(new Color(204,204,204));
+            setBackground(Theme.tablePanelColor);
             setBorder(null);
             setAlignmentY(BOTTOM_ALIGNMENT);
 
@@ -163,7 +163,7 @@ public class HowToPlayScreen extends BaseScreen {
             setWrapStyleWord(true);
             setEditable(false);
             setFont(new Font("Calibri", Font.PLAIN,16));
-            setBackground(new Color(204,204,204));
+            setBackground(Theme.tablePanelColor);
             setBorder(null);
             setAlignmentY(BOTTOM_ALIGNMENT);
 
@@ -191,16 +191,12 @@ public class HowToPlayScreen extends BaseScreen {
     }
 
     private class CustomTabbedPaneUI extends BasicTabbedPaneUI {
-        private Color selectColor;
-        private Color deSelectColor;
         private int inclTab = 4;
         private int anchoFocoH = 4;
 
         @Override
         protected void installDefaults() {
             super.installDefaults();
-            selectColor = Color.WHITE;
-            deSelectColor = Color.RED;
             tabPane.setFocusable(false);
 
         }
@@ -220,7 +216,7 @@ public class HowToPlayScreen extends BaseScreen {
             h -= (y - insets.top);
 
             if ( tabPane.getTabCount() > 0  ) {
-                g.setColor(selectColor);
+                g.setColor(Theme.normalColor);
                 g.fillRect(x,y,w,h);
             }
 
@@ -232,9 +228,9 @@ public class HowToPlayScreen extends BaseScreen {
             Graphics2D g2D = (Graphics2D) g;
 
             if (isSelected) {
-                g2D.setColor(selectColor);
+                g2D.setColor(Theme.normalColor);
             } else {
-                g2D.setColor(deSelectColor);
+                g2D.setColor(Theme.hoverColor);
 
             }
 
@@ -247,9 +243,9 @@ public class HowToPlayScreen extends BaseScreen {
             g.setFont(font);
 
             if (isSelected) {
-                g.setColor(deSelectColor);
+                g.setColor(Theme.normalFontColor);
             } else { // tab disabled
-                g.setColor(selectColor);
+                g.setColor(Theme.hoverFontColor);
             }
 
             int mnemIndex = tabPane.getDisplayedMnemonicIndexAt(tabIndex);
@@ -279,7 +275,7 @@ public class HowToPlayScreen extends BaseScreen {
             Graphics2D g2D = (Graphics2D) g;
 
             g2D.setStroke(new BasicStroke(2));
-            g2D.setColor(Color.BLACK);
+            g2D.setColor(Theme.borderColor);
             g2D.drawRect(x,y,w,h);
         }
 

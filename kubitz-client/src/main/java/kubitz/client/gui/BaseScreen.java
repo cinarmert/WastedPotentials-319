@@ -140,7 +140,7 @@ public abstract class BaseScreen extends JPanel implements Screen {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage( MainFrame.getBackgroundImage(), 0, 0, getWidth(), getHeight(), this);
+        g.drawImage( Theme.backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 
     protected abstract void initializeResources();

@@ -42,11 +42,10 @@ public class CreateLobbyScreen extends BaseScreen{
 
     private JPanel initializeContainer() {
         JPanel container = new JPanel(new GridBagLayout());
-        container.setBorder(new LineBorder(Color.BLACK, 2));
-        container.setBackground( new Color(204,204,204));
-        container.setBackground( new Color(204,204,204));
+        container.setBorder(new LineBorder(Theme.borderColor, 2));
+        container.setBackground( Theme.tablePanelColor);
 
-        container.setBorder( new LineBorder(Color.BLACK, 2));
+        container.setBorder( new LineBorder(Theme.borderColor, 2));
         container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
 
         GridBagConstraints c = new GridBagConstraints();
@@ -97,7 +96,7 @@ public class CreateLobbyScreen extends BaseScreen{
 
     private JPanel initializePrivateCheckBox() {
         JPanel privateCheckBoxPanel = new JPanel(new BorderLayout());
-        privateCheckBoxPanel.setBackground( new Color(204,204,204));
+        privateCheckBoxPanel.setBackground( Theme.tablePanelColor);
 
         privateCheckBox = new JCheckBox("Private Lobby (Invite Only)");
         privateCheckBoxPanel.add(privateCheckBox,BorderLayout.CENTER);
@@ -106,7 +105,7 @@ public class CreateLobbyScreen extends BaseScreen{
 
     private JPanel initializePlayerBox() {
         JPanel playerPanel = new JPanel(new BorderLayout());
-        playerPanel.setBackground( new Color(204,204,204));
+        playerPanel.setBackground( Theme.tablePanelColor);
 
         Integer[] sizeList = new Integer[]{1,2,3,4};
 
@@ -121,7 +120,7 @@ public class CreateLobbyScreen extends BaseScreen{
 
     private JPanel initializeModeBox() {
         JPanel modePanel = new JPanel(new BorderLayout());
-        modePanel.setBackground( new Color(204,204,204));
+        modePanel.setBackground( Theme.tablePanelColor);
         modePanel.add(new JLabel("Game Mode", JLabel.LEFT), BorderLayout.WEST);
 
         String[] modeList = {Lobby.MODE_CLASSIC, Lobby.MODE_SWITCH};
@@ -146,7 +145,7 @@ public class CreateLobbyScreen extends BaseScreen{
 
     private JPanel initializeNameField() {
         JPanel namePanel = new JPanel(new BorderLayout());
-        namePanel.setBackground( new Color(204,204,204));
+        namePanel.setBackground( Theme.tablePanelColor);
         namePanel.add(new JLabel("Lobby Name", JLabel.LEFT),BorderLayout.WEST);
 
         nameField = new JTextField("Enter name...");

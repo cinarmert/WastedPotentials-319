@@ -15,9 +15,9 @@ public class CubeUI extends JPanel {
                 MainFrame.getInstance().getResolution().height/20));
 
         if ( cube == null)
-            setBackground(Color.GRAY);
+            setBackground(Theme.nullColor);
         else
-            setBackground(Color.WHITE);
+            setBackground(Theme.secondaryColor);
         this.cube = cube;
     }
 
@@ -34,11 +34,11 @@ public class CubeUI extends JPanel {
     public void paintComponent( Graphics g){
         super.paintComponent(g);
 
-        setBackground( Color.GRAY);
+        setBackground( Theme.nullColor);
 
         if (cube != null) {
-            g.setColor(Color.RED);
-            setBackground( Color.WHITE);
+            g.setColor(Theme.primaryColor);
+            setBackground( Theme.secondaryColor);
 
             Polygon triangleLeft = new Polygon();
             triangleLeft.addPoint(0,0);
@@ -55,34 +55,34 @@ public class CubeUI extends JPanel {
                     g.fillOval(0, 0, getWidth(), getHeight());
                     break;
                 case Cube.RED:
-                    setBackground(Color.RED);
+                    setBackground(Theme.primaryColor);
                     break;
                 case Cube.WHITE:
-                    setBackground(Color.WHITE);
+                    setBackground(Theme.secondaryColor);
                     break;
                 case Cube.WHITE_DOT:
-                    setBackground(Color.RED);
-                    g.setColor(Color.WHITE);
+                    setBackground(Theme.primaryColor);
+                    g.setColor(Theme.secondaryColor);
                     g.fillOval(0, 0, getWidth(), getHeight());
                     break;
                 case Cube.TRIANGLE_LD:
-                    setBackground(Color.RED);
-                    g.setColor(Color.WHITE);
+                    setBackground(Theme.primaryColor);
+                    g.setColor(Theme.secondaryColor);
                     g.fillPolygon( triangleRight );
                     break;
                 case Cube.TRIANGLE_LU:
                     g.fillPolygon( triangleLeft );
                     break;
                 case Cube.TRIANGLE_RD:
-                    setBackground(Color.RED);
-                    g.setColor(Color.WHITE);
+                    setBackground(Theme.primaryColor);
+                    g.setColor(Theme.secondaryColor);
                     g.fillPolygon( triangleLeft );
                     break;
                 case Cube.TRIANGLE_RU:
                     g.fillPolygon( triangleRight );
                     break;
                 default:
-                    setBackground(Color.WHITE);
+                    setBackground(Theme.secondaryColor);
                     break;
             }
         }

@@ -100,7 +100,7 @@ public class LoadingScreen extends JDialog{
             int i = 0;
             while (true) {
                 renderFrame(g, i);
-                i++;
+                i++;// ToDo if i = 900(3min) timeout?
                 if (i == 4) i = 0;
                 try {
                     Thread.sleep(200);

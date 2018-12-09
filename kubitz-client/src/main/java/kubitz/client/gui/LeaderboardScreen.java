@@ -60,17 +60,14 @@ public class LeaderboardScreen extends BaseScreen {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new GridLayout(1,1, 10, 10));
         mainPanel.setPreferredSize(new Dimension( getMainWidth()*5/6, getMainHeight()*5/6));
-        mainPanel.setBackground(new Color(0,0,0,200));
+        mainPanel.setBackground(Theme.maskColorDark);
 
         table = new JTable(new LeaderboardTableModel()){
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
                 Component returnComp = super.prepareRenderer(renderer, row, column);
-                Color alternateColor = new Color(220,221,221);
-                Color whiteColor = Color.WHITE;
                 if (!returnComp.getBackground().equals(getSelectionBackground())){
-                    Color bg = (row % 2 == 0 ? alternateColor : whiteColor);
+                    Color bg = (row % 2 == 0 ? Theme.alternateColor1 : Theme.alternateColor2);
                     returnComp .setBackground(bg);
-                    bg = null;
                 }
                 return returnComp;
             }
@@ -79,15 +76,15 @@ public class LeaderboardScreen extends BaseScreen {
         table.setAutoCreateRowSorter(true);
         table.setShowGrid(false);
         table.setRowHeight(30);
-        table.getTableHeader().setBackground(new Color(153,153,153));
-        table.setSelectionBackground(new Color(153,153,153));
+        table.getTableHeader().setBackground(Theme.tableHeaderColor);
+        table.setSelectionBackground(Theme.tableHeaderColor);
         table.setOpaque(true);
         table.setRowSelectionAllowed(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getViewport().setBackground(new Color(221,221,221));
+        scrollPane.getViewport().setBackground(Theme.alternateColor1);
         scrollPane.setOpaque(false);
 
         mainPanel.add(scrollPane);

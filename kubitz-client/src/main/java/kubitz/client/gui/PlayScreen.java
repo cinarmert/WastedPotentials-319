@@ -41,7 +41,7 @@ public class PlayScreen extends BaseScreen{
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout( new GridLayout(3,1, 10, 10));
         buttonsPanel.setMaximumSize(new Dimension( getMainWidth()/5, 30));
-        buttonsPanel.setBackground( new Color(0,0,0, 0));
+        buttonsPanel.setOpaque(false);
 
         CustomButton multiplayerButton = new CustomButton("Multiplayer (Classic / Switch)");
         multiplayerButton.addActionListener(new ActionListener() {

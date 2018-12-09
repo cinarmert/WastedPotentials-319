@@ -59,8 +59,8 @@ public class LobbyScreen extends BaseScreen {
 
     private JPanel initializeContainer() {
         JPanel container = new JPanel(new GridBagLayout());
-        container.setBorder(new LineBorder(Color.BLACK, 2));
-        container.setBackground( new Color(204,204,204));
+        container.setBorder(new LineBorder(Theme.borderColor, 2));
+        container.setBackground( Theme.tablePanelColor);
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -98,7 +98,7 @@ public class LobbyScreen extends BaseScreen {
         GridBagConstraints c = new GridBagConstraints();
 
         JTextField inviteTextField;
-        invitePanel.setBackground( new Color(204,204,204));
+        invitePanel.setBackground( Theme.tablePanelColor);
         inviteTextField = new JTextField("Enter a nickname...");
 
         c.anchor = GridBagConstraints.CENTER;
@@ -126,11 +126,11 @@ public class LobbyScreen extends BaseScreen {
 
         c.gridx = 0;
         c.gridy = 0;
-        chatPanel.setBackground( new Color(204,204,204));
+        chatPanel.setBackground( Theme.tablePanelColor);
 
         chatBox = new JTextArea();
         chatBox.setEditable(false);
-        chatBox.setBackground(new Color(153,153,153));
+        chatBox.setBackground(Theme.tableHeaderColor);
 
         JScrollPane chatScroll = new JScrollPane(chatBox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         chatScroll.setPreferredSize(new Dimension(getMainWidth()/2,100));
@@ -158,7 +158,7 @@ public class LobbyScreen extends BaseScreen {
     private JPanel initializeButtons() {
 
         JPanel buttonPanel = new JPanel(new GridBagLayout());
-        buttonPanel.setBackground( new Color(204,204,204));
+        buttonPanel.setBackground( Theme.tablePanelColor);
 
         GridBagConstraints c = new GridBagConstraints();
 

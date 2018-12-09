@@ -25,7 +25,7 @@ public class CardUI extends JPanel {
 
         this.card = card.getGrid();
         setLayout( new GridLayout(card.getSize(),card.getSize()));
-        setBorder( new LineBorder(Color.BLACK,5));
+        setBorder( new LineBorder(Theme.borderColor,5));
 
         cubes = new CubeUI[card.getSize()][card.getSize()];
 
