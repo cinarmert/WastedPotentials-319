@@ -80,7 +80,7 @@ public class CreditsScreen extends BaseScreen{
             add(new JLabel(name,JLabel.CENTER), BorderLayout.CENTER);
             setPreferredSize( new Dimension( getMainWidth()/5, getMainHeight()/20));
             setBorder(new LineBorder(Theme.borderColor));
-            setBackground(Theme.foregroundColor);
+            setBackground(Theme.backgroundColor);
         }};
     }
 
