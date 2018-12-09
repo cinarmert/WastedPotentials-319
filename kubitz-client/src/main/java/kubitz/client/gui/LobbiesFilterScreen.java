@@ -49,8 +49,7 @@ public class LobbiesFilterScreen extends BaseScreen {
     @Override
     public void backButtonAction(){
 
-        // ToDo get original filters
-
+        update();
         super.backButtonAction();
     }
 
