@@ -24,7 +24,6 @@ public class PlayScreen extends BaseScreen{
 
         setBackButton(true);
 
-        c.anchor = GridBagConstraints.NORTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridx = 0;
@@ -49,8 +48,22 @@ public class PlayScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //((LobbiesScreen)ScreenManager.getScreen(ScreenManager.LOBBIES_SCREEN)).refresh();
-                ScreenManager.show(ScreenManager.LOBBIES_SCREEN);
+                LoadingScreen.setMessage("Loading Lobbies");
+                LoadingScreen.start();
+
+                // ToDo wtf screen is not visible
+                if (ScreenManager.canShown(ScreenManager.LOBBIES_SCREEN)) {
+                    ((LobbiesScreen) ScreenManager.getScreen(ScreenManager.LOBBIES_SCREEN)).refresh();
+                    ScreenManager.show(ScreenManager.LOBBIES_SCREEN);
+                    LoadingScreen.stop();
+                }
+                else {
+                    LoadingScreen.stop();
+                    JOptionPane.showMessageDialog( PlayScreen.this,
+                            "Connection Failed!",
+                            "ERROR",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 

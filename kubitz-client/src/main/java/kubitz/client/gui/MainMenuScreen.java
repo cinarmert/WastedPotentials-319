@@ -66,6 +66,9 @@ public class MainMenuScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                LoadingScreen.setMessage("Loading Leaderboard");
+                LoadingScreen.start();
+
                 ScreenManager.show(ScreenManager.HOW_TO_PLAY_SCREEN);
             }
         });
@@ -76,8 +79,22 @@ public class MainMenuScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN).update();
-                ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
+                LoadingScreen.setMessage("Loading Leaderboard");
+                LoadingScreen.start();
+
+                // ToDo wtf screen is not visible
+                if (ScreenManager.canShown(ScreenManager.LEADERBOARD_SCREEN)){
+                    ((LeaderboardScreen)ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN)).onShow();
+                    ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
+                    LoadingScreen.stop();
+                }
+                else{
+                    LoadingScreen.stop();
+                    JOptionPane.showMessageDialog( MainMenuScreen.this,
+                            "Connection Failed!",
+                            "ERROR",
+                            JOptionPane.ERROR_MESSAGE);
+                }
 
             }
         });
