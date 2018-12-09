@@ -20,20 +20,18 @@ public class MainFrame extends JFrame {
     private static Dimension resolution;
 
     private MoveController moveController;
-    private SoundManager soundManager;
     private Account account;
 
     public MainFrame(){
         instance = this;
 
-        soundManager = new SoundManager();
-        soundManager.initializeVolumes((double)Config.getMasterSound(),
-                (double)Config.getEffectsSound(), (double)Config.getMusicSound());
-
+        new SoundManager();
         initializeAccount();
         initializeResources();
 
-        soundManager.startBackgroundMusic();
+        SoundManager.initializeVolumes((double)Config.getMasterSound(),
+                (double)Config.getEffectsSound(), (double)Config.getMusicSound());
+        SoundManager.startBackgroundMusic();
     }
 
     private void initializeAccount() {
@@ -97,10 +95,5 @@ public class MainFrame extends JFrame {
         setSize(resolution);
 
         ScreenManager.updateResolutions();
-    }
-
-    public SoundManager getSoundManager()
-    {
-        return soundManager;
     }
 }

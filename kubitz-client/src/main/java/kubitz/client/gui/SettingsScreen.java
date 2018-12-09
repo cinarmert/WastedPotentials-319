@@ -1,6 +1,7 @@
 package kubitz.client.gui;
 
 import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.sound.SoundManager;
 import kubitz.client.storage.Account;
 
 import javax.swing.*;
@@ -179,11 +180,11 @@ public class SettingsScreen extends BaseScreen{
 
                 JSlider source = (JSlider)e.getSource();
                 if (!source.getValueIsAdjusting()) {
-                    masterSound = (int) source.getValue();
-                    MainFrame.getInstance().getSoundManager().changeMusicVolume(
-                            (double)((masterSlider.getValue()*musicSlider.getValue())/100));
-                    MainFrame.getInstance().getSoundManager().changeEffectsVolume(
-                            (double)((masterSlider.getValue()*effectsSlider.getValue())/100));
+                    masterSound = sliderAction( source);
+                    SoundManager.changeMusicVolume(
+                            (double)((masterSound*musicSound)/100));
+                    SoundManager.changeEffectsVolume(
+                            (double)((masterSound*effectsSound)/100));
                 }
             }
         });
@@ -199,15 +200,15 @@ public class SettingsScreen extends BaseScreen{
 
                 JSlider source = (JSlider)e.getSource();
                 if (!source.getValueIsAdjusting()) {
-                    effectsSound = (int) source.getValue();
-                    MainFrame.getInstance().getSoundManager().changeEffectsVolume(
-                            (double)((masterSlider.getValue()*effectsSlider.getValue())/100));
+                    effectsSound = sliderAction(source);
+                    SoundManager.changeEffectsVolume(
+                            (double)((masterSound*effectsSound)/100));
                 }
             }
         });
 
         musicSlider = new JSlider(JSlider.HORIZONTAL,
-                0, 100, Config.getMasterSound());
+                0, 100, Config.getMusicSound());
         musicSlider.setLabelTable(labels);
         musicSlider.setPaintLabels(true);
         musicSlider.setBackground(Color.WHITE);
@@ -217,9 +218,9 @@ public class SettingsScreen extends BaseScreen{
 
                 JSlider source = (JSlider)e.getSource();
                 if (!source.getValueIsAdjusting()) {
-                    musicSound = (int) source.getValue();
-                    MainFrame.getInstance().getSoundManager().changeMusicVolume(
-                            (double)((masterSlider.getValue()*musicSlider.getValue())/100));
+                    musicSound = sliderAction(source);
+                    SoundManager.changeMusicVolume(
+                            (double)((masterSound*musicSound)/100));
                 }
             }
         });
@@ -290,11 +291,8 @@ public class SettingsScreen extends BaseScreen{
         return settingsPanel;
     }
 
-    private int sliderAction(ChangeEvent e){
-        JSlider source = (JSlider)e.getSource();
-
+    private int sliderAction(JSlider source){
         applied = false;
-
         return source.getValue();
     }
 
@@ -328,7 +326,7 @@ public class SettingsScreen extends BaseScreen{
         masterSlider.setValue( Config.getMasterSound());
         effectsSlider.setValue(Config.getEffectsSound());
         musicSlider.setValue(Config.getMusicSound());
-        MainFrame.getInstance().getSoundManager().initializeVolumes((double)Config.getMasterSound(),
+        SoundManager.initializeVolumes((double)Config.getMasterSound(),
                 (double)Config.getEffectsSound(), (double)Config.getMusicSound());
 
         applied = true;

@@ -9,9 +9,9 @@ import javax.sound.sampled.Clip;import javax.sound.sampled.FloatControl;
 public class SoundManager {
 
     private static final String BACKGROUND_MUSIC_1 = "/sounds/music/m1.wav";
-    private final String MENU_CLICK = "/sounds/sfx/menu_click.wav";
+    private static final String MENU_CLICK = "/sounds/sfx/menu_click.wav";
     private static Clip backgroundMusic1;
-    private Clip menuClickSound;
+    private static Clip menuClickSound;
 
     public SoundManager(){
         getSoundFiles();
@@ -20,7 +20,7 @@ public class SoundManager {
     private void getSoundFiles(){
 
         SoundManager.backgroundMusic1 = setMusic(BACKGROUND_MUSIC_1);
-        menuClickSound = setMusic(MENU_CLICK);
+        SoundManager.menuClickSound = setMusic(MENU_CLICK);
 
     }
 
@@ -47,7 +47,7 @@ public class SoundManager {
         SoundManager.backgroundMusic1.stop();
     }
 
-    public void startMenuClickSound(){
+    public static void startMenuClickSound(){
         menuClickSound.setFramePosition(0);
         menuClickSound.start();
 
@@ -56,21 +56,21 @@ public class SoundManager {
 
     }
 
-    public void changeMusicVolume(double volume){
+    public static void changeMusicVolume(double volume){
         double gain = (double)volume / 100;
         FloatControl gainControl = (FloatControl) backgroundMusic1.getControl(FloatControl.Type.MASTER_GAIN);
         float gainValue = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
         gainControl.setValue(gainValue);
     }
 
-    public void changeEffectsVolume(double volume){
+    public static void changeEffectsVolume(double volume){
         double gain = (double)volume / 100;
         FloatControl gainControl = (FloatControl) menuClickSound.getControl(FloatControl.Type.MASTER_GAIN);
         float gainValue = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
         gainControl.setValue(gainValue);
     }
 
-    public void initializeVolumes( double master, double effects, double music){
+    public static void initializeVolumes( double master, double effects, double music){
         changeMusicVolume( master * music / 100);
         changeEffectsVolume( master * effects / 100);
     }
