@@ -32,12 +32,6 @@ public class LobbiesScreen extends BaseScreen {
     }
 
     @Override
-    public void onShow()
-    {
-        refresh();
-    }
-
-    @Override
     protected void initializeResources(){
 
         GridBagConstraints c = new GridBagConstraints();

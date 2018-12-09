@@ -47,6 +47,8 @@ public class ScreenManager extends JPanel {
         ScreenManager.screens.add( LEADERBOARD_SCREEN, new LeaderboardScreen(MainFrame.getResolution()));
 //        ScreenManager.screens.add( KEY_BINDING_SCREEN, new KeyBindingScreen(MainFrame.getResolution()));
 
+        new LoadingScreen();
+
         setLayout( new BorderLayout());
 
         show(MAIN_MENU_SCREEN);
@@ -57,8 +59,6 @@ public class ScreenManager extends JPanel {
     }
 
     public static void back(){
-        BaseScreen screenToPop = getCurrentScreen();
-        screenToPop.onHide();
         stack.pop();
         instance.removeAll();
         instance.add(stack.peek());
@@ -67,14 +67,21 @@ public class ScreenManager extends JPanel {
         MainFrame.getInstance().repaint();
     }
 
-    public static boolean show(int screen){
+    public static boolean canShown(int screen){
         BaseScreen screenToShow = screens.get(screen);
         if(screenToShow.doesRequireConnection() && !RESTRequestManager.checkServerConnection())
             return false;
+
+        return true;
+    }
+
+    public static boolean show(int screen){
+        if(!canShown(screen))
+            return false;
+
         instance.removeAll();
 
-        screenToShow.onShow();
-        stack.push(screenToShow);
+        stack.push(screens.get(screen));
         instance.add(stack.peek());
 
         MainFrame.getInstance().revalidate();
@@ -94,8 +101,6 @@ public class ScreenManager extends JPanel {
     }
 
     public static void doubleBack(){
-        BaseScreen screenToPop = getCurrentScreen();
-        screenToPop.onHide();
         stack.pop();
         ScreenManager.back();
 

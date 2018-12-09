@@ -12,7 +12,7 @@ public abstract class BaseScreen extends JPanel implements Screen {
     private boolean isBackButton;
     private JPanel up;
     private JPanel down;
-    boolean requiresConnection = false;
+    protected boolean requiresConnection = false;
 
     public BaseScreen(Dimension resolution) {
 
@@ -41,16 +41,6 @@ public abstract class BaseScreen extends JPanel implements Screen {
         up.setPreferredSize( new Dimension( resolution.width, backButton.getPreferredSize().height + 10));
 
         setBackButton(isBackButton);
-
-    }
-
-    public void onShow()
-    {
-
-    }
-
-    public void onHide()
-    {
 
     }
 
