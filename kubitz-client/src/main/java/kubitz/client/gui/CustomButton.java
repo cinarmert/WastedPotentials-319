@@ -11,16 +11,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class CustomButton extends JButton {
-    private SoundManager soundManager;
 
     public CustomButton(String label) {
 
         super(label);
 
-        soundManager = new SoundManager();
-        addActionListener(e->{
-            soundManager.startMenuClickSound();
-        });
+        addActionListener(e-> SoundManager.startMenuClickSound());
 
         setUI( new CustomButtonUI());
         setFocusable( false);

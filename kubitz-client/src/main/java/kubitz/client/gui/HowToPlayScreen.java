@@ -201,6 +201,7 @@ public class HowToPlayScreen extends BaseScreen {
             super.installDefaults();
             selectColor = Color.WHITE;
             deSelectColor = Color.RED;
+            tabPane.setFocusable(false);
 
         }
 
