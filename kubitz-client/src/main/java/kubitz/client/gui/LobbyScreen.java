@@ -21,7 +21,6 @@ public class LobbyScreen extends BaseScreen {
     private JLabel lobbyNameLabel;
     private JList<Account> playerList;
     private DefaultListModel<Account> accountListModel;
-    private Thread messageGetter;
     private List<Message> messageList;
     private JTextArea chatBox;
 
@@ -30,13 +29,13 @@ public class LobbyScreen extends BaseScreen {
         super(resolution);
         this.requiresConnection = true;
         initializeResources();
-        messageGetter = new Thread(new MessageThread());
     }
 
     @Override
     protected void backButtonAction(){
 
         //ToDo leave lobby
+        currentLobby = null;
         ScreenManager.back();
         if (ScreenManager.getCurrentScreen() instanceof CreateLobbyScreen){
             ScreenManager.back();
@@ -215,7 +214,6 @@ public class LobbyScreen extends BaseScreen {
     }
 
     private void startGame() {
-        messageGetter.stop();
 
         if ( getCurrentLobby().getMode().equals(Lobby.MODE_CLASSIC) ){
 
@@ -247,44 +245,6 @@ public class LobbyScreen extends BaseScreen {
             accountListModel.addElement(currentLobby.getPlayers().get(i));
 
         playerList.setModel(accountListModel);
-
-        if (messageGetter.isAlive())
-            messageGetter.stop();
-
-        messageGetter = new Thread(new MessageThread());
-        messageGetter.start();
-
-    }
-
-    private class MessageThread implements Runnable{
-
-        @Override
-        public void run() {
-            while (true) {
-                messageList = RESTRequestManager.getMessages(LobbyScreen.this.getCurrentLobby());
-                Lobby lobby = RESTRequestManager.getLobbyByName(currentLobby.getName());
-                if(lobby != null) {
-                    currentLobby = lobby;
-                }
-                try {
-                    chatBox.setText("");
-                    for(Message message : messageList) {
-                        chatBox.append(getChatBoxMessage(message));
-                    }
-                    if(lobby != null) {
-                        accountListModel.removeAllElements();
-                        for (Account account : currentLobby.getPlayers()) {
-                            accountListModel.addElement(account);
-                        }
-                    }
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    System.err.println(e.getMessage());
-                    messageGetter.stop();
-                }
-            }
-        }
-
 
     }
 
