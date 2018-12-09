@@ -59,7 +59,7 @@ public class LeaderboardScreen extends BaseScreen {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new GridLayout(1,1, 10, 10));
-        mainPanel.setPreferredSize(new Dimension( getMainWidth()-50, getMainHeight()-50));
+        mainPanel.setPreferredSize(new Dimension( getMainWidth()*5/6, getMainHeight()*5/6));
         mainPanel.setBackground(new Color(0,0,0,200));
 
         table = new JTable(new LeaderboardTableModel()){
