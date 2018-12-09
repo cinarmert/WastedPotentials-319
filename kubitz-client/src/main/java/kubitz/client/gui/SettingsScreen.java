@@ -32,11 +32,13 @@ public class SettingsScreen extends BaseScreen{
     private int musicSound;
     private String theme;
 
+    private boolean viewChanged;
     private boolean applied;
 
     public SettingsScreen(Dimension resolution) {
         super(resolution);
         this.applied = true;
+        this.viewChanged = false;
         initializeResources();
     }
 
@@ -54,7 +56,7 @@ public class SettingsScreen extends BaseScreen{
 
         GridBagConstraints c = new GridBagConstraints();
 
-        c.anchor = GridBagConstraints.NORTHWEST;
+        c.anchor = GridBagConstraints.NORTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridx = 0;
@@ -63,19 +65,28 @@ public class SettingsScreen extends BaseScreen{
 
     }
 
-    private JPanel initializeSettings() {
+    private JScrollPane initializeSettings() {
+
+        //ToDo make scrollbar ui
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setPreferredSize(new Dimension(getMainWidth()*2/3, getMainHeight()-100));
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(null);
 
         JPanel settingsPanel = new JPanel();
-        settingsPanel.setLayout( new GridLayout(17,1, 10, 5));
+        settingsPanel.setLayout( new GridLayout(16,1, 10, 5));
         settingsPanel.setOpaque(false);
-        settingsPanel.setPreferredSize(new Dimension(getResolution().width/2, getResolution().height));
+        settingsPanel.setPreferredSize(new Dimension(scrollPane.getViewport().getWidth(), 800 )); // height = rows * 50
 
         JLabel settingsText = new JLabel("SETTINGS");
         settingsText.setFont( new Font(settingsText.getFont().getName(), Font.BOLD, 34));
+        settingsText.setForeground(Theme.foregroundColor);
 
         //====================================================Nick Name==========================================================
         JLabel nickNameText = new JLabel("NICK NAME");
         nickNameText.setFont( new Font( nickNameText.getFont().getName(), Font.BOLD, 16));
+        nickNameText.setForeground(Theme.foregroundColor);
 
         JPanel nickNamePanel = new JPanel();
         nickNamePanel.setSize( new Dimension( getMainWidth()/3,30));
@@ -119,6 +130,7 @@ public class SettingsScreen extends BaseScreen{
         //====================================================Graphics==========================================================
         JLabel graphicsText = new JLabel("GRAPHICS");
         graphicsText.setFont( new Font( graphicsText.getFont().getName(), Font.BOLD, 16));
+        graphicsText.setForeground(Theme.foregroundColor);
 
         JPanel resolutionPanel = new JPanel();
         resolutionPanel.setSize( new Dimension( getMainWidth()/3,30));
@@ -127,6 +139,7 @@ public class SettingsScreen extends BaseScreen{
 
         JLabel resolutionText = new JLabel("Resolution");
         resolutionText.setFont( new Font( resolutionText.getFont().getName(), Font.PLAIN, 14));
+        resolutionText.setForeground(Theme.foregroundColor);
 
         List<Resolution> spinnerList = getResolutions();
         resolutionSpinner = new JSpinner( new SpinnerListModel( spinnerList ) );
@@ -139,6 +152,7 @@ public class SettingsScreen extends BaseScreen{
             public void stateChanged(ChangeEvent e) {
                 resolution = (Dimension) ((JSpinner)e.getSource()).getValue();
                 applied = false;
+                viewChanged = true;
             }
         });
 
@@ -153,16 +167,47 @@ public class SettingsScreen extends BaseScreen{
 
                 fullScreen = fullScreenCheckBox.isSelected();
                 applied = false;
+                viewChanged = true;
 
             }
         });
-        fullScreenCheckBox.setBackground(Color.WHITE);//todo
+        fullScreenCheckBox.setForeground(Theme.foregroundColor);
+        fullScreenCheckBox.setOpaque(false);
+        fullScreenCheckBox.setFocusable(false);
+        fullScreenCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 
         List<String> spinnerThemeList = new ArrayList<>();
         spinnerThemeList.add(ThemeManager.RED_THEME);
         spinnerThemeList.add(ThemeManager.BLUE_THEME);
 
-        themeSpinner = new JSpinner( new SpinnerListModel( spinnerThemeList ) );
+        JPanel themeSpinnerPanel = new JPanel();
+        themeSpinnerPanel.setSize( new Dimension( getMainWidth()/3,30));
+        themeSpinnerPanel.setLayout( new FlowLayout(FlowLayout.LEFT));
+        themeSpinnerPanel.setOpaque(false);
+
+        JLabel themeText = new JLabel("Theme");
+        themeText.setFont( new Font( themeText.getFont().getName(), Font.PLAIN, 14));
+        themeText.setForeground(Theme.foregroundColor);
+
+        themeSpinner = new JSpinner( new SpinnerListModel( spinnerThemeList ){
+            @Override
+            public Object getNextValue() {
+                List list = getList();
+                int index = list.indexOf(getValue());
+
+                index = (index >= list.size() - 1) ? 0 : index + 1;
+                return list.get(index);
+            }
+
+            @Override
+            public Object getPreviousValue() {
+                List list = getList();
+                int index = list.indexOf(getValue());
+
+                index = (index <= 0) ? list.size() - 1 : index - 1;
+                return list.get(index);
+            }
+        } );
         themeSpinner.setValue( Config.getTheme());
         ((JSpinner.DefaultEditor)themeSpinner.getEditor()).getTextField().setColumns(6);
         ((JSpinner.DefaultEditor)themeSpinner.getEditor()).getTextField().setEditable(false);
@@ -172,20 +217,37 @@ public class SettingsScreen extends BaseScreen{
             public void stateChanged(ChangeEvent e) {
                 theme = (String) ((JSpinner)e.getSource()).getValue();
                 applied = false;
+                viewChanged = true;
             }
         });
 
+        themeSpinnerPanel.add(themeText);
+        themeSpinnerPanel.add(themeSpinner);
+
         //====================================================Sound==========================================================
         JLabel soundText = new JLabel("SOUND");
-        JLabel masterVolumeLabel = new JLabel("Master Volume");
-        JLabel effectsVolumeLabel = new JLabel("Effects Volume");
-        JLabel musicVolumeLabel = new JLabel("Music Volume");
         soundText.setFont( new Font( soundText.getFont().getName(), Font.BOLD, 16));
+        soundText.setForeground(Theme.foregroundColor);
+
+        JLabel masterVolumeLabel = new JLabel("Master Volume");
+        masterVolumeLabel.setForeground(Theme.foregroundColor);
+
+        JLabel effectsVolumeLabel = new JLabel("Effects Volume");
+        effectsVolumeLabel.setForeground(Theme.foregroundColor);
+
+        JLabel musicVolumeLabel = new JLabel("Music Volume");
+        musicVolumeLabel.setForeground(Theme.foregroundColor);
 
         Hashtable labels = new Hashtable();
 
-        labels.put(0,new JLabel("LOW"));
-        labels.put(100, new JLabel("HIGH"));
+        JLabel lowLabel = new JLabel("LOW");
+        lowLabel.setForeground(Theme.foregroundColor);
+
+        JLabel highLabel = new JLabel("HIGH");
+        highLabel.setForeground(Theme.foregroundColor);
+
+        labels.put(0, lowLabel);
+        labels.put(100, highLabel );
 
         UIManager.put("Slider.paintValue", true);
 
@@ -193,7 +255,7 @@ public class SettingsScreen extends BaseScreen{
                 0, 100, Config.getMasterSound());
         masterSlider.setLabelTable(labels);
         masterSlider.setPaintLabels(true);
-        masterSlider.setBackground(Color.WHITE);//todo
+        masterSlider.setOpaque(false);
         masterSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -213,7 +275,7 @@ public class SettingsScreen extends BaseScreen{
                 0, 100, Config.getEffectsSound());
         effectsSlider.setLabelTable(labels);
         effectsSlider.setPaintLabels(true);
-        effectsSlider.setBackground(Color.WHITE);//todo
+        effectsSlider.setOpaque(false);
         effectsSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -231,7 +293,7 @@ public class SettingsScreen extends BaseScreen{
                 0, 100, Config.getMusicSound());
         musicSlider.setLabelTable(labels);
         musicSlider.setPaintLabels(true);
-        musicSlider.setBackground(Color.WHITE);//todo
+        musicSlider.setOpaque(false);
         musicSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -248,10 +310,17 @@ public class SettingsScreen extends BaseScreen{
 
         //====================================================Buttons==========================================================
 
+        JPanel keyBindingsPanel = new JPanel();
+        keyBindingsPanel.setOpaque(false);
+        keyBindingsPanel.setLayout( new FlowLayout(FlowLayout.LEFT));
+
         CustomButton keyBindingsButton = new CustomButton("Key Bindings");
         keyBindingsButton.addActionListener(e -> {
             ScreenManager.show(ScreenManager.KEY_BINDING_SCREEN);
         });
+        keyBindingsButton.setPreferredSize( new Dimension(getMainWidth()/5,30));
+
+        keyBindingsPanel.add(keyBindingsButton);
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout( new FlowLayout(FlowLayout.CENTER,10,10));
@@ -299,7 +368,7 @@ public class SettingsScreen extends BaseScreen{
         settingsPanel.add(graphicsText);
         settingsPanel.add(resolutionPanel);
         settingsPanel.add(fullScreenCheckBox);
-        settingsPanel.add(themeSpinner);
+        settingsPanel.add(themeSpinnerPanel);
         settingsPanel.add(soundText);
         settingsPanel.add(masterVolumeLabel);
         settingsPanel.add(masterSlider);
@@ -307,9 +376,12 @@ public class SettingsScreen extends BaseScreen{
         settingsPanel.add(effectsSlider);
         settingsPanel.add(musicVolumeLabel);
         settingsPanel.add(musicSlider);
-        settingsPanel.add(keyBindingsButton);
+        settingsPanel.add(keyBindingsPanel);
         settingsPanel.add(buttonsPanel);
-        return settingsPanel;
+
+        scrollPane.setViewportView(settingsPanel);
+
+        return scrollPane;
     }
 
     private int sliderAction(JSlider source){
@@ -322,24 +394,35 @@ public class SettingsScreen extends BaseScreen{
         if (applied)
             return;
 
-        MainFrame.getInstance().setVisible(false);
+        if (viewChanged){
+            MainFrame.getInstance().setVisible(false);
 
-        Config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
-        Config.setTheme(theme);
 
-        ThemeManager.setTheme(theme);
 
-        if (fullScreen) {
-            setFullScreen();
+            if (fullScreen) {
+                setFullScreen();
+            }
+            else {
+                restoreScreen();
+            }
+
+            Config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
+            Config.setTheme(theme);
+
+            ThemeManager.setTheme(theme);
+            MainFrame.getInstance().setResolution();
+            updateResolution(resolution);
+
+            viewChanged = false;
+
+            MainFrame.getInstance().setVisible(true);
         }
         else {
-            restoreScreen();
+            Config.updateConfig(resolution,fullScreen,masterSound, effectsSound, musicSound);
         }
 
-        MainFrame.getInstance().setResolution();
         applied = true;
 
-        MainFrame.getInstance().setVisible(true);
     }
 
     @Override
