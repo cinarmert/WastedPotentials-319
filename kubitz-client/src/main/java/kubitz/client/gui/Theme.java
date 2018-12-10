@@ -31,10 +31,10 @@ public class Theme {
     public static Color foregroundColor;
 
     //colors
-    public static Color tablePanelColor; //new Color(204,204,204)
-    public static Color tableHeaderColor; //new Color(153,153,153)
-    public static Color alternateColor1; //new Color(220,221,221);
-    public static Color alternateColor2; //Color.WHITE;
+    public static Color tablePanelColor;
+    public static Color tableHeaderColor;
+    public static Color alternateColor1;
+    public static Color alternateColor2;
 
     //button/tab colors
     public static Color normalColor;
