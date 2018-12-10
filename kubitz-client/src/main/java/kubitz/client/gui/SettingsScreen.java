@@ -69,7 +69,6 @@ public class SettingsScreen extends BaseScreen{
 
     private JScrollPane initializeSettings() {
 
-        //ToDo make scrollbar ui
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(getMainWidth(), getMainHeight()-100));
         scrollPane.setOpaque(false);
