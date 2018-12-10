@@ -7,9 +7,10 @@ import kubitz.client.storage.Account;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.util.Stack;
 import java.util.UUID;
 
 
@@ -66,7 +67,25 @@ public class MainFrame extends JFrame {
         this.setContentPane(new ScreenManager());
         this.setSize( resolution);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+
+                int quit = JOptionPane.showConfirmDialog( MainFrame.this,
+                        "Are you sure you want to quit ku-Bitz?",
+                        "Quit?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if( quit == 0 ) {
+                    //ToDo if in game leave game
+                    //ToDo if in lobby leave lobby
+                    System.exit(0);
+                }
+            }
+        });
         this.setResizable(false);
         this.setVisible(true);
 
