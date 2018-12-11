@@ -16,8 +16,6 @@ public class CustomButton extends JButton {
 
         super(label);
 
-        addActionListener(e-> SoundManager.startMenuClickSound());
-
         setUI( new CustomButtonUI());
         setFocusable( false);
         setBorder( new LineBorder( Color.BLACK, 2) ); // if different borders will be used, this can be added to mouse listener.
@@ -62,6 +60,7 @@ public class CustomButton extends JButton {
         @Override
         public void mousePressed(MouseEvent e) {
             changeButtonStyle( (JButton) e.getComponent(), Theme.pressColor, Theme.pressFontColor);
+            SoundManager.startMenuClickSound();
         }
 
         @Override
