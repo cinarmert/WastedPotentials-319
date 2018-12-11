@@ -95,7 +95,7 @@ public abstract class BaseScreen extends JPanel implements Screen {
         if (isBackButton) {
             removeAll();
 
-            down.setPreferredSize( new Dimension( getWidth() - 20 - backButton.getPreferredSize().width, resolution.height));
+            down.setPreferredSize( new Dimension( resolution.width - 20 , resolution.height-40 - up.getPreferredSize().height));
 
             c.fill = GridBagConstraints.HORIZONTAL;
             c.anchor = GridBagConstraints.NORTH;

@@ -70,7 +70,7 @@ public class SettingsScreen extends BaseScreen{
     private JScrollPane initializeSettings() {
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setPreferredSize(new Dimension(getMainWidth(), getMainHeight()-100));
+        scrollPane.setPreferredSize(new Dimension(getMainWidth(), getMainHeight()));
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(null);

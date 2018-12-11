@@ -23,7 +23,6 @@ public class CreditsScreen extends BaseScreen{
 
         setBackButton(true);
 
-        c.insets = new Insets(20,0,0,0);
         c.anchor = GridBagConstraints.CENTER;
         c.weightx = 1.0;
         c.weighty = 1.0;
@@ -36,7 +35,7 @@ public class CreditsScreen extends BaseScreen{
     private JPanel initializeCredits() {
 
         JPanel creditsPanel = new JPanel();
-        creditsPanel.setMaximumSize(new Dimension( getMainWidth()/2, getMainHeight()));
+        creditsPanel.setPreferredSize(new Dimension( getMainWidth()/2, getMainHeight()));
         creditsPanel.setOpaque(false);
         creditsPanel.setLayout( new GridBagLayout());
 
