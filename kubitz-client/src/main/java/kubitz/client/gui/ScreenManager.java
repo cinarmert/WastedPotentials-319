@@ -47,8 +47,6 @@ public class ScreenManager extends JPanel {
         ScreenManager.screens.add( LEADERBOARD_SCREEN, new LeaderboardScreen(MainFrame.getResolution()));
 //        ScreenManager.screens.add( KEY_BINDING_SCREEN, new KeyBindingScreen(MainFrame.getResolution()));
 
-        new LoadingScreen();
-
         setLayout( new BorderLayout());
 
         show(MAIN_MENU_SCREEN);

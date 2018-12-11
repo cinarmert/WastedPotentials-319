@@ -48,22 +48,40 @@ public class PlayScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                LoadingScreen.setMessage("Loading Lobbies");
-                LoadingScreen.start();
+                // Loading screen
+                LoadingScreen loadingScreen = new LoadingScreen("Loading Lobbies");
+                Thread loadingThread = new Thread(loadingScreen);
 
-                // ToDo wtf screen is not visible
-                if (ScreenManager.canShown(ScreenManager.LOBBIES_SCREEN)) {
-                    ((LobbiesScreen) ScreenManager.getScreen(ScreenManager.LOBBIES_SCREEN)).refresh();
-                    ScreenManager.show(ScreenManager.LOBBIES_SCREEN);
-                    LoadingScreen.stop();
-                }
-                else {
-                    LoadingScreen.stop();
-                    JOptionPane.showMessageDialog( PlayScreen.this,
-                            "Connection Failed!",
-                            "ERROR",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                SwingWorker<Void, Void> mySwingWorker = new SwingWorker<Void, Void>(){
+                    @Override
+                    protected Void doInBackground() {
+
+                        if (ScreenManager.canShown(ScreenManager.LOBBIES_SCREEN)) {
+                            ((LobbiesScreen) ScreenManager.getScreen(ScreenManager.LOBBIES_SCREEN)).refresh();
+                            this.done();
+                            ScreenManager.show(ScreenManager.LOBBIES_SCREEN);
+                        }
+                        else {
+                            this.done();
+                            JOptionPane.showMessageDialog( PlayScreen.this,
+                                    "Connection Failed!",
+                                    "ERROR",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        loadingScreen.stop();
+                        loadingThread.stop();
+                    }
+                };
+
+                loadingThread.start();
+                mySwingWorker.execute();
+
             }
         });
 
@@ -80,9 +98,42 @@ public class PlayScreen extends BaseScreen{
                     return;
                 }
 
-                DailyChallengeScreen screen = new DailyChallengeScreen( MainFrame.getResolution() );
+                // Loading screen
+                LoadingScreen loadingScreen = new LoadingScreen("Loading Daily Challenge");
+                Thread loadingThread = new Thread(loadingScreen);
 
-                ScreenManager.openGameScreen( screen );
+                SwingWorker<Void, Void> mySwingWorker = new SwingWorker<Void, Void>(){
+                    @Override
+                    protected Void doInBackground() {
+
+                        //ToDo check daily challenge
+                        if (false) {
+                            this.done();
+
+                            DailyChallengeScreen screen = new DailyChallengeScreen( MainFrame.getResolution() );
+
+                            ScreenManager.openGameScreen( screen );
+                        }
+                        else {
+                            this.done();
+                            JOptionPane.showMessageDialog( PlayScreen.this,
+                                    "Connection Failed!",
+                                    "ERROR",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        loadingScreen.stop();
+                        loadingThread.stop();
+                    }
+                };
+
+                loadingThread.start();
+                mySwingWorker.execute();
 
             }
         });

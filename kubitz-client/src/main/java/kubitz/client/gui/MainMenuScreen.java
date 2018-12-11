@@ -76,22 +76,39 @@ public class MainMenuScreen extends BaseScreen{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                LoadingScreen.setMessage("Loading Leaderboard");
-                LoadingScreen.start();
+                // Loading screen
+                LoadingScreen loadingScreen = new LoadingScreen("Loading Leaderboard");
+                Thread loadingThread = new Thread(loadingScreen);
 
-                // ToDo wtf screen is not visible
-                if (ScreenManager.canShown(ScreenManager.LEADERBOARD_SCREEN)){
-                    ((LeaderboardScreen)ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN)).onShow();
-                    ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
-                    LoadingScreen.stop();
-                }
-                else{
-                    LoadingScreen.stop();
-                    JOptionPane.showMessageDialog( MainMenuScreen.this,
-                            "Connection Failed!",
-                            "ERROR",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                SwingWorker<Void, Void> mySwingWorker = new SwingWorker<Void, Void>(){
+                    @Override
+                    protected Void doInBackground() {
+
+                        if (ScreenManager.canShown(ScreenManager.LEADERBOARD_SCREEN)){
+                            ((LeaderboardScreen)ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN)).onShow();
+                            this.done();
+                            ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
+                        }
+                        else{
+                            this.done();
+                            JOptionPane.showMessageDialog( MainMenuScreen.this,
+                                    "Connection Failed!",
+                                    "ERROR",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        loadingScreen.stop();
+                        loadingThread.stop();
+                    }
+                };
+
+                loadingThread.start();
+                mySwingWorker.execute();
 
             }
         });

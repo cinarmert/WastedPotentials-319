@@ -3,35 +3,32 @@ package kubitz.client.gui;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class LoadingScreen extends JDialog{
+public class LoadingScreen extends JDialog implements Runnable{
 
-    private static JLabel messageLabel;
-    private static JPanel loadingPanel;
-    private static JPanel labelPanel;
-    private static LoadingScreen instance = null;
-    private static String message;
-    private static Thread loading;
+    private JLabel messageLabel;
+    private String message;
+    private Timer timer;
 
-    public LoadingScreen(){
-        super( MainFrame.getInstance());
+    public LoadingScreen( String message){
+        super( MainFrame.getInstance(),"Loading", ModalityType.APPLICATION_MODAL);
 
-        instance = this;
-        message = "";
-        loading = null;
+        this.message = message;
 
-        loadingPanel = new JPanel();
+        JPanel loadingPanel = new JPanel();
         loadingPanel.setPreferredSize( new Dimension(500,200));
-        loadingPanel.setBackground(Color.WHITE);
-        loadingPanel.setBorder( new LineBorder(Color.BLACK,3));
+        loadingPanel.setBackground(Theme.backgroundColor);
+        loadingPanel.setBorder( new LineBorder(Theme.borderColor,3));
 
-        labelPanel = new JPanel();
+        JPanel labelPanel = new JPanel();
         labelPanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         labelPanel.setOpaque(false);
 
         messageLabel = new JLabel(message);
         messageLabel.setFont( new Font( messageLabel.getFont().getName(), Font.PLAIN, 30));
-        messageLabel.setForeground(Color.RED);
+        messageLabel.setForeground(Theme.foregroundColor);
 
         labelPanel.add(messageLabel);
 
@@ -50,74 +47,49 @@ public class LoadingScreen extends JDialog{
 
     }
 
-    public static void setMessage(String message) {
-        LoadingScreen.message = message;
-        messageLabel.setText(message);
-
-        loadingPanel.removeAll();
-        GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(0,(500 - messageLabel.getPreferredSize().width)/2,0,0);
-        c.anchor = GridBagConstraints.WEST;
-        c.weightx = 1.0;
-        loadingPanel.add(labelPanel,c);
-
-        instance.setVisible(true);
-        instance.revalidate();
-        instance.repaint();
-
-
+    public void stop(){
+        timer.stop();
+        dispose();
     }
 
-    public static void stop(){
-        if ( loading != null){
-            loading.stop();
-            instance.setVisible(false);
-            loading = null;
+    private void start() {
+
+        Graphics2D g = (Graphics2D) getGraphics();
+        if (g == null) {
+            System.out.println("g is null");
+            return;
         }
-    }
 
-    public static void start() {
-        stop();
-
-        loading = new Thread(new LoadingThread());
-        loading.start();
-        instance.setVisible(true);
-
-
-    }
-
-    private static class LoadingThread implements Runnable{
-
-        @Override
-        public void run() {
-
-            Graphics2D g = (Graphics2D) instance.getGraphics();
-            if (g == null) {
-                System.out.println("g is null");
-                return;
-            }
+        timer = new Timer(200, new ActionListener() {
 
             int i = 0;
-            while (true) {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 renderFrame(g, i);
-                i++;// ToDo if i = 900(3min) timeout?
+                i++;
                 if (i == 4) i = 0;
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
+        });
 
-        }
+        timer.start();
+        setVisible(true);
 
-        public void renderFrame(Graphics2D g, int frame) {
 
-            //System.out.println("running");
+    }
 
-            final String[] dots = {"", ".", "..", "...", "...."};
-            messageLabel.setText(message + dots[frame%5]);
-        }
+    public void renderFrame(Graphics2D g, int frame) {
+
+        // ToDo can make animation
+
+        final String[] dots = {"", ".", "..", "...", "...."};
+        messageLabel.setText(message + dots[frame%5]);
+        repaint();
+    }
+
+    @Override
+    public void run() {
+        start();
     }
 
 }
