@@ -4,6 +4,7 @@ import kubitz.client.controllers.MoveController;
 import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.sound.SoundManager;
 import kubitz.client.storage.Account;
+import kubitz.client.websocket.WebSocketManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,8 +81,10 @@ public class MainFrame extends JFrame {
                         JOptionPane.WARNING_MESSAGE);
 
                 if( quit == 0 ) {
-                    //ToDo if in game leave game
-                    //ToDo if in lobby leave lobby
+                    LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
+                    if (lobbyScreen.getCurrentLobby() != null) {
+                        WebSocketManager.sendLeaveLobbyMessage(lobbyScreen.getCurrentLobby().getName());
+                    }
                     System.exit(0);
                 }
             }

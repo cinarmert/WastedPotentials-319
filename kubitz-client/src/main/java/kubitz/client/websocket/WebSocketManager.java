@@ -3,6 +3,7 @@ package kubitz.client.websocket;
 import kubitz.client.gui.Config;
 import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.JoinMessage;
+import kubitz.client.websocket.storage.LeaveMessage;
 import kubitz.client.websocket.storage.LobbyMessage;
 import kubitz.client.websocket.storage.LobbyMessageTypes;
 import org.java_websocket.drafts.Draft_6455;
@@ -33,4 +34,11 @@ public class WebSocketManager {
         client.send(JsonUtil.toJson(lm));
     }
 
+    public static void sendLeaveLobbyMessage(String lobbyId){
+        LeaveMessage leaveMessage = new LeaveMessage(Config.getId(), lobbyId, Config.getAccount());
+        LobbyMessage lm = new LobbyMessage();
+        lm.setPayload(JsonUtil.toJson(leaveMessage));
+        lm.setType(LobbyMessageTypes.LOBBY_LEAVE_MESSAGE);
+        client.send(JsonUtil.toJson(lm));
+    }
 }

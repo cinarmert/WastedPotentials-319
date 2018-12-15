@@ -2,7 +2,6 @@ package kubitz.client.websocket;
 
 import kubitz.client.gui.LobbyScreen;
 import kubitz.client.gui.ScreenManager;
-import kubitz.client.main.Message;
 import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.*;
@@ -45,7 +44,8 @@ public class KubitzWebSocketClient extends WebSocketClient {
 
     @Override
     public void onClose( int code, String reason, boolean remote ) {
-        System.out.println( "closed connection" );
+        System.out.println( "closed connection: " + reason);
+//        WebSocketManager.client.reconnect();
     }
 
     @Override
@@ -71,6 +71,10 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleLeaveMessage(LobbyMessage lm) throws IOException {
         LeaveMessage leaveMessage = JsonUtil.fromJson(lm.getPayload().toString(), LeaveMessage.class);
 
+        LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
+        Lobby lobby = lobbyScreen.getCurrentLobby();
+        lobby.removePlayer(leaveMessage.getAccount());
+        lobbyScreen.setCurrentLobby(lobby);
     }
 
     private void handleKickMessage(LobbyMessage lm) throws IOException {

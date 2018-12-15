@@ -4,6 +4,7 @@ import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
 import kubitz.client.storage.Message;
+import kubitz.client.websocket.WebSocketManager;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -34,7 +35,7 @@ public class LobbyScreen extends BaseScreen {
     @Override
     protected void backButtonAction(){
 
-        //ToDo leave lobby
+        WebSocketManager.sendLeaveLobbyMessage(currentLobby.getName());
         currentLobby = null;
         ScreenManager.back();
         if (ScreenManager.getCurrentScreen() instanceof CreateLobbyScreen){

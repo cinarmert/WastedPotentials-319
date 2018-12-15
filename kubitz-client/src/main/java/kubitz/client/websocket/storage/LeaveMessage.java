@@ -3,7 +3,7 @@ package kubitz.client.websocket.storage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import kubitz.client.storage.Account;
 
-public class LeaveMessage extends LobbyMessage {
+public class LeaveMessage {
 
     @JsonProperty
     private String playerId;
@@ -13,6 +13,14 @@ public class LeaveMessage extends LobbyMessage {
 
     @JsonProperty
     private Account account;
+
+    public LeaveMessage(String playerId, String lobbyId, Account account) {
+        this.playerId = playerId;
+        this.lobbyId = lobbyId;
+        this.account = account;
+    }
+
+    public LeaveMessage() {}
 
     public Account getAccount() {
         return account;
