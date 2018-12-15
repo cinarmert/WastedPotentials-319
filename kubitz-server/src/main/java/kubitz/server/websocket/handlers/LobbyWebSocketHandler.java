@@ -6,6 +6,7 @@ import kubitz.server.database.gamestate.repository.GameStateRepository;
 import kubitz.server.database.lobby.model.Lobby;
 import kubitz.server.database.lobby.repository.LobbyRepository;
 import kubitz.server.util.JsonUtil;
+import kubitz.server.util.RandomUtil;
 import kubitz.server.websocket.storage.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +77,12 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
     private void handleStartGameMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         StartGameMessage startGameMessage = JsonUtil.fromJson(lm.getPayload().toString(), StartGameMessage.class);
+        logger.info("got start message, " + startGameMessage.getPlayerId() + " is starting the game: " + startGameMessage.getLobbyId());
 
+        Lobby lobby = lobbyRepository.findLobbyByName(startGameMessage.getLobbyId());
+        //ToDo get size from lobby properties
+        startGameMessage.setCard(RandomUtil.getRandomCard(4));
+        notifyLobbyParticipants(lobby, JsonUtil.toJson(startGameMessage), LobbyMessageTypes.LOBBY_START_GAME_MSG);
     }
 
     private void handleStateMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
