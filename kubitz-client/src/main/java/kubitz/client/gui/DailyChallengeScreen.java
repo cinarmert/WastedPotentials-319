@@ -28,6 +28,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
         timerPanel.setPreferredSize( new Dimension(300,80));
         timerPanel.setOpaque(false);
 
+
     }
 
     public void startTimer(){

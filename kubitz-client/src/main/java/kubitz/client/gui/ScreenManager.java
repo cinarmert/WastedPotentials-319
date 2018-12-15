@@ -100,6 +100,8 @@ public class ScreenManager extends JPanel {
 
     public static void openGameScreen(BaseGameScreen screen){
 
+        screen.onShow();
+
         instance.removeAll();
         stack.push( screen);
         instance.add(stack.peek());
