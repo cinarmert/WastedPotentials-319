@@ -126,4 +126,8 @@ public class Lobby {
         }
         players.add(a);
     }
+
+    public void removePlayer(Account a) {
+        players.remove(a);
+    }
 }
