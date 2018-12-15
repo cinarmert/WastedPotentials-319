@@ -61,6 +61,7 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage jsonTextMessage) throws Exception {
         LobbyMessage lm = JsonUtil.fromJson(jsonTextMessage.getPayload(), LobbyMessage.class);
         logger.info("got message with type: " + lm.getType());
+        logger.info("message payload: " + lm.getPayload());
 
         if(lm.isChangeSettingsMessage())             handleChangeSettingsMessage(lm, session);
         else if(lm.isChatMessage())                  handleChatMessage(lm, session);
