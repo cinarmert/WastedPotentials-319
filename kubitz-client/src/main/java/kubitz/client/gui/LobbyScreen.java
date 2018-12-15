@@ -240,6 +240,7 @@ public class LobbyScreen extends BaseScreen {
 
         this.currentLobby = currentLobby;
         lobbyNameLabel.setText(currentLobby.getName());
+        accountListModel.removeAllElements();
 
         for(int i = 0; i < currentLobby.getPlayers().size(); i++ )
             accountListModel.addElement(currentLobby.getPlayers().get(i));
