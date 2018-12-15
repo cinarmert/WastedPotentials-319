@@ -58,7 +58,7 @@ public class LobbiesFilterScreen extends BaseScreen {
         container.setBackground(Theme.tablePanelColor);
         container.setBorder(new LineBorder(Theme.borderColor, 2));
 
-        container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
+        container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/4)));
 
         GridBagConstraints c = new GridBagConstraints();
 
