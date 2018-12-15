@@ -45,7 +45,7 @@ public class ScreenManager extends JPanel {
         ScreenManager.screens.add( LOBBIES_FILTER_SCREEN, new LobbiesFilterScreen(MainFrame.getResolution(), filter ));
         ScreenManager.screens.add( CREATE_LOBBY_SCREEN, new CreateLobbyScreen(MainFrame.getResolution()));
         ScreenManager.screens.add( LEADERBOARD_SCREEN, new LeaderboardScreen(MainFrame.getResolution()));
-//        ScreenManager.screens.add( KEY_BINDING_SCREEN, new KeyBindingScreen(MainFrame.getResolution()));
+        ScreenManager.screens.add( KEY_BINDING_SCREEN, new KeyBindingScreen(MainFrame.getResolution()));
 
         setLayout( new BorderLayout());
 
@@ -57,6 +57,8 @@ public class ScreenManager extends JPanel {
     }
 
     public static void back(){
+        BaseScreen screen_ = stack.peek();
+        screen_.onHide();
         stack.pop();
         instance.removeAll();
         instance.add(stack.peek());
@@ -79,7 +81,9 @@ public class ScreenManager extends JPanel {
 
         instance.removeAll();
 
-        stack.push(screens.get(screen));
+        BaseScreen screen_ = screens.get(screen);
+        screen_.onShow();
+        stack.push(screen_);
         instance.add(stack.peek());
 
         MainFrame.getInstance().revalidate();
@@ -99,6 +103,8 @@ public class ScreenManager extends JPanel {
     }
 
     public static void doubleBack(){
+        BaseScreen screen_ = stack.peek();
+        screen_.onHide();
         stack.pop();
         ScreenManager.back();
 

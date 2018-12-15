@@ -121,6 +121,13 @@ public abstract class BaseScreen extends JPanel implements Screen {
             super.add(down, c);
         }
     }
+    public void onShow(){
+
+    }
+
+    public void onHide(){
+
+    }
 
     @Override
     public void update(){
