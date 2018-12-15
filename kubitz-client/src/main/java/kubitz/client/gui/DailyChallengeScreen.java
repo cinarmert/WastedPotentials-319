@@ -28,7 +28,6 @@ public class DailyChallengeScreen extends BaseGameScreen{
         timerPanel.setPreferredSize( new Dimension(300,80));
         timerPanel.setOpaque(false);
 
-        this.createGame();
     }
 
     public void startTimer(){
@@ -85,6 +84,11 @@ public class DailyChallengeScreen extends BaseGameScreen{
     }
 
     @Override
+    public void onShow(){
+        this.createGame();
+    }
+
+    @Override
     public void onGameFinished(){
         DailyChallengeScreen.this.timer.stop();
         long timePassedLong = ((DailyChallengeMode)getGame()).getTimePassed();
@@ -99,6 +103,14 @@ public class DailyChallengeScreen extends BaseGameScreen{
         ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN).update();
         ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
 
+    }
+
+    @Override
+    public void onError(){
+        JOptionPane.showMessageDialog( ScreenManager.getScreen( ScreenManager.PLAY_SCREEN),
+                "Connection Failed!",
+                "ERROR",
+                JOptionPane.ERROR_MESSAGE);
     }
 
 }

@@ -84,17 +84,14 @@ public class MainMenuScreen extends BaseScreen{
                     @Override
                     protected Void doInBackground() {
 
-                        if (ScreenManager.canShown(ScreenManager.LEADERBOARD_SCREEN)){
-                            ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
+
+                        if(!ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN)) {
                             this.done();
+                            ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN).onError();
                         }
-                        else{
+                        else
                             this.done();
-                            JOptionPane.showMessageDialog( MainMenuScreen.this,
-                                    "Connection Failed!",
-                                    "ERROR",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
+
 
                         return null;
                     }

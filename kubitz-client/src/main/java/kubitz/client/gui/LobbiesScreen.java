@@ -32,6 +32,14 @@ public class LobbiesScreen extends BaseScreen {
     }
 
     @Override
+    public void onError(){
+        JOptionPane.showMessageDialog( ScreenManager.getScreen( ScreenManager.PLAY_SCREEN),
+                "Connection Failed!",
+                "ERROR",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    @Override
     protected void initializeResources(){
 
         GridBagConstraints c = new GridBagConstraints();

@@ -129,6 +129,10 @@ public abstract class BaseScreen extends JPanel implements Screen {
 
     }
 
+    public void onError(){ //ToDo maybe add different kind of errors.
+
+    }
+
     @Override
     public void update(){
         this.removeMainAll();
