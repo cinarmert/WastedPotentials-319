@@ -30,7 +30,7 @@ public class WebSocketManager {
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(joinMessage));
         lm.setType(LobbyMessageTypes.LOBBY_JOIN_MESSAGE);
-        client.send(JsonUtil.toJson(joinMessage));
+        client.send(JsonUtil.toJson(lm));
     }
 
 }
