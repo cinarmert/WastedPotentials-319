@@ -1,6 +1,8 @@
 package kubitz.client.gui;
 
+import kubitz.client.components.Card;
 import kubitz.client.components.Cube;
+import kubitz.client.components.Grid;
 import kubitz.client.logic.ClassicMode;
 import kubitz.client.storage.Lobby;
 
@@ -40,6 +42,12 @@ public class ClassicModeScreen extends BaseGameScreen{
 
         ClassicMode cm = new ClassicMode(new Cube(0), lobby);
         setGame(cm);
+    }
+
+    public void setCard(int[][] card){
+        Grid grid = new Grid(card.length);
+        grid.setGrid(card);
+        getGame().setCard(new Card(grid));
     }
 
     @Override

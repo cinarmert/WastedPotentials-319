@@ -1,6 +1,8 @@
 package kubitz.client.gui;
 
+import kubitz.client.components.Card;
 import kubitz.client.components.Cube;
+import kubitz.client.components.Grid;
 import kubitz.client.logic.SwitchMode;
 import kubitz.client.storage.Lobby;
 
@@ -50,6 +52,12 @@ public class SwitchModeScreen extends BaseGameScreen{
         ((SwitchMode)getGame()).start();
         return null;
 
+    }
+
+    public void setCard(int[][] card){
+        Grid grid = new Grid(card.length);
+        grid.setGrid(card);
+        getGame().setCard(new Card(grid));
     }
 
     @Override

@@ -2,10 +2,7 @@ package kubitz.client.websocket;
 
 import kubitz.client.gui.Config;
 import kubitz.client.util.JsonUtil;
-import kubitz.client.websocket.storage.JoinMessage;
-import kubitz.client.websocket.storage.LeaveMessage;
-import kubitz.client.websocket.storage.LobbyMessage;
-import kubitz.client.websocket.storage.LobbyMessageTypes;
+import kubitz.client.websocket.storage.*;
 import org.java_websocket.drafts.Draft_6455;
 
 import java.net.URI;
@@ -39,6 +36,14 @@ public class WebSocketManager {
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(leaveMessage));
         lm.setType(LobbyMessageTypes.LOBBY_LEAVE_MESSAGE);
+        client.send(JsonUtil.toJson(lm));
+    }
+
+    public static void sendStartGameMessage(String lobbyId, String gameMode){
+        StartGameMessage startGameMessage = new StartGameMessage(gameMode, Config.getId(), lobbyId);
+        LobbyMessage lm = new LobbyMessage();
+        lm.setPayload(JsonUtil.toJson(startGameMessage));
+        lm.setType(LobbyMessageTypes.LOBBY_START_GAME_MSG);
         client.send(JsonUtil.toJson(lm));
     }
 }
