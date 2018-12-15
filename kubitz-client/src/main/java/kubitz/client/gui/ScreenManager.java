@@ -57,6 +57,8 @@ public class ScreenManager extends JPanel {
     }
 
     public static void back(){
+        BaseScreen screen_ = stack.peek();
+        screen_.onHide();
         stack.pop();
         instance.removeAll();
         instance.add(stack.peek());
@@ -79,7 +81,9 @@ public class ScreenManager extends JPanel {
 
         instance.removeAll();
 
-        stack.push(screens.get(screen));
+        BaseScreen screen_ = screens.get(screen);
+        screen_.onShow();
+        stack.push(screen_);
         instance.add(stack.peek());
 
         MainFrame.getInstance().revalidate();
@@ -99,6 +103,8 @@ public class ScreenManager extends JPanel {
     }
 
     public static void doubleBack(){
+        BaseScreen screen_ = stack.peek();
+        screen_.onHide();
         stack.pop();
         ScreenManager.back();
 

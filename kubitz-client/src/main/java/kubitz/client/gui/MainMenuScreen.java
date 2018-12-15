@@ -85,9 +85,8 @@ public class MainMenuScreen extends BaseScreen{
                     protected Void doInBackground() {
 
                         if (ScreenManager.canShown(ScreenManager.LEADERBOARD_SCREEN)){
-                            ((LeaderboardScreen)ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN)).onShow();
-                            this.done();
                             ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
+                            this.done();
                         }
                         else{
                             this.done();

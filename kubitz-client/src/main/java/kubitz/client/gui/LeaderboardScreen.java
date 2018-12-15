@@ -38,6 +38,7 @@ public class LeaderboardScreen extends BaseScreen {
 
     }
 
+    @Override
     public void onShow()
     {
         setupLeaderBoard();
