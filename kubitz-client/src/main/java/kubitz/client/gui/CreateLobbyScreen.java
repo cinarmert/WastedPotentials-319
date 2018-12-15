@@ -7,6 +7,9 @@ import kubitz.client.storage.Lobby;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class CreateLobbyScreen extends BaseScreen{
 
@@ -104,24 +107,24 @@ public class CreateLobbyScreen extends BaseScreen{
     }
 
     private JPanel initializePlayerBox() {
-        JPanel playerPanel = new JPanel(new BorderLayout());
+        JPanel playerPanel = new JPanel(new GridLayout(1,2));
         playerPanel.setBackground( Theme.tablePanelColor);
 
         Integer[] sizeList = new Integer[]{1,2,3,4};
 
-        playerPanel.add(new JLabel("LobbySize", JLabel.LEFT), BorderLayout.WEST);
+        playerPanel.add(new JLabel("LobbySize", JLabel.LEFT));
 
         noOfPlayersBox = new JComboBox(sizeList);
         noOfPlayersBox.setPreferredSize(BOXDIMENSION);
 
-        playerPanel.add(noOfPlayersBox, BorderLayout.EAST);
+        playerPanel.add(noOfPlayersBox);
         return playerPanel;
     }
 
     private JPanel initializeModeBox() {
-        JPanel modePanel = new JPanel(new BorderLayout());
+        JPanel modePanel = new JPanel(new GridLayout(1,2));
         modePanel.setBackground( Theme.tablePanelColor);
-        modePanel.add(new JLabel("Game Mode", JLabel.LEFT), BorderLayout.WEST);
+        modePanel.add(new JLabel("Game Mode", JLabel.LEFT));
 
         String[] modeList = {Lobby.MODE_CLASSIC, Lobby.MODE_SWITCH};
 
@@ -138,19 +141,33 @@ public class CreateLobbyScreen extends BaseScreen{
             }
 
         });
+        ComboBoxRenderer renderer = new ComboBoxRenderer();
+        modeBox.setRenderer(renderer);
 
-        modePanel.add(modeBox, BorderLayout.EAST);
+        modePanel.add(modeBox);
         return modePanel;
     }
 
     private JPanel initializeNameField() {
-        JPanel namePanel = new JPanel(new BorderLayout());
+        JPanel namePanel = new JPanel(new GridLayout(1,2));
         namePanel.setBackground( Theme.tablePanelColor);
-        namePanel.add(new JLabel("Lobby Name", JLabel.LEFT),BorderLayout.WEST);
+        namePanel.add(new JLabel("Lobby Name", JLabel.LEFT));
 
         nameField = new JTextField("Enter name...");
+        nameField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                nameField.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
         nameField.setColumns(20);
-        namePanel.add(nameField,BorderLayout.EAST);
+        nameField.setEditable(true);
+        namePanel.add(nameField);
         return namePanel;
     }
 
@@ -164,5 +181,46 @@ public class CreateLobbyScreen extends BaseScreen{
 
         ScreenManager.show(ScreenManager.LOBBY_SCREEN);
     }
+class ComboBoxRenderer extends JLabel implements ListCellRenderer, ComboBoxEditor {
 
+    @Override
+    public Component getEditorComponent() {
+        return null;
+    }
+
+    @Override
+    public void setItem(Object anObject) {
+
+    }
+
+    @Override
+    public Object getItem() {
+        return null;
+    }
+
+    @Override
+    public void selectAll() {
+
+    }
+
+    @Override
+    public void addActionListener(ActionListener l) {
+
+    }
+
+    @Override
+    public void removeActionListener(ActionListener l) {
+
+    }
+
+    @Override
+    public Component getListCellRendererComponent(JList list, Object value, int index,
+                                                  boolean isSelected, boolean cellHasFocus) {
+        if(value.equals(Lobby.MODE_CLASSIC))
+            setText("Classic");
+        else
+            setText("Switch");
+        return this;
+    }
+}
 }
