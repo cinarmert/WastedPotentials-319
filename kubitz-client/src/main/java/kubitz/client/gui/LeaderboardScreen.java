@@ -39,6 +39,15 @@ public class LeaderboardScreen extends BaseScreen {
     }
 
     @Override
+    public void onError(){
+        JOptionPane.showMessageDialog( ScreenManager.getScreen(ScreenManager.MAIN_MENU_SCREEN),
+                "Connection Failed!",
+                "ERROR",
+                JOptionPane.ERROR_MESSAGE);
+        System.out.println("ERORR");
+    }
+
+    @Override
     public void onShow()
     {
         setupLeaderBoard();

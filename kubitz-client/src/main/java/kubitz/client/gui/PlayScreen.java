@@ -56,18 +56,14 @@ public class PlayScreen extends BaseScreen{
                     @Override
                     protected Void doInBackground() {
 
-                        if (ScreenManager.canShown(ScreenManager.LOBBIES_SCREEN)) {
-                            ((LobbiesScreen) ScreenManager.getScreen(ScreenManager.LOBBIES_SCREEN)).refresh();
+
+                        if(!ScreenManager.show(ScreenManager.LOBBIES_SCREEN)){
                             this.done();
-                            ScreenManager.show(ScreenManager.LOBBIES_SCREEN);
+                            ScreenManager.getScreen(ScreenManager.LOBBIES_SCREEN).onError();
                         }
-                        else {
+                        else
                             this.done();
-                            JOptionPane.showMessageDialog( PlayScreen.this,
-                                    "Connection Failed!",
-                                    "ERROR",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
+
 
                         return null;
                     }
@@ -105,22 +101,17 @@ public class PlayScreen extends BaseScreen{
                 SwingWorker<Void, Void> mySwingWorker = new SwingWorker<Void, Void>(){
                     @Override
                     protected Void doInBackground() {
-
+                        DailyChallengeScreen screen = new DailyChallengeScreen( MainFrame.getResolution() );
                         //ToDo check daily challenge
-                        if (false) {
+                        if (ScreenManager.canShown(screen)) {
                             this.done();
-
-                            DailyChallengeScreen screen = new DailyChallengeScreen( MainFrame.getResolution() );
-
                             ScreenManager.openGameScreen( screen );
                         }
                         else {
                             this.done();
-                            JOptionPane.showMessageDialog( PlayScreen.this,
-                                    "Connection Failed!",
-                                    "ERROR",
-                                    JOptionPane.ERROR_MESSAGE);
+                            screen.onError();
                         }
+
 
                         return null;
                     }
@@ -157,5 +148,6 @@ public class PlayScreen extends BaseScreen{
 
         return buttonsPanel;
     }
+
 
 }

@@ -12,6 +12,7 @@ public class ScreenManager extends JPanel {
     private static ScreenStack stack;
     private static ScreenManager instance = null;
 
+
     public static final int MAIN_MENU_SCREEN = 0;
     public static final int PLAY_SCREEN = 1;
     public static final int HOW_TO_PLAY_SCREEN = 2;
@@ -60,34 +61,40 @@ public class ScreenManager extends JPanel {
         BaseScreen screen_ = stack.peek();
         screen_.onHide();
         stack.pop();
-        instance.removeAll();
-        instance.add(stack.peek());
+        screen_ = stack.peek();
 
-        MainFrame.getInstance().revalidate();
-        MainFrame.getInstance().repaint();
+        while(!canShown(screen_)){
+            screen_.onHide();
+            stack.pop();
+            screen_ = stack.peek();
+        }
+        synchronizeStackWithScreen();
     }
 
-    public static boolean canShown(int screen){
-        BaseScreen screenToShow = screens.get(screen);
-        if(screenToShow.doesRequireConnection() && !RESTRequestManager.checkServerConnection())
+    public static boolean canShown(BaseScreen screen){
+        if(screen.doesRequireConnection() && !RESTRequestManager.checkServerConnection()) {
             return false;
+        }
 
         return true;
     }
 
-    public static boolean show(int screen){
-        if(!canShown(screen))
-            return false;
-
+    public static void synchronizeStackWithScreen(){
         instance.removeAll();
-
-        BaseScreen screen_ = screens.get(screen);
-        screen_.onShow();
-        stack.push(screen_);
         instance.add(stack.peek());
-
         MainFrame.getInstance().revalidate();
         MainFrame.getInstance().repaint();
+    }
+
+    public static boolean show(int screen){
+        BaseScreen screen_ = screens.get(screen);
+
+        if(!canShown(screen_))
+            return false;
+
+        screen_.onShow();
+        stack.push(screen_);
+        synchronizeStackWithScreen();
         return true;
     }
 
@@ -103,10 +110,11 @@ public class ScreenManager extends JPanel {
     }
 
     public static void doubleBack(){
+
         BaseScreen screen_ = stack.peek();
         screen_.onHide();
         stack.pop();
-        ScreenManager.back();
+        back();
 
     }
 
