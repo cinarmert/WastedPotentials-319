@@ -171,7 +171,13 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
                 logger.info(getPlayerId(session.getUri().getPath()));
                 if (player.getId().equals(getPlayerId(session.getUri().getPath()))){
                     logger.info("sending message to " + player.getId());
-                    session.sendMessage(getTextLobbyMessage(payload, type));
+                    try {
+                        session.sendMessage(getTextLobbyMessage(payload, type));
+                    } catch( Exception ex ) {
+                        logger.warn( "could not send message to id: ", session.getAttributes().get("playerId") );
+                        sessions.remove( session );
+
+                    }
                 }
             }
         }
