@@ -3,7 +3,7 @@ package kubitz.server.websocket.storage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import kubitz.server.database.accounts.model.Account;
 
-public class LeaveMessage extends LobbyMessage {
+public class LeaveMessage {
 
     private String playerId;
 
