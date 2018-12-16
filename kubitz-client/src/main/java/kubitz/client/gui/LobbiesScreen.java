@@ -57,13 +57,22 @@ public class LobbiesScreen extends BaseScreen {
     private JPanel initializeContainer(){
         JPanel lobbies = new JPanel();
 
-        lobbies.setLayout(new BorderLayout());
+        lobbies.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
         lobbies.setBackground( Theme.tablePanelColor);
         lobbies.setBorder(new LineBorder(Theme.borderColor, 2));
         lobbies.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
 
-        lobbies.add(initializeList(), BorderLayout.LINE_START);
-        lobbies.add(initializeButtons(), BorderLayout.CENTER);
+        c.anchor = GridBagConstraints.WEST;
+        c.gridx = 0;
+        c.gridx = 0;
+        c.weighty = 1.0;
+        c.weightx = 1.0;
+        lobbies.add(initializeList(), c);
+
+        c.gridx = 1;
+        c.weightx = 1.0;
+        lobbies.add(initializeButtons(), c);
 
         return lobbies;
     }
@@ -75,7 +84,7 @@ public class LobbiesScreen extends BaseScreen {
 
         GridBagConstraints c = new GridBagConstraints();
 
-        c.anchor = GridBagConstraints.PAGE_START;
+        c.anchor = GridBagConstraints.CENTER;
         c.gridx = 0;
         c.gridy = 0;
         buttonPanel.add(new CustomButton("Create"){{
@@ -105,12 +114,12 @@ public class LobbiesScreen extends BaseScreen {
         }}, c);
         c.gridy = 3;
         buttonPanel.add( Box.createVerticalStrut( getMainHeight()/4),c);
-
+        buttonPanel.setPreferredSize( new Dimension(100, 340));
         return buttonPanel;
     }
 
     private JPanel initializeList(){
-        JPanel list = new JPanel();
+        JPanel list = new JPanel(new GridLayout(1,1));
         table = new JTable(null){
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
                 Component returnComp = super.prepareRenderer(renderer, row, column);
@@ -142,7 +151,8 @@ public class LobbiesScreen extends BaseScreen {
         scrollPane.getViewport().setBackground(Theme.alternateColor1);
         scrollPane.setOpaque(false);
         list.add(scrollPane);
-
+        list.setPreferredSize(new Dimension(getMainWidth()-(getMainWidth()/3) - 150,
+                getMainHeight()-(getMainHeight()/3)-10));
         return list;
     }
 
