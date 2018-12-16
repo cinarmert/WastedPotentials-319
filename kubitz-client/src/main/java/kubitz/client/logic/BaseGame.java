@@ -10,6 +10,8 @@ public abstract class BaseGame {
     Cube cube;
     Card card;
 
+    boolean requiresUpdate = false;
+
     public BaseGame(Cube cube) {
         this.cube = cube;
     }
@@ -70,7 +72,17 @@ public abstract class BaseGame {
         return true;
     }
 
-    public void addCubeToGrid( Cube cube, int x, int y){
+    public boolean doesRequireUpdate()
+    {
+        if(requiresUpdate)
+        {
+            requiresUpdate = false;
+            return true;
+        }
+        return false;
+    }
+
+    public void addCubeToGrid(Cube cube, int x, int y){
         grid.getGrid()[x][y] = cube;
     }
 

@@ -245,6 +245,9 @@ public abstract class BaseGameScreen extends BaseScreen{
                     if (baseGame.isGameFinished()) {
                         onGameFinished();
                     }
+
+                    if(baseGame.doesRequireUpdate())
+                        setGame(baseGame); //TODO change only the grid, card etc
                     repaint();
                 }
             });

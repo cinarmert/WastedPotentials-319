@@ -5,21 +5,22 @@ import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
 import kubitz.client.controllers.TimeController;
 import kubitz.client.gui.Config;
-import kubitz.client.gui.LeaderboardScreen;
 import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.ClassicChallenge;
 import kubitz.client.storage.DailyChallenges;
-
 import kubitz.client.storage.LeaderboardUser;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DailyChallengeMode extends BaseGame {
 
     TimeController tc;
     int score = -1;
+    ArrayList<Card> cards;
+    int cardIndex = -1;
 
-    //ToDo support for multiple daily challenge
     public DailyChallengeMode(Cube cube) {
         super(cube);
         tc = new TimeController();
@@ -29,14 +30,28 @@ public class DailyChallengeMode extends BaseGame {
             super.setCard(null);
             return;
         }
-        ClassicChallenge challenge = dailyChallenges.getClassicChallenges().get(0);
-        Grid cardGrid = new Grid(challenge.getSize());
-        cardGrid.setGrid(challenge.getMission());
-        Card card = new Card(cardGrid);
-        super.setCard(card);
-        super.getGrid().setSize(challenge.getSize());
+        cards = new ArrayList<Card>();
+        for (ClassicChallenge chal : dailyChallenges.getClassicChallenges())
+        {
+            Grid cardGrid = new Grid(chal.getSize());
+            cardGrid.setGrid(chal.getMission());
+            Card card = new Card(cardGrid);
+            cards.add(card);
+        }
+        nextCard();
     }
 
+    private boolean nextCard()
+    {
+        if(cardIndex == cards.size() - 1)
+            return false;
+        requiresUpdate = true;
+        cardIndex++;
+        Card card = cards.get(cardIndex);
+        super.setCard(card);
+        super.getGrid().setSize(card.getGrid().getSize());
+        return true;
+    }
     public void setTime(){tc.setTime();}
     public long getTimePassed(){
         return tc.getTimePassed();
@@ -44,8 +59,9 @@ public class DailyChallengeMode extends BaseGame {
 
     public boolean isGameFinished()
     {
-        boolean finsihed = super.isGameFinished();
-        if(finsihed)
+        boolean finished = super.isGameFinished();
+        finished = finished && !nextCard();
+        if(finished)
         {
             Config.setLastPlayedDailyChallenge(LocalDate.now().getDayOfYear());
             score = (int) tc.getTimePassed(); //ToDo make calculation of score meaningful
@@ -53,6 +69,6 @@ public class DailyChallengeMode extends BaseGame {
             RESTRequestManager.postDailyChallengeScore(user);
             //ToDo open leaderboard screen
         }
-        return finsihed;
+        return finished;
     }
 }
