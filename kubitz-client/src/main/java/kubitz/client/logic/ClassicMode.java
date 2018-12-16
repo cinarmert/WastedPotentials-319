@@ -12,9 +12,6 @@ public class ClassicMode extends BaseGame {
     public ClassicMode(Cube cube, Lobby lobby) {
         super(cube);
         this.lobby = lobby;
-
-        //ToDo get Card from server
-        setCard(new Card(new Grid(4)));
     }
 
     @Override

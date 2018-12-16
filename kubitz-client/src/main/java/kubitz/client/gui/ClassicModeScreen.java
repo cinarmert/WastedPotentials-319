@@ -48,6 +48,7 @@ public class ClassicModeScreen extends BaseGameScreen{
         Grid grid = new Grid(card.length);
         grid.setGrid(card);
         getGame().setCard(new Card(grid));
+        updateCardUI();
     }
 
     @Override

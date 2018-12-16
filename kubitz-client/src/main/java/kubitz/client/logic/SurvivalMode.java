@@ -20,9 +20,6 @@ public class SurvivalMode extends BaseGame {
         time = 150000; //ToDo reasonable time period
         ctc = new CountdownTimeController(time, onGameFinished);
         this.onGameFinished = onGameFinished;
-
-        // ToDo card size
-        setCard(Card.getRandomCard(4));
     }
 
     public boolean isGameFinished() {

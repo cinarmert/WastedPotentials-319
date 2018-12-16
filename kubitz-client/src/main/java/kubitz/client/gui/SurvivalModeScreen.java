@@ -95,12 +95,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
             ((SurvivalMode)getGame()).createNewChallenge();
 
-            cardUI.setCard( getGame().getCard() );
-            gridUI.resetGrid();
-
-            gridUI.repaint();
-            cardUI.repaint();
-
+            updateCardUI();
             repaint();
         }
     }

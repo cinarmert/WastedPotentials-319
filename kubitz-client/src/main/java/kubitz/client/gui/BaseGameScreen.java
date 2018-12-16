@@ -280,6 +280,14 @@ public abstract class BaseGameScreen extends BaseScreen{
 
     public abstract void onGameFinished();
 
+    public void updateCardUI(){
+        cardUI.setCard( getGame().getCard() );
+        gridUI.resetGrid();
+
+        gridUI.repaint();
+        cardUI.repaint();
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
