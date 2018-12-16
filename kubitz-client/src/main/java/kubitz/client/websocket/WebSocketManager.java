@@ -14,7 +14,7 @@ public class WebSocketManager {
 
     public WebSocketManager(){
         try {
-            client = new KubitzWebSocketClient(new URI("ws://40.89.169.29:8083/player/" + "101"), new Draft_6455());
+            client = new KubitzWebSocketClient(new URI("ws://40.89.169.29:8083/player/" + Config.getId()), new Draft_6455());
             client.connectBlocking();
         } catch (URISyntaxException e) {
             e.printStackTrace();

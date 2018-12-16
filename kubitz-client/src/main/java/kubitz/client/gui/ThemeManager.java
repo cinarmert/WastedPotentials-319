@@ -46,7 +46,7 @@ public class ThemeManager {
         //fundamental colors
         Theme.borderColor = Color.BLACK;
         Theme.backgroundColor = Color.WHITE;
-        Theme.foregroundColor = new Color(82, 255, 61);
+        Theme.foregroundColor = new Color(225, 91, 255);
 
         //colors
         Theme.tablePanelColor = new Color(204,204,204);
