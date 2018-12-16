@@ -1,7 +1,7 @@
 package kubitz.client.websocket;
 
-import kubitz.client.gui.LobbyScreen;
-import kubitz.client.gui.ScreenManager;
+import kubitz.client.gui.*;
+import kubitz.client.logic.ClassicMode;
 import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.*;
@@ -55,7 +55,17 @@ public class KubitzWebSocketClient extends WebSocketClient {
 
     private void handleStartGameMessage(LobbyMessage lm) throws IOException {
         StartGameMessage startGameMessage = JsonUtil.fromJson(lm.getPayload().toString(), StartGameMessage.class);
+        LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
 
+        if(startGameMessage.getGameMode().equals(Lobby.MODE_CLASSIC)) {
+            ClassicModeScreen cms = new ClassicModeScreen(MainFrame.getResolution(), lobbyScreen.getCurrentLobby());
+            cms.setCard(startGameMessage.getCard());
+            ScreenManager.openGameScreen(cms);
+        } else {
+            SwitchModeScreen sms = new SwitchModeScreen(MainFrame.getResolution(), lobbyScreen.getCurrentLobby());
+            sms.setCard(startGameMessage.getCard());
+            ScreenManager.openGameScreen(sms);
+        }
     }
 
     private void handleStateMessage(LobbyMessage lm) throws IOException {

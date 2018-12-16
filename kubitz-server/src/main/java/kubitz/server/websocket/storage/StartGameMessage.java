@@ -10,6 +10,16 @@ public class StartGameMessage {
 
     private String lobbyId;
 
+    private int[][] card;
+
+    public int[][] getCard() {
+        return card;
+    }
+
+    public void setCard(int[][] card) {
+        this.card = card;
+    }
+
     public String getPlayerId() {
         return playerId;
     }

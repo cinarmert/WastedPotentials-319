@@ -13,6 +13,25 @@ public class StartGameMessage {
     @JsonProperty
     private String lobbyId;
 
+    @JsonProperty
+    private int[][] card;
+
+    public StartGameMessage(){}
+
+    public StartGameMessage(String gameMode, String playerId, String lobbyId) {
+        this.gameMode = gameMode;
+        this.lobbyId = lobbyId;
+        this.playerId = playerId;
+    }
+
+    public int[][] getCard() {
+        return card;
+    }
+
+    public void setCard(int[][] card) {
+        this.card = card;
+    }
+
     public String getPlayerId() {
         return playerId;
     }
@@ -28,8 +47,6 @@ public class StartGameMessage {
     public void setLobbyId(String lobbyId) {
         this.lobbyId = lobbyId;
     }
-
-    public StartGameMessage(){}
 
     public String getGameMode() {
         return gameMode;
