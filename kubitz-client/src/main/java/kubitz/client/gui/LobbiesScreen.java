@@ -243,6 +243,11 @@ public class LobbiesScreen extends BaseScreen {
             return obj;
         }
     }
+
+    @Override
+    public void onShow(){
+        refresh();
+    }
 }
 
 
