@@ -113,7 +113,7 @@ public class LobbiesScreen extends BaseScreen {
             });
         }}, c);
         c.gridy = 3;
-        buttonPanel.add( Box.createVerticalStrut( getMainHeight()/4),c);
+        //buttonPanel.add( Box.createVerticalStrut( getMainHeight()/4),c);
         buttonPanel.setPreferredSize( new Dimension(100, 340));
         return buttonPanel;
     }

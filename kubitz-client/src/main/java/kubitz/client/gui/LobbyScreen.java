@@ -217,13 +217,13 @@ public class LobbyScreen extends BaseScreen {
     private void startGame() {
         WebSocketManager.sendStartGameMessage(getCurrentLobby().getName(), getCurrentLobby().getMode());
 
-        if ( getCurrentLobby().getMode().equals(Lobby.MODE_CLASSIC) ){
+/*        if ( getCurrentLobby().getMode().equals(Lobby.MODE_CLASSIC) ){
             ClassicModeScreen cms = new ClassicModeScreen(MainFrame.getResolution(), getCurrentLobby());
             ScreenManager.openGameScreen(cms);
         } else if (getCurrentLobby().getMode().equals(Lobby.MODE_SWITCH)){
             SwitchModeScreen sms = new SwitchModeScreen(MainFrame.getResolution(), getCurrentLobby());
             ScreenManager.openGameScreen(sms);
-        }
+        }*/
     }
 
     private void invite(String name) {

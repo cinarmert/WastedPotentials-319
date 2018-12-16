@@ -282,7 +282,9 @@ public abstract class BaseGameScreen extends BaseScreen{
 
     public void updateCardUI(){
         cardUI.setCard( getGame().getCard() );
-        gridUI.resetGrid();
+        gridUI.setGrid( getGame().getGrid() );
+
+        addGridListeners();
 
         gridUI.repaint();
         cardUI.repaint();
