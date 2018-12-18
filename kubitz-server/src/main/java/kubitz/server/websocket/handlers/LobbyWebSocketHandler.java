@@ -87,12 +87,24 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
     private void handleStateMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         StateMessage stateMessage = JsonUtil.fromJson(lm.getPayload().toString(), StateMessage.class);
+        if (stateMessage == null)
+            return;
+        Lobby lobby = lobbyRepository.findLobbyByName(stateMessage.getLobbyId());
+
+        logger.info("player " + stateMessage.getPlayerId() + " in lobby " + stateMessage.getLobbyId() + " is ready to switch");
+
+        notifyLobbyParticipants(lobby, JsonUtil.toJson(stateMessage), LobbyMessageTypes.LOBBY_STATE_MESSAGE);
 
     }
 
     private void handleFinishGameMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         FinishGameMessage finishGameMessage = JsonUtil.fromJson(lm.getPayload().toString(), FinishGameMessage.class);
+        if(finishGameMessage == null) return;
 
+        Lobby lobby = lobbyRepository.findLobbyByName(finishGameMessage.getLobbyId());
+        logger.info("player " + finishGameMessage.getPlayerId() + " in lobby " + finishGameMessage.getLobbyId() + " finished game in " + finishGameMessage.getFinishTime());
+
+        notifyLobbyParticipants(lobby, JsonUtil.toJson(finishGameMessage), LobbyMessageTypes.LOBBY_FINISH_GAME);
     }
 
     private void handleLeaveMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
