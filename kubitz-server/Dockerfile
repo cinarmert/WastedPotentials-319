@@ -20,7 +20,7 @@ EXPOSE 27017
 EXPOSE 28017
 
 
-ADD target/weather-server.jar app.jar
+ADD target/kubitz-server.jar app.jar
 ADD run.sh run.sh
 RUN ["chmod", "+x", "./run.sh"]
 RUN sh -c 'touch /app.jar'
