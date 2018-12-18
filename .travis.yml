@@ -1,0 +1,38 @@
+language: java
+
+sudo: required
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: builds
+      script:
+      - sudo apt-get update
+      - sudo apt-get install -y docker.io
+      - cd kubitz-server
+      - mvn -B clean package
+      - mvn -B dockerfile:build
+      - export COMMITNO=$(git log --pretty=format:'%h' -n 1)        
+      - gzip -9 -c target/kubitz-server.jar > target/kubitz-server-${TRAVIS_BUILD_ID}-${COMMITNO}.jar.gz
+      - docker save -o target/kubitz-server-${TRAVIS_BUILD_ID}-${COMMITNO} kubitz-server
+      - gzip -9 target/kubitz-server-${TRAVIS_BUILD_ID}-${COMMITNO}
+      - docker tag kubitz-server:latest kubitz/kubitz-server:${TRAVIS_BUILD_ID}-${COMMITNO}
+      - yes | docker login -u "$DOCKERHUB_KUBITZ_USERNAME" -p "$DOCKERHUB_KUBITZ_PW"  --email kubitzgame@gmail.com
+      - docker push kubitz/kubitz-server:${TRAVIS_BUILD_ID}-${COMMITNO}
+      - docker tag kubitz-server:latest kubitz/kubitz-server:latest
+      - docker push kubitz/kubitz-server:latest
+      - docker logout
+
+# build:
+#   - sudo apt-get update
+#   - sudo apt-get install -y docker.io
+#   - mvn -B clean package
+#   - mvn -B dockerfile:build
+#   - export COMMITNO=$(git log --pretty=format:'%h' -n 1)
+
+# deploy:
+#   provider: script
+#   script: "docker push kubitz/travis-test:latest"
+#   on:
+#     branch: master

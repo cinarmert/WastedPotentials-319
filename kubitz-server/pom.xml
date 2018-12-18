@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>kubitz.server</groupId>
-    <artifactId>kubitz.server</artifactId>
+    <artifactId>kubitz-server</artifactId>
     <version>1.0</version>
 
     <repositories>
@@ -22,7 +22,20 @@
     </pluginRepositories>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <repository>kubitz-server</repository>
+                </configuration>
+            </plugin>
             <plugin>
                 <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -99,6 +112,5 @@
         </dependency>
 
     </dependencies>
-
 
 </project>
