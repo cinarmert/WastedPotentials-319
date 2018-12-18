@@ -11,7 +11,7 @@ jobs:
       - sudo apt-get update
       - sudo apt-get install -y docker.io
       - cd kubitz-server
-      - mvn -B clean package
+      - mvn -B -DskipTests clean package
       - mvn -B dockerfile:build
       - export COMMITNO=$(git log --pretty=format:'%h' -n 1)        
       - gzip -9 -c target/kubitz-server.jar > target/kubitz-server-${TRAVIS_BUILD_ID}-${COMMITNO}.jar.gz
