@@ -22,6 +22,7 @@ public class Config {
     private static String name;
     private static long lastPlayedDailyChallenge;
     private static String theme;
+    private static String server;
 
     private static Properties readProps(){
         Properties props;
@@ -45,8 +46,9 @@ public class Config {
             Config.name = props.getProperty("name");
             Config.lastPlayedDailyChallenge = Long.parseLong(props.getProperty("lastPlayedDailyChallenge"));
             Config.theme = props.getProperty("theme");
+            Config.server = props.getProperty("server");
 
-            if ( resolution == null || theme  == null ){
+            if ( resolution == null || theme  == null  || server == null){
                 return createDefaultConfig();
             }
 
@@ -72,6 +74,7 @@ public class Config {
             props.setProperty("music", ""+100);
             props.setProperty("lastPlayedDailyChallenge", ""+(-1));
             props.setProperty("theme", ThemeManager.RED_THEME);
+            props.setProperty("server", "http://40.89.169.29:8083");
 
             updateFile();
 
@@ -81,6 +84,7 @@ public class Config {
             Config.effectsSound = 100;
             Config.musicSound = 100;
             Config.theme = props.getProperty("theme");
+            Config.server =  "http://40.89.169.29:8083";
 
             return props;
         }
@@ -194,6 +198,20 @@ public class Config {
             e.printStackTrace();
         }
 
+    }
+
+    public static void setServer(String s)
+    {
+        props.setProperty("server", s);
+        server = s;
+        updateFile();
+    }
+
+    public static String getServer()
+    {
+        if(props == null)
+            props = readProps();
+        return server;
     }
 
 }
