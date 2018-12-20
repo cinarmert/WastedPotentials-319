@@ -25,7 +25,7 @@ public class ClassicMode extends BaseGame {
             WebSocketManager.sendFinishGameMessage("", Config.getName(), lobby.getName());
         }
 
-        return haveIFinished;
+        return getWhoWon() != null;
     }
 
 
