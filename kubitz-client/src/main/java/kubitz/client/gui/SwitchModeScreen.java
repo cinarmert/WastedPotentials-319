@@ -56,10 +56,10 @@ public class SwitchModeScreen extends BaseGameScreen{
 
     @Override
     public void onGameFinished() {
-        ((SwitchMode)getGame()).stop();
 
-        // ToDo get who wins
-        if( true)
+        String winner = ((SwitchMode)getGame()).getWhoWon();
+
+        if( winner.equals(Config.getId()))
             JOptionPane.showMessageDialog( this,
                     "You win!",
                     "GAME OVER",
@@ -69,7 +69,6 @@ public class SwitchModeScreen extends BaseGameScreen{
                     "You lose!",
                     "GAME OVER",
                     JOptionPane.INFORMATION_MESSAGE);
-
 
         ScreenManager.back();
 

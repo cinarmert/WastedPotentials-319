@@ -74,7 +74,7 @@ public class KubitzWebSocketClient extends WebSocketClient {
         StateMessage stateMessage = JsonUtil.fromJson(lm.getPayload().toString(), StateMessage.class);
         SwitchModeScreen sms = (SwitchModeScreen) ScreenManager.getCurrentScreen();
         SwitchMode sm = (SwitchMode) sms.getGame();
-        if (true) //TODO check if comes from this account
+        if (!Config.getId().equals(stateMessage.getAccount().getId()))
         {
             sm.setGridState(stateMessage.getState());
             sm.signalUpdate();
