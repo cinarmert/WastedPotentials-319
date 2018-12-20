@@ -10,7 +10,7 @@ public class Lobby {
     private String name;
 
     @JsonProperty
-    private int playerCount;
+    private int playerCount; //TODO remove this
 
     @JsonProperty
     private String mode;
@@ -63,7 +63,7 @@ public class Lobby {
     }
 
     public int getPlayerCount() {
-        return playerCount;
+        return players.size();
     }
 
     public void setPlayerCount(int playerCount) {
