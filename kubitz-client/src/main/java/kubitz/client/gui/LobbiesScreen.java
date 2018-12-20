@@ -47,7 +47,7 @@ public class LobbiesScreen extends BaseScreen {
         setBackButton(true);
 
         c.insets = new Insets(30,30,0,0);
-        c.anchor = GridBagConstraints.NORTH;
+        c.anchor = GridBagConstraints.CENTER;
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
@@ -147,6 +147,7 @@ public class LobbiesScreen extends BaseScreen {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.getVerticalScrollBar().setUI(new CustomScrollbarUI(scrollPane));
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(Theme.alternateColor1);
         scrollPane.setOpaque(false);

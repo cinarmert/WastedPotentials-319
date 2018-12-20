@@ -46,7 +46,7 @@ public class LobbyScreen extends BaseScreen {
 
         setBackButton(true);
 
-        c.anchor = GridBagConstraints.NORTH;
+        c.anchor = GridBagConstraints.CENTER;
         c.weighty = 1.0;
         c.gridx = 0;
         c.gridy = 0;
@@ -128,9 +128,12 @@ public class LobbyScreen extends BaseScreen {
         chatBox = new JTextPane();
         chatBox.setEditable(false);
         chatBox.setBackground(Theme.backgroundColor);
+        DefaultCaret caret = (DefaultCaret)chatBox.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         JScrollPane chatScroll = new JScrollPane(chatBox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         chatScroll.setPreferredSize(new Dimension(getMainWidth()/2,100));
+        chatScroll.getVerticalScrollBar().setUI(new CustomScrollbarUI(chatScroll));
         chatPanel.add(chatScroll,c);
 
         c.gridy = 1;
@@ -207,7 +210,7 @@ public class LobbyScreen extends BaseScreen {
         playerList.setFixedCellHeight(30);
 
         listPanel.add(playerList);
-        playerList.setPreferredSize(new Dimension(getMainWidth()/2, getMainHeight()/6));
+        playerList.setPreferredSize(new Dimension(getMainWidth()/2, getMainHeight()/5));
 
         return listPanel;
     }
