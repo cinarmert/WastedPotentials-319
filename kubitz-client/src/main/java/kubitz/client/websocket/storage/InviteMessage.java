@@ -13,6 +13,14 @@ public class InviteMessage {
     @JsonProperty
     private String lobbyId;
 
+    public InviteMessage(){}
+
+    public InviteMessage(String invitedPlayerId, String playerId, String lobbyId) {
+        this.invitedPlayerId = invitedPlayerId;
+        this.playerId = playerId;
+        this.lobbyId = lobbyId;
+    }
+
     public String getPlayerId() {
         return playerId;
     }
@@ -28,8 +36,6 @@ public class InviteMessage {
     public void setLobbyId(String lobbyId) {
         this.lobbyId = lobbyId;
     }
-
-    public InviteMessage(){}
 
     public String getInvitedPlayerId() {
         return invitedPlayerId;

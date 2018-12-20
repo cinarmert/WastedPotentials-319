@@ -1,6 +1,7 @@
 package kubitz.client.websocket;
 
 import kubitz.client.gui.*;
+import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.*;
@@ -8,6 +9,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.handshake.ServerHandshake;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URI;
 
@@ -113,6 +115,19 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleInviteMessage(LobbyMessage lm) throws IOException {
         InviteMessage inviteMessage = JsonUtil.fromJson(lm.getPayload().toString(), InviteMessage.class);
 
+        int invite = JOptionPane.showConfirmDialog( MainFrame.getInstance(),
+                inviteMessage.getPlayerId() + " invites you.",
+                "Play?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (invite == 0){// ToDo test invite
+            Lobby lobby = RESTRequestManager.getLobbyByName(inviteMessage.getLobbyId()); //ToDo invite message returns lobby?
+            WebSocketManager.sendJoinLobbyMessage(inviteMessage.getLobbyId());
+
+            ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(lobby);
+            ScreenManager.show(ScreenManager.LOBBY_SCREEN);
+        }
     }
 
     private void handleChatMessage(LobbyMessage lm) throws IOException {

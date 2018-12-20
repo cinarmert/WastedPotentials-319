@@ -253,6 +253,8 @@ public class LobbyScreen extends BaseScreen {
 
     private void invite(String name) {
 
+        //ToDo name to ID?
+        WebSocketManager.sendInviteMessage(name, Config.getName(),currentLobby.getName());
     }
 
 
