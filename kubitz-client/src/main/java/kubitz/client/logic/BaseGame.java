@@ -9,6 +9,7 @@ public abstract class BaseGame {
     Grid grid;
     Cube cube;
     Card card;
+    private String whoWon;
 
     boolean requiresUpdate = false;
 
@@ -82,6 +83,14 @@ public abstract class BaseGame {
             return true;
         }
         return false;
+    }
+
+    public String getWhoWon() {
+        return whoWon;
+    }
+
+    public void setWhoWon(String whoWon) {
+        this.whoWon = whoWon;
     }
 
     public void addCubeToGrid(Cube cube, int x, int y){

@@ -77,6 +77,9 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleFinishGameMessage(LobbyMessage lm) throws IOException {
         FinishGameMessage finishGameMessage = JsonUtil.fromJson(lm.getPayload().toString(), FinishGameMessage.class);
 
+        BaseGameScreen bg = (BaseGameScreen)ScreenManager.getCurrentScreen();
+        bg.getGame().setWhoWon(finishGameMessage.getPlayerId());
+        bg.onGameFinished();
     }
 
     private void handleLeaveMessage(LobbyMessage lm) throws IOException {

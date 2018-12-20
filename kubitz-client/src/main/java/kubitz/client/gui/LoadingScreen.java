@@ -68,7 +68,7 @@ public class LoadingScreen extends JDialog implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 renderFrame(g, i);
                 i++;
-                if (i == 4) i = 0;
+                if (i == 6) i = 0;
             }
         });
 

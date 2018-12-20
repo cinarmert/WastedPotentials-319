@@ -62,4 +62,12 @@ public class WebSocketManager {
         lm.setType(LobbyMessageTypes.LOBBY_INVITE_MESSAGE);
         client.send(JsonUtil.toJson(lm));
     }
+
+    public static void sendFinishGameMessage(String finishTime, String playerId, String lobbyId){
+        FinishGameMessage finishMessage = new FinishGameMessage(finishTime,playerId,lobbyId);
+        LobbyMessage lm = new LobbyMessage();
+        lm.setPayload(JsonUtil.toJson(finishMessage));
+        lm.setType(LobbyMessageTypes.LOBBY_FINISH_GAME);
+        client.send(JsonUtil.toJson(lm));
+    }
 }

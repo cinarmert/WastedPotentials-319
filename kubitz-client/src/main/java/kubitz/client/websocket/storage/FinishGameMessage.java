@@ -13,6 +13,14 @@ public class FinishGameMessage {
     @JsonProperty
     private String lobbyId;
 
+    public FinishGameMessage(){}
+
+    public FinishGameMessage(String finishTime, String playerId, String lobbyId) {
+        this.finishTime = finishTime;
+        this.playerId = playerId;
+        this.lobbyId = lobbyId;
+    }
+
     public String getPlayerId() {
         return playerId;
     }
@@ -28,8 +36,6 @@ public class FinishGameMessage {
     public void setLobbyId(String lobbyId) {
         this.lobbyId = lobbyId;
     }
-
-    public FinishGameMessage(){}
 
     public String getFinishTime() {
         return finishTime;
