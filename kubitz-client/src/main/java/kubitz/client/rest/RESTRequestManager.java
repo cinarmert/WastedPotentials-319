@@ -13,7 +13,7 @@ import java.util.List;
 //ToDo to be tested
 public class RESTRequestManager {
 
-    private static final String BASE_URL = Config.getServer();
+    private static final String BASE_URL = "http://" + Config.getServer();
 
     private static final String ACCOUNT_LOGIN = "/accounts/login";
     private static final String CHAT_GET_MSG = "/chat/getMessages/%s/%s";
