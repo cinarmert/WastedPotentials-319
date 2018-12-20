@@ -29,14 +29,14 @@ public class MainMenuScreen extends BaseScreen{
     private JPanel initializeLogo(){
         JPanel logoPanel = new JPanel();
         logoPanel.setLayout( new GridLayout(2,1));
-        logoPanel.setMaximumSize( new Dimension( getMainWidth()/3, getMainHeight()/8));
+        //logoPanel.setMaximumSize( new Dimension( getMainWidth()/3, getMainHeight()/8));
         logoPanel.setOpaque(false);
 
-        JLabel kubitz = new JLabel("ku-Bitz");
-        kubitz.setFont( new Font( kubitz.getFont().getName(), Font.PLAIN, 50));
 
-        JLabel version = new JLabel("Menthol Edition");
-        version.setFont( new Font( kubitz.getFont().getName(), Font.PLAIN, 20));
+
+        JLabel kubitz = new JLabel(new ImageIcon( MainFrame.getInstance().getClass().getResource("/logos/kubitz.png")) );
+
+        JLabel version = new JLabel(new ImageIcon( MainFrame.getInstance().getClass().getResource("/logos/double_fusion.png")) );
 
         logoPanel.add(kubitz);
         logoPanel.add(version);
