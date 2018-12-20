@@ -85,7 +85,7 @@ public class KubitzWebSocketClient extends WebSocketClient {
         FinishGameMessage finishGameMessage = JsonUtil.fromJson(lm.getPayload().toString(), FinishGameMessage.class);
 
         BaseGameScreen bg = (BaseGameScreen)ScreenManager.getCurrentScreen();
-        bg.getGame().setWhoWon(finishGameMessage.getPlayerId());
+        bg.getGame().setWhoWon(finishGameMessage.getAccount().getId());
         bg.onGameFinished();
     }
 
@@ -104,7 +104,7 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleKickMessage(LobbyMessage lm) throws IOException {
         KickMessage kickMessage = JsonUtil.fromJson(lm.getPayload().toString(), KickMessage.class);
 
-        if (kickMessage.getKickedPlayerId().equals(Config.getId()) ){
+        if (kickMessage.getAccountToKick().getId().equals(Config.getId()) ){
             LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
             lobbyScreen.setCurrentLobby(null);
             ScreenManager.back();
@@ -126,7 +126,7 @@ public class KubitzWebSocketClient extends WebSocketClient {
         InviteMessage inviteMessage = JsonUtil.fromJson(lm.getPayload().toString(), InviteMessage.class);
 
         int invite = JOptionPane.showConfirmDialog( MainFrame.getInstance(),
-                inviteMessage.getPlayerId() + " invites you.",
+                inviteMessage.getAccount().getId() + " invites you.",
                 "Play?",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE);
@@ -144,8 +144,8 @@ public class KubitzWebSocketClient extends WebSocketClient {
         ChatMessage chatMessage = JsonUtil.fromJson(lm.getPayload().toString(), ChatMessage.class);
         LobbyScreen ls = ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN));
 
-        if ( ls.getCurrentLobby() !=  null && ls.getCurrentLobby().getName().equals( chatMessage.getLobbyId() )  ) {
-            ls.newMessage(chatMessage.getPlayerId(), chatMessage.getContent());
+        if ( ls.getCurrentLobby() !=  null && ls.getCurrentLobby().getId().equals( chatMessage.getLobbyId() )  ) {
+            ls.newMessage(chatMessage.getAccount().getId(), chatMessage.getContent());
         }
 
     }

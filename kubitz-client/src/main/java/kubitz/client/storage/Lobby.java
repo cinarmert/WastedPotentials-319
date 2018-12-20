@@ -7,10 +7,7 @@ import java.util.ArrayList;
 public class Lobby {
 
     @JsonProperty
-    private String name;
-
-    @JsonProperty
-    private int playerCount; //TODO remove this
+    private String id;
 
     @JsonProperty
     private String mode;
@@ -34,40 +31,34 @@ public class Lobby {
 
     public Lobby() {}
 
-    public Lobby(String name, String mode, int maxPlayerLimit, boolean privateLobby ){
-        this.name = name;
+    public Lobby(String id, String mode, int maxPlayerLimit, boolean privateLobby ){
+        this.id = id;
         this.mode = mode;
         this.maxPlayerLimit = maxPlayerLimit;
         this.privateLobby = privateLobby;
         players = new ArrayList<>();
-        playerCount = 1;
         status = Lobby.STATUS_WAITING;
     }
 
-    public Lobby(String name, String mode, int maxPlayerLimit, boolean privateLobby, int playerCount, String status ){
-        this.name = name;
+    public Lobby(String id, String mode, int maxPlayerLimit, boolean privateLobby, String status ){
+        this.id = id;
         this.mode = mode;
         this.maxPlayerLimit = maxPlayerLimit;
         this.privateLobby = privateLobby;
         players = new ArrayList<>();
-        this.playerCount = playerCount;
         this.status = status;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getPlayerCount() {
         return players.size();
-    }
-
-    public void setPlayerCount(int playerCount) {
-        this.playerCount = playerCount;
     }
 
     public String getMode() {
@@ -107,7 +98,7 @@ public class Lobby {
     }
 
     public boolean isFull(){
-        return(maxPlayerLimit == playerCount);
+        return(maxPlayerLimit == getPlayerCount());
     }
 
     public boolean isPlaying(){
@@ -120,7 +111,7 @@ public class Lobby {
 
     public void addPlayer(Account a) {
         for(Account player : players){
-            if(player.getName().equals(a.getName())){
+            if(player.getId().equals(a.getId())){
                 return;
             }
         }

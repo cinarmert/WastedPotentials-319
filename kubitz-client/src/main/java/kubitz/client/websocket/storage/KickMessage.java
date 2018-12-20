@@ -6,10 +6,7 @@ import kubitz.client.storage.Account;
 public class KickMessage {
 
     @JsonProperty
-    private String kickedPlayerId;
-
-    @JsonProperty
-    private String playerId;
+    private Account account;
 
     @JsonProperty
     private String lobbyId;
@@ -17,20 +14,20 @@ public class KickMessage {
     @JsonProperty
     private Account accountToKick;
 
+    public Account getAccount() {
+        return account;
+    }
+
     public Account getAccountToKick() {
         return accountToKick;
     }
 
     public void setAccount(Account account) {
-        this.accountToKick = account;
+        this.account = account;
     }
 
-    public String getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
+    public void setAccountToKick(Account account) {
+        this.accountToKick = accountToKick;
     }
 
     public String getLobbyId() {
@@ -43,11 +40,4 @@ public class KickMessage {
 
     public KickMessage(){};
 
-    public String getKickedPlayerId() {
-        return kickedPlayerId;
-    }
-
-    public void setKickedPlayerId(String kickedPlayerId) {
-        this.kickedPlayerId = kickedPlayerId;
-    }
 }

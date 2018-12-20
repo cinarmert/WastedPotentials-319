@@ -19,7 +19,6 @@ public class Config {
     private static int effectsSound;
     private static int musicSound;
     private static String id;
-    private static String name;
     private static long lastPlayedDailyChallenge;
     private static String theme;
     private static String server;
@@ -43,7 +42,6 @@ public class Config {
             Config.effectsSound = Integer.parseInt( props.getProperty("effects") );
             Config.musicSound = Integer.parseInt( props.getProperty("music") );
             Config.id = props.getProperty("id");
-            Config.name = props.getProperty("name");
             Config.lastPlayedDailyChallenge = Long.parseLong(props.getProperty("lastPlayedDailyChallenge"));
             Config.theme = props.getProperty("theme");
             Config.server = props.getProperty("server");
@@ -138,16 +136,6 @@ public class Config {
         updateFile();
     }
 
-    public static void setName(String name){
-        props.setProperty("name", name);
-        Config.name = name;
-        updateFile();
-    }
-
-    public static String getName(){
-        return name;
-    }
-
     public static Dimension getResolution() {
         return resolution;
     }
@@ -166,7 +154,7 @@ public class Config {
     }
 
     public static Account getAccount() {
-        return new Account(getId(), getName());
+        return new Account(getId());
     }
 
     public static int getMusicSound() {

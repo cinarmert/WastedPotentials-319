@@ -101,7 +101,7 @@ public class SettingsScreen extends BaseScreen{
         nickNamePanel.setLayout( new FlowLayout(FlowLayout.LEFT));
         nickNamePanel.setOpaque(false);
 
-        nickNameTextField = new JTextField(Config.getName(),20);
+        nickNameTextField = new JTextField(Config.getId(),20);
         nickNameTextField.setBackground(Theme.goodColor);
         nickNameTextField.setForeground(Theme.goodTextColor);
         nickNameTextField.addKeyListener(new KeyAdapter() {
@@ -109,7 +109,7 @@ public class SettingsScreen extends BaseScreen{
             public void keyReleased(KeyEvent e) {
                 super.keyPressed(e);
 
-                if (Config.getName().equals( nickNameTextField.getText() ) ){
+                if (Config.getId().equals( nickNameTextField.getText() ) ){
                     nickNameTextField.setBackground(Theme.goodColor);
                     nickNameTextField.setForeground(Theme.goodTextColor);
                 }
@@ -125,8 +125,8 @@ public class SettingsScreen extends BaseScreen{
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Config.setName(nickNameTextField.getText());
-                RESTRequestManager.login(new Account(Config.getId(), nickNameTextField.getText()));
+                Config.setId(nickNameTextField.getText());
+                RESTRequestManager.login(new Account(Config.getId()));
                 nickNameTextField.setBackground(Theme.goodColor);
                 nickNameTextField.setForeground(Theme.goodTextColor);
             }

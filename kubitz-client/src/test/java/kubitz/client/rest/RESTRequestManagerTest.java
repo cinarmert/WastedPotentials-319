@@ -16,7 +16,7 @@ public class RESTRequestManagerTest {
     private GameState gameState = new GameState();
     private Leaderboard leaderboard = new Leaderboard();
     private LeaderboardUser leaderboardUser = new LeaderboardUser();
-    private Lobby lobby = new Lobby("testlobby", Lobby.MODE_CLASSIC, 5, false, 4, Lobby.STATUS_PLAYING);
+    private Lobby lobby = new Lobby("testlobby", Lobby.MODE_CLASSIC, 5, false, Lobby.STATUS_PLAYING);
     Message message = new Message("testfromrest", "testlobby", "tstmsg", "now", "autrest");
 
     @Before
@@ -26,7 +26,6 @@ public class RESTRequestManagerTest {
     @Test
     public void login() {
         account.setId("3");
-        account.setName("test");
         RESTRequestManager.login(account);
     }
 
@@ -47,7 +46,6 @@ public class RESTRequestManagerTest {
     @Test
     public void postDailyChallengeScore() {
         leaderboardUser.setId("3");
-        leaderboardUser.setName("test");
         leaderboardUser.setScore(100);
         RESTRequestManager.postDailyChallengeScore(leaderboardUser);
     }
@@ -97,7 +95,6 @@ public class RESTRequestManagerTest {
 
     @Test
     public void kickPlayer() {
-        lobby.setPlayerCount(3);
         RESTRequestManager.kickPlayer(lobby);
     }
 

@@ -7,14 +7,10 @@ public class Account {
     @JsonProperty
     private String id;
 
-    @JsonProperty
-    private String name;
-
     public Account(){}
 
-    public Account(String id, String name) {
+    public Account(String id) {
         this.id = id;
-        this.name = name;
     }
 
     public String getId() {
@@ -25,21 +21,13 @@ public class Account {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString(){
-        return name;
+        return id;
     }
 
     @Override
     public boolean equals(Object o){
-        return id.equals( ((Account)o).id) && name.equals(((Account)o).name);
+        return id.equals(((Account)o).id);
     }
 }

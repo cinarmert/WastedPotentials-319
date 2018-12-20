@@ -56,7 +56,7 @@ public class ClassicModeScreen extends BaseGameScreen{
 
         String winner = ((ClassicMode)getGame()).getWhoWon();
 
-        if( winner.equals(Config.getName()))
+        if( winner.equals(Config.getId()))
         JOptionPane.showMessageDialog( this,
                 "You win!",
                 "GAME OVER",

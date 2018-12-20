@@ -1,6 +1,7 @@
 package kubitz.client.websocket.storage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kubitz.client.storage.Account;
 
 public class FinishGameMessage {
 
@@ -8,25 +9,25 @@ public class FinishGameMessage {
     private String finishTime;
 
     @JsonProperty
-    private String playerId;
+    private Account account;
 
     @JsonProperty
     private String lobbyId;
 
     public FinishGameMessage(){}
 
-    public FinishGameMessage(String finishTime, String playerId, String lobbyId) {
+    public FinishGameMessage(String finishTime, Account account, String lobbyId) {
         this.finishTime = finishTime;
-        this.playerId = playerId;
+        this.account = account;
         this.lobbyId = lobbyId;
     }
 
-    public String getPlayerId() {
-        return playerId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public String getLobbyId() {

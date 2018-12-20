@@ -131,7 +131,7 @@ public class LeaderboardScreen extends BaseScreen {
             switch (columnIndex){
                 case 0 : obj = rowIndex + 1;
                     break;
-                case 1 : obj = leaderboard.getLeaderboard().get(rowIndex).getName();
+                case 1 : obj = leaderboard.getLeaderboard().get(rowIndex).getId();
                     break;
                 case 2 : obj = leaderboard.getLeaderboard().get(rowIndex).getScore();
                     break;

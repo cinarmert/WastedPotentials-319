@@ -24,7 +24,7 @@ public class WebSocketManager {
     }
 
     public static void sendJoinLobbyMessage(String lobbyId){
-        JoinMessage joinMessage = new JoinMessage(Config.getId(), lobbyId, Config.getAccount());
+        JoinMessage joinMessage = new JoinMessage(lobbyId, Config.getAccount());
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(joinMessage));
         lm.setType(LobbyMessageTypes.LOBBY_JOIN_MESSAGE);
@@ -32,7 +32,7 @@ public class WebSocketManager {
     }
 
     public static void sendLeaveLobbyMessage(String lobbyId){
-        LeaveMessage leaveMessage = new LeaveMessage(Config.getId(), lobbyId, Config.getAccount());
+        LeaveMessage leaveMessage = new LeaveMessage(lobbyId, Config.getAccount());
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(leaveMessage));
         lm.setType(LobbyMessageTypes.LOBBY_LEAVE_MESSAGE);
@@ -40,7 +40,7 @@ public class WebSocketManager {
     }
 
     public static void sendStartGameMessage(String lobbyId, String gameMode){
-        StartGameMessage startGameMessage = new StartGameMessage(gameMode, Config.getId(), lobbyId);
+        StartGameMessage startGameMessage = new StartGameMessage(gameMode, Config.getAccount(), lobbyId);
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(startGameMessage));
         lm.setType(LobbyMessageTypes.LOBBY_START_GAME_MSG);
@@ -48,7 +48,7 @@ public class WebSocketManager {
     }
 
     public static void sendChatMessage(String autorId, String lobbyId, String content){
-        ChatMessage chatMessage = new ChatMessage(autorId,lobbyId,content);
+        ChatMessage chatMessage = new ChatMessage(lobbyId, Config.getAccount(), content);
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(chatMessage));
         lm.setType(LobbyMessageTypes.LOBBY_CHAT_MESSAGE);
@@ -56,7 +56,7 @@ public class WebSocketManager {
     }
 
     public static void sendInviteMessage(String invitedPlayerId, String playerId, String lobbyId){
-        InviteMessage inviteMessage = new InviteMessage(invitedPlayerId,playerId,lobbyId);
+        InviteMessage inviteMessage = new InviteMessage(invitedPlayerId, Config.getAccount(), lobbyId);
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(inviteMessage));
         lm.setType(LobbyMessageTypes.LOBBY_INVITE_MESSAGE);
@@ -64,7 +64,7 @@ public class WebSocketManager {
     }
 
     public static void sendFinishGameMessage(String finishTime, String playerId, String lobbyId){
-        FinishGameMessage finishMessage = new FinishGameMessage(finishTime,playerId,lobbyId);
+        FinishGameMessage finishMessage = new FinishGameMessage(finishTime,Config.getAccount(),lobbyId);
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(finishMessage));
         lm.setType(LobbyMessageTypes.LOBBY_FINISH_GAME);
@@ -72,7 +72,7 @@ public class WebSocketManager {
     }
 
     public static void sendStateMessage(int[][] state, String playerId, String lobbyId){
-        StateMessage stateMessage = new StateMessage(state, playerId, lobbyId);
+        StateMessage stateMessage = new StateMessage(state, Config.getAccount(), lobbyId);
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(stateMessage));
         lm.setType(LobbyMessageTypes.LOBBY_STATE_MESSAGE);

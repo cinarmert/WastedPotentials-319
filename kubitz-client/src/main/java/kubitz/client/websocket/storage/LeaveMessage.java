@@ -6,16 +6,12 @@ import kubitz.client.storage.Account;
 public class LeaveMessage {
 
     @JsonProperty
-    private String playerId;
-
-    @JsonProperty
     private String lobbyId;
 
     @JsonProperty
     private Account account;
 
-    public LeaveMessage(String playerId, String lobbyId, Account account) {
-        this.playerId = playerId;
+    public LeaveMessage(String lobbyId, Account account) {
         this.lobbyId = lobbyId;
         this.account = account;
     }
@@ -28,14 +24,6 @@ public class LeaveMessage {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public String getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
     }
 
     public String getLobbyId() {

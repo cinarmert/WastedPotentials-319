@@ -161,15 +161,15 @@ public class LobbiesScreen extends BaseScreen {
 
             for(Lobby l : getLobbies())
             {
-                if(l.getName().equals(lobbyName)) {
+                if(l.getId().equals(lobbyName)) {
                     lobby = l;
                     break;
                 }
             }
 
             if (lobby != null) {
-                lobby.addPlayer(new Account(Config.getId(), Config.getName()));
-                WebSocketManager.sendJoinLobbyMessage(lobby.getName());
+                lobby.addPlayer(new Account(Config.getId()));
+                WebSocketManager.sendJoinLobbyMessage(lobby.getId());
             }
 
             ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(lobby);
@@ -227,7 +227,7 @@ public class LobbiesScreen extends BaseScreen {
         public Object getValueAt(int rowIndex, int columnIndex) {
             Object obj;
             switch (columnIndex){
-                case 0 : obj = lobbies.get(rowIndex).getName();
+                case 0 : obj = lobbies.get(rowIndex).getId();
                     break;
                 case 1 : obj = lobbies.get(rowIndex).getPlayerCount() + "/" + lobbies.get(rowIndex).getMaxPlayerLimit();
                     break;
