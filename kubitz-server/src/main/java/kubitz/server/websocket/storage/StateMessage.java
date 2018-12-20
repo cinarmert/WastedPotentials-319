@@ -1,21 +1,24 @@
 package kubitz.server.websocket.storage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kubitz.server.database.accounts.model.Account;
 
 public class StateMessage {
 
     private int[][] state;
 
-    private String playerId;
+    private Account account;
 
     private String lobbyId;
 
-    public String getPlayerId() {
-        return playerId;
+    public StateMessage(){};
+
+    public Account getAccount() {
+        return account;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public String getLobbyId() {
@@ -25,8 +28,6 @@ public class StateMessage {
     public void setLobbyId(String lobbyId) {
         this.lobbyId = lobbyId;
     }
-
-    public StateMessage(){};
 
     public int[][] getState() {
         return state;

@@ -39,17 +39,15 @@ public class MainFrame extends JFrame {
     private void initializeAccount() {
 
         if(Config.isRegistered()){
-            account = new Account(Config.getId(), Config.getName());
+            account = new Account(Config.getId());
             return;
         }
 
         try {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
-            String mac = new String(networkInterface.getHardwareAddress());
             String name = UUID.randomUUID().toString();
-            account = new Account(mac, name);
-            Config.setId(mac);
-            Config.setName(name);
+            account = new Account(name);
+            Config.setId(name);
             RESTRequestManager.login(account);
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,7 +81,7 @@ public class MainFrame extends JFrame {
                 if( quit == 0 ) {
                     LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
                     if (lobbyScreen.getCurrentLobby() != null) {
-                        WebSocketManager.sendLeaveLobbyMessage(lobbyScreen.getCurrentLobby().getName());
+                        WebSocketManager.sendLeaveLobbyMessage(lobbyScreen.getCurrentLobby().getId());
                     }
                     System.exit(0);
                 }

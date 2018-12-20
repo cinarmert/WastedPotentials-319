@@ -8,16 +8,12 @@ public class LeaderboardUser {
     private String id;
 
     @JsonProperty
-    private String name;
-
-    @JsonProperty
     private int score;
 
     public LeaderboardUser(){}
 
-    public LeaderboardUser(String id, String name, int score) {
+    public LeaderboardUser(String id, int score) {
         this.id = id;
-        this.name = name;
         this.score = score;
     }
 
@@ -27,14 +23,6 @@ public class LeaderboardUser {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getScore() {

@@ -10,13 +10,11 @@ import java.util.ArrayList;
 public class Lobby {
 
     @Id
-    private String name;
+    private String id;
 
     private int maxPlayerLimit;
 
     private String mode;
-
-    private int playerCount;
 
     private boolean privateLobby;
 
@@ -27,15 +25,11 @@ public class Lobby {
     public Lobby(){}
 
     public int getPlayerCount() {
-        return playerCount;
+        return players.size();
     }
 
-    public void setPlayerCount(int playerCount) {
-        this.playerCount = playerCount;
-    }
-
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
     public int getMaxPlayerLimit() {
@@ -54,8 +48,8 @@ public class Lobby {
         return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setMaxPlayerLimit(int maxPlayerLimit) {
@@ -88,15 +82,13 @@ public class Lobby {
 
     public void addPlayer(Account player) {
         players.add(player);
-        playerCount++;
     }
 
     public void removePlayer(Account player) {
         players.remove(player);
-        playerCount--;
     }
 
     public boolean isFull() {
-        return playerCount >= maxPlayerLimit;
+        return getPlayerCount() >= maxPlayerLimit;
     }
 }

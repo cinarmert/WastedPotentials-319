@@ -5,13 +5,8 @@ import kubitz.client.components.Cube;
 import kubitz.client.components.Grid;
 import kubitz.client.controllers.PeriodicTimeController;
 import kubitz.client.gui.Config;
-import kubitz.client.rest.RESTRequestManager;
-import kubitz.client.storage.Account;
-import kubitz.client.storage.GameState;
 import kubitz.client.storage.Lobby;
 import kubitz.client.websocket.WebSocketManager;
-
-import java.util.function.Function;
 
 public class SwitchMode extends BaseGame {
 
@@ -42,7 +37,7 @@ public class SwitchMode extends BaseGame {
     public Void switchGrids(Void v)
     {
         stop();
-        WebSocketManager.sendStateMessage(getGridState(), Config.getName(), lobby.getName());
+        WebSocketManager.sendStateMessage(getGridState(), Config.getId(), lobby.getId());
         start();
         return null;
     }

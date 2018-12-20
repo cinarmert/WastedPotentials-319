@@ -31,7 +31,7 @@ public class LobbyScreen extends BaseScreen {
     @Override
     protected void backButtonAction(){
 
-        WebSocketManager.sendLeaveLobbyMessage(currentLobby.getName());
+        WebSocketManager.sendLeaveLobbyMessage(currentLobby.getId());
         setCurrentLobby(null);
         ScreenManager.back();
         if (ScreenManager.getCurrentScreen() instanceof CreateLobbyScreen){
@@ -143,11 +143,11 @@ public class LobbyScreen extends BaseScreen {
             @Override
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
-/*                    Message message = new Message(UUID.randomUUID().toString(), currentLobby.getName(), chatField.getText(), "now", Config.getName());
+/*                    Message message = new Message(UUID.randomUUID().toString(), currentLobby.getId(), chatField.getText(), "now", Config.getId());
                     chatField.setText("");
                     chatBox.append(getChatBoxMessage(message));
                     RESTRequestManager.postMesage(message);*/
-                    WebSocketManager.sendChatMessage(Config.getId(),currentLobby.getName(),chatField.getText());
+                    WebSocketManager.sendChatMessage(Config.getId(),currentLobby.getId(),chatField.getText());
                     chatField.setText("");
                 }
             }
@@ -195,7 +195,7 @@ public class LobbyScreen extends BaseScreen {
 
         for (int i = 0; i < currentLobby.getPlayerCount(); i++){
             if (currentLobby.getPlayers().get(i).getId().equals(authorId)){
-                author = currentLobby.getPlayers().get(i).getName();
+                author = currentLobby.getPlayers().get(i).getId();
             }
         }
 
@@ -241,7 +241,7 @@ public class LobbyScreen extends BaseScreen {
     }
 
     private void startGame() {
-        WebSocketManager.sendStartGameMessage(getCurrentLobby().getName(), getCurrentLobby().getMode());
+        WebSocketManager.sendStartGameMessage(getCurrentLobby().getId(), getCurrentLobby().getMode());
 
 /*        if ( getCurrentLobby().getMode().equals(Lobby.MODE_CLASSIC) ){
             ClassicModeScreen cms = new ClassicModeScreen(MainFrame.getResolution(), getCurrentLobby());
@@ -255,7 +255,7 @@ public class LobbyScreen extends BaseScreen {
     private void invite(String name) {
 
         //ToDo name to ID?
-        WebSocketManager.sendInviteMessage(name, Config.getName(),currentLobby.getName());
+        WebSocketManager.sendInviteMessage(name, Config.getId(),currentLobby.getId());
     }
 
 
@@ -268,7 +268,7 @@ public class LobbyScreen extends BaseScreen {
         this.currentLobby = currentLobby;
 
         if (currentLobby != null) {
-            lobbyNameLabel.setText(currentLobby.getName());
+            lobbyNameLabel.setText(currentLobby.getId());
             accountListModel.removeAllElements();
 
             for (int i = 0; i < currentLobby.getPlayers().size(); i++)

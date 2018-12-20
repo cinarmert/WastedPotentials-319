@@ -52,7 +52,7 @@ public class RESTRequestManager {
     }
 
     public static List<Message> getMessages(Lobby lobby){
-        String urlFragment = String.format(CHAT_GET_MSG, Config.getId(), lobby.getName());
+        String urlFragment = String.format(CHAT_GET_MSG, Config.getId(), lobby.getId());
         String response = makeServerRequest(METHOD_GET, urlFragment, null);
 
         try {

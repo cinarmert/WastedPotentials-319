@@ -1,5 +1,6 @@
 package kubitz.server.database.chat.model;
 
+import kubitz.server.database.accounts.model.Account;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,7 +16,7 @@ public class Message {
 
     private String timestamp;
 
-    private String author;
+    private Account author;
 
     public String getTimestamp() {
         return timestamp;
@@ -25,11 +26,11 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public String getAuthor() {
+    public Account getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Account author) {
         this.author = author;
     }
 

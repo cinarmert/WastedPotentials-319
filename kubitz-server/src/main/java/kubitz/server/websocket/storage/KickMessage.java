@@ -1,33 +1,31 @@
 package kubitz.server.websocket.storage;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import kubitz.server.database.accounts.model.Account;
 
 public class KickMessage {
 
-    private String kickedPlayerId;
-
-    private String playerId;
+    private Account account;
 
     private String lobbyId;
 
-    @JsonProperty
     private Account accountToKick;
 
-    public Account getAccountToKick() {
-        return accountToKick;
+    public KickMessage(){};
+
+    public Account getAccount() {
+        return account;
     }
 
     public void setAccount(Account account) {
-        this.accountToKick = account;
+        this.account = account;
     }
 
-    public String getPlayerId() {
-        return playerId;
+    public void setAccountToKick(Account accountToKick) {
+        this.accountToKick = accountToKick;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
+    public Account getAccountToKick() {
+        return accountToKick;
     }
 
     public String getLobbyId() {
@@ -38,13 +36,4 @@ public class KickMessage {
         this.lobbyId = lobbyId;
     }
 
-    public KickMessage(){};
-
-    public String getKickedPlayerId() {
-        return kickedPlayerId;
-    }
-
-    public void setKickedPlayerId(String kickedPlayerId) {
-        this.kickedPlayerId = kickedPlayerId;
-    }
 }
