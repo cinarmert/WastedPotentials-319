@@ -16,8 +16,6 @@ public class Lobby {
 
     private String mode;
 
-    private int playerCount;
-
     private boolean privateLobby;
 
     private String status;
@@ -27,11 +25,7 @@ public class Lobby {
     public Lobby(){}
 
     public int getPlayerCount() {
-        return playerCount;
-    }
-
-    public void setPlayerCount(int playerCount) {
-        this.playerCount = playerCount;
+        return players.size();
     }
 
     public String getId() {
@@ -88,15 +82,13 @@ public class Lobby {
 
     public void addPlayer(Account player) {
         players.add(player);
-        playerCount++;
     }
 
     public void removePlayer(Account player) {
         players.remove(player);
-        playerCount--;
     }
 
     public boolean isFull() {
-        return playerCount >= maxPlayerLimit;
+        return getPlayerCount() >= maxPlayerLimit;
     }
 }
