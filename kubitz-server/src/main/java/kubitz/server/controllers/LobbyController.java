@@ -60,7 +60,7 @@ public class LobbyController {
     @RequestMapping(value = "/getLobbyByName/{lobbyname}", method = RequestMethod.GET)
     @ResponseBody
     public String getLobbyByName(@PathParam("lobbyname") String lobbyname) {
-        String response = JsonUtil.toJson(lobbyRepository.findLobbyByName(lobbyname));
+        String response = JsonUtil.toJson(lobbyRepository.findLobbyById(lobbyname));
         logger.info("returning the lobbies: " + response);
         return response;
     }

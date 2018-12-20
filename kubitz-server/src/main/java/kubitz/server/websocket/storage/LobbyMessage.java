@@ -1,7 +1,5 @@
 package kubitz.server.websocket.storage;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class LobbyMessage {
 
     private String type;

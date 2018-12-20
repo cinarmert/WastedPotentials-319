@@ -77,9 +77,9 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
     private void handleStartGameMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         StartGameMessage startGameMessage = JsonUtil.fromJson(lm.getPayload().toString(), StartGameMessage.class);
-        logger.info("got start message, " + startGameMessage.getPlayerId() + " is starting the game: " + startGameMessage.getLobbyId());
+        logger.info("got start message, " + startGameMessage.getAccount().getId() + " is starting the game: " + startGameMessage.getLobbyId());
 
-        Lobby lobby = lobbyRepository.findLobbyByName(startGameMessage.getLobbyId());
+        Lobby lobby = lobbyRepository.findLobbyById(startGameMessage.getLobbyId());
         //ToDo get size from lobby properties
         startGameMessage.setCard(RandomUtil.getRandomCard(4));
         notifyLobbyParticipants(lobby, JsonUtil.toJson(startGameMessage), LobbyMessageTypes.LOBBY_START_GAME_MSG);
@@ -89,9 +89,9 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
         StateMessage stateMessage = JsonUtil.fromJson(lm.getPayload().toString(), StateMessage.class);
         if (stateMessage == null)
             return;
-        Lobby lobby = lobbyRepository.findLobbyByName(stateMessage.getLobbyId());
+        Lobby lobby = lobbyRepository.findLobbyById(stateMessage.getLobbyId());
 
-        logger.info("player " + stateMessage.getPlayerId() + " in lobby " + stateMessage.getLobbyId() + " is ready to switch");
+        logger.info("player " + stateMessage.getAccount().getId() + " in lobby " + stateMessage.getLobbyId() + " is ready to switch");
 
         notifyLobbyParticipants(lobby, JsonUtil.toJson(stateMessage), LobbyMessageTypes.LOBBY_STATE_MESSAGE);
 
@@ -101,17 +101,17 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
         FinishGameMessage finishGameMessage = JsonUtil.fromJson(lm.getPayload().toString(), FinishGameMessage.class);
         if(finishGameMessage == null) return;
 
-        Lobby lobby = lobbyRepository.findLobbyByName(finishGameMessage.getLobbyId());
-        logger.info("player " + finishGameMessage.getPlayerId() + " in lobby " + finishGameMessage.getLobbyId() + " finished game in " + finishGameMessage.getFinishTime());
+        Lobby lobby = lobbyRepository.findLobbyById(finishGameMessage.getLobbyId());
+        logger.info("player " + finishGameMessage.getAccount().getId() + " in lobby " + finishGameMessage.getLobbyId() + " finished game in " + finishGameMessage.getFinishTime());
 
         notifyLobbyParticipants(lobby, JsonUtil.toJson(finishGameMessage), LobbyMessageTypes.LOBBY_FINISH_GAME);
     }
 
     private void handleLeaveMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         LeaveMessage leaveMessage = JsonUtil.fromJson(lm.getPayload().toString(), LeaveMessage.class);
-        logger.info("got leave message, " + leaveMessage.getPlayerId() + " is leaving from the lobby " + leaveMessage.getLobbyId());
+        logger.info("got leave message, " + leaveMessage.getAccount().getId() + " is leaving from the lobby " + leaveMessage.getLobbyId());
 
-        Lobby lobbyToLeave = lobbyRepository.findLobbyByName(leaveMessage.getLobbyId());
+        Lobby lobbyToLeave = lobbyRepository.findLobbyById(leaveMessage.getLobbyId());
         lobbyToLeave.removePlayer(leaveMessage.getAccount());
 
         if (lobbyToLeave.getPlayerCount() == 0) {
@@ -126,11 +126,11 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
     private void handleKickMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         KickMessage kickMessage = JsonUtil.fromJson(lm.getPayload().toString(), KickMessage.class);
-        logger.info("got kick message, " + kickMessage.getPlayerId() + " is being kicked from the lobby " + kickMessage.getLobbyId());
+        logger.info("got kick message, " + kickMessage.getAccountToKick().getId() + " is being kicked from the lobby " + kickMessage.getLobbyId());
 
         if (kickMessage.getAccountToKick() == null) return;
 
-        Lobby lobby = lobbyRepository.findLobbyByName(kickMessage.getLobbyId());
+        Lobby lobby = lobbyRepository.findLobbyById(kickMessage.getLobbyId());
         notifyLobbyParticipants(lobby, JsonUtil.toJson(kickMessage), LobbyMessageTypes.LOBBY_KICK_MESSAGE);
 
         lobby.removePlayer(kickMessage.getAccountToKick());
@@ -139,11 +139,11 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
     private void handleJoinMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         JoinMessage joinMessage = JsonUtil.fromJson(lm.getPayload().toString(), JoinMessage.class);
-        logger.info("got join message, " + joinMessage.getPlayerId() + " is joining the lobby " + joinMessage.getLobbyId());
+        logger.info("got join message, " + joinMessage.getAccount().getId() + " is joining the lobby " + joinMessage.getLobbyId());
 
-        Lobby lobbyToJoin = lobbyRepository.findLobbyByName(joinMessage.getLobbyId());
+        Lobby lobbyToJoin = lobbyRepository.findLobbyById(joinMessage.getLobbyId());
         if (lobbyToJoin.isFull()) {
-            logger.info("the lobby " + joinMessage.getLobbyId() + " is full, player " + joinMessage.getPlayerId() + " cannot join the lobby");
+            logger.info("the lobby " + joinMessage.getLobbyId() + " is full, player " + joinMessage.getAccount().getId() + " cannot join the lobby");
 //            String errorMsg = JsonUtil.toJson(new WebSocketResponseMessage(false));
             session.sendMessage(getTextLobbyMessage(null, LobbyMessageTypes.LOBBY_AS_RESPONSE));
         } else {
@@ -156,7 +156,7 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
     private void handleInviteMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         InviteMessage inviteMessage = JsonUtil.fromJson(lm.getPayload().toString(), InviteMessage.class);
-        logger.info("got invite message, " + inviteMessage.getInvitedPlayerId() + " is inviting " + inviteMessage.getPlayerId() + " to the lobby " + inviteMessage.getLobbyId());
+        logger.info("got invite message, " + inviteMessage.getInvitedPlayerId() + " is inviting " + inviteMessage.getAccount().getId() + " to the lobby " + inviteMessage.getLobbyId());
 
         session = getSessionByPlayerId(inviteMessage.getInvitedPlayerId());
         if (session != null){
@@ -168,15 +168,15 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
     private void handleChatMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         ChatMessage chatMessage = JsonUtil.fromJson(lm.getPayload().toString(), ChatMessage.class);
-        logger.info("got chat message from player " + chatMessage.getPlayerId() + " in lobby " + chatMessage.getLobbyId());
+        logger.info("got chat message from player " + chatMessage.getAccount().getId() + " in lobby " + chatMessage.getLobbyId());
 
-        Lobby lobby = lobbyRepository.findLobbyByName(chatMessage.getLobbyId());
+        Lobby lobby = lobbyRepository.findLobbyById(chatMessage.getLobbyId());
         notifyLobbyParticipants(lobby, JsonUtil.toJson(chatMessage), LobbyMessageTypes.LOBBY_CHAT_MESSAGE);
     }
 
     private void handleChangeSettingsMessage(LobbyMessage lm, WebSocketSession session) throws IOException {
         ChangeSettingsMessage changeSettingsMessage = JsonUtil.fromJson(lm.getPayload().toString(), ChangeSettingsMessage.class);
-        logger.info("got change settings message for lobby " + changeSettingsMessage.getLobbyId());
+        logger.info("got change settings message for lobby " + changeSettingsMessage.getLobby().getId());
 
         lobbyRepository.save(changeSettingsMessage.getLobby());
         notifyLobbyParticipants(changeSettingsMessage.getLobby(), JsonUtil.toJson(changeSettingsMessage), LobbyMessageTypes.LOBBY_CHANGE_SETTINGS);

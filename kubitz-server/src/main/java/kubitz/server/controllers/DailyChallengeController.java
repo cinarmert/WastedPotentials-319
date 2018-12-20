@@ -1,5 +1,6 @@
 package kubitz.server.controllers;
 
+import kubitz.server.database.accounts.model.Account;
 import kubitz.server.database.accounts.repository.AccountRepository;
 import kubitz.server.database.dailychallenge.model.DailyChallenge;
 import kubitz.server.database.dailychallenge.repository.DailyChallengeRepository;
@@ -60,8 +61,8 @@ public class DailyChallengeController {
         List<LeaderboardUser> leaderboardUsers = leaderboardRepository.findAll();
 
         for (LeaderboardUser leaderboardUser : leaderboardUsers) {
-            if (accountRepository.findAccountById(leaderboardUser.getId()) != null && accountRepository.findAccountById(leaderboardUser.getId()).getName() != null) {
-                leaderboardUser.setName(accountRepository.findAccountById(leaderboardUser.getId()).getName());
+            if (accountRepository.findAccountById(leaderboardUser.getAccount().getId()) != null && accountRepository.findAccountById(leaderboardUser.getAccount().getId()).getId() != null) {
+                leaderboardUser.setAccount(new Account(accountRepository.findAccountById(leaderboardUser.getAccount().getId()).getId()));
             }
         }
 

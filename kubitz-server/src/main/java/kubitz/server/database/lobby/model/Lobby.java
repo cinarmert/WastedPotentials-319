@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Lobby {
 
     @Id
-    private String name;
+    private String id;
 
     private int maxPlayerLimit;
 
@@ -34,8 +34,8 @@ public class Lobby {
         this.playerCount = playerCount;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
     public int getMaxPlayerLimit() {
@@ -54,8 +54,8 @@ public class Lobby {
         return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setMaxPlayerLimit(int maxPlayerLimit) {

@@ -1,12 +1,13 @@
 package kubitz.server.websocket.storage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kubitz.server.database.accounts.model.Account;
 
 public class StartGameMessage {
 
     private String gameMode;
 
-    private String playerId;
+    private Account account;
 
     private String lobbyId;
 
@@ -16,16 +17,16 @@ public class StartGameMessage {
         return card;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
     public void setCard(int[][] card) {
         this.card = card;
-    }
-
-    public String getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
     }
 
     public String getLobbyId() {

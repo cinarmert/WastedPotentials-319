@@ -25,9 +25,9 @@ public class KubitzServer {
         return args -> {
 
 //            Account acc = new Account();
-//            acc.setName("mert");
+//            acc.setId("mert");
 //            Account acc2 = new Account();
-//            acc.setName("alp");
+//            acc.setId("alp");
 //
 //            accountRepository.save(acc);
 //            accountRepository.save(acc2);
