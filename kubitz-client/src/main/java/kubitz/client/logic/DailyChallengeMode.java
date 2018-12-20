@@ -45,7 +45,7 @@ public class DailyChallengeMode extends BaseGame {
     {
         if(cardIndex == cards.size() - 1)
             return false;
-        requiresUpdate = true;
+        super.signalUpdate();
         cardIndex++;
         Card card = cards.get(cardIndex);
         super.setCard(card);

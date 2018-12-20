@@ -9,6 +9,7 @@ import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Account;
 import kubitz.client.storage.GameState;
 import kubitz.client.storage.Lobby;
+import kubitz.client.websocket.WebSocketManager;
 
 import java.util.function.Function;
 
@@ -17,15 +18,14 @@ public class SwitchMode extends BaseGame {
     private final int PERIOD = 15000;
     private PeriodicTimeController ptc;
     private int period;
-    private Function<Void, Void> notifySwitchGrids;
     private Lobby lobby;
   
-    public SwitchMode(Cube cube, Lobby lobby, Function<Void, Void> notifySwitchGrids) {
+    public SwitchMode(Cube cube, Lobby lobby) {
         super(cube);
         this.lobby = lobby;
         period = PERIOD; //ToDo proper period, -consider random-
         ptc = new PeriodicTimeController(period, this::switchGrids);
-        this.notifySwitchGrids = notifySwitchGrids;
+
 
         //ToDo get Card from server
         setCard(new Card(new Grid(4)));
@@ -41,23 +41,22 @@ public class SwitchMode extends BaseGame {
 
     public Void switchGrids(Void v)
     {
-        GameState gameState = new GameState(Config.getId(), this.grid.getSize(), this.grid.getGridIntArray(), Config.getName(), getOpponentName());
-        RESTRequestManager.postSwitchGameState(gameState);
-        notifySwitchGrids.apply(null);
-
-        GameState opponent = RESTRequestManager.getSwitchOpponentGameState(getOponentID());
-        this.grid.setGrid(opponent.getState());
+        stop();
+        WebSocketManager.sendStateMessage(getGridState(), Config.getName(), lobby.getName());
+        start();
         return null;
     }
 
-
-    private String getOpponentName()
+    public void setGridState(int[][] state)
     {
-        return (lobby.getPlayers().get(0).getName()).equals(Config.getName())?  lobby.getPlayers().get(1).getName() : lobby.getPlayers().get(0).getName();
+        this.grid.setGrid(state);
     }
 
-    private String getOponentID()
+    public int[][] getGridState()
     {
-        return (lobby.getPlayers().get(0).getId()).equals(Config.getId())?  lobby.getPlayers().get(1).getId() : lobby.getPlayers().get(0).getId();
+        return this.grid.getGridIntArray();
     }
+
+
+
 }
