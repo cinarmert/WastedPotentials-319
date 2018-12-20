@@ -11,7 +11,7 @@ public abstract class BaseGame {
     Card card;
     private String whoWon;
 
-    boolean requiresUpdate = false;
+    private boolean requiresUpdate = false;
 
     public BaseGame(Cube cube) {
         this.cube = cube;
@@ -83,6 +83,11 @@ public abstract class BaseGame {
             return true;
         }
         return false;
+    }
+
+    public void signalUpdate()
+    {
+        this.requiresUpdate = true;
     }
 
     public String getWhoWon() {
