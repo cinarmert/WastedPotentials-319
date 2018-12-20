@@ -83,8 +83,11 @@ public class KubitzWebSocketClient extends WebSocketClient {
 
         LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
         Lobby lobby = lobbyScreen.getCurrentLobby();
-        lobby.removePlayer(leaveMessage.getAccount());
-        lobbyScreen.setCurrentLobby(lobby);
+
+        if (lobby != null) {
+            lobby.removePlayer(leaveMessage.getAccount());
+            lobbyScreen.setCurrentLobby(lobby);
+        }
     }
 
     private void handleKickMessage(LobbyMessage lm) throws IOException {
