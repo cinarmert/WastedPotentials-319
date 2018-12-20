@@ -72,7 +72,7 @@ public class Config {
             props.setProperty("music", ""+100);
             props.setProperty("lastPlayedDailyChallenge", ""+(-1));
             props.setProperty("theme", ThemeManager.RED_THEME);
-            props.setProperty("server", "40.89.169.29:8083");
+            props.setProperty("server", "40.114.122.251:8083");
 
             updateFile();
 
@@ -82,7 +82,7 @@ public class Config {
             Config.effectsSound = 100;
             Config.musicSound = 100;
             Config.theme = props.getProperty("theme");
-            Config.server =  "40.89.169.29:8083";
+            Config.server =  "40.114.122.251:8083";
 
             return props;
         }
