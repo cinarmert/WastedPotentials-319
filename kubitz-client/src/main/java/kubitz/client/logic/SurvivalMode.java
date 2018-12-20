@@ -17,6 +17,7 @@ public class SurvivalMode extends BaseGame {
     public SurvivalMode(Cube cube, Function<Void, Void> onGameFinished) {
         super(cube);
 
+        score = 0;
         time = 150000; //ToDo reasonable time period
         ctc = new CountdownTimeController(time, onGameFinished);
         this.onGameFinished = onGameFinished;
