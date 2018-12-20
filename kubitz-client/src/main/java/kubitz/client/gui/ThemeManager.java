@@ -61,6 +61,10 @@ public class ThemeManager {
         Theme.normalFontColor = Color.BLUE;
         Theme.hoverFontColor = Color.WHITE;
         Theme.pressFontColor = Color.WHITE;
+
+        //chat color
+        Theme.chatAuthorColor = new Color(55, 27, 125);
+        Theme.chatMessageColor = new Color(29, 153, 41);
     }
 
     private static void setThemeRED(){
@@ -103,6 +107,10 @@ public class ThemeManager {
         Theme.normalFontColor = Color.RED;
         Theme.hoverFontColor = Color.WHITE;
         Theme.pressFontColor = Color.WHITE;
+
+        //chat color
+        Theme.chatAuthorColor = new Color(55, 27, 125);
+        Theme.chatMessageColor = new Color(29, 153, 41);
     }
     
 }

@@ -1,7 +1,6 @@
 package kubitz.client.websocket;
 
 import kubitz.client.gui.*;
-import kubitz.client.logic.ClassicMode;
 import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.*;
@@ -93,6 +92,13 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleKickMessage(LobbyMessage lm) throws IOException {
         KickMessage kickMessage = JsonUtil.fromJson(lm.getPayload().toString(), KickMessage.class);
 
+        if (kickMessage.getKickedPlayerId().equals(Config.getId()) ){
+            LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
+            lobbyScreen.setCurrentLobby(null);
+            ScreenManager.back();
+            //ToDo cant join again
+        }
+
     }
 
     private void handleJoinMessage(LobbyMessage lm) throws IOException {
@@ -111,6 +117,11 @@ public class KubitzWebSocketClient extends WebSocketClient {
 
     private void handleChatMessage(LobbyMessage lm) throws IOException {
         ChatMessage chatMessage = JsonUtil.fromJson(lm.getPayload().toString(), ChatMessage.class);
+        LobbyScreen ls = ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN));
+
+        if ( ls.getCurrentLobby() !=  null && ls.getCurrentLobby().getName().equals( chatMessage.getLobbyId() )  ) {
+            ls.newMessage(chatMessage.getPlayerId(), chatMessage.getContent());
+        }
 
     }
 

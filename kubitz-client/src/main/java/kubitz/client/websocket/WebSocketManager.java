@@ -46,4 +46,12 @@ public class WebSocketManager {
         lm.setType(LobbyMessageTypes.LOBBY_START_GAME_MSG);
         client.send(JsonUtil.toJson(lm));
     }
+
+    public static void sendChatMessage(String autorId, String lobbyId, String content){
+        ChatMessage chatMessage = new ChatMessage(autorId,lobbyId,content);
+        LobbyMessage lm = new LobbyMessage();
+        lm.setPayload(JsonUtil.toJson(chatMessage));
+        lm.setType(LobbyMessageTypes.LOBBY_CHAT_MESSAGE);
+        client.send(JsonUtil.toJson(lm));
+    }
 }

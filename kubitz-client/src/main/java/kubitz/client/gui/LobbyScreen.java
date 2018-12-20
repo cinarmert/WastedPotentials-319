@@ -1,18 +1,15 @@
 package kubitz.client.gui;
 
-import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
-import kubitz.client.storage.Message;
 import kubitz.client.websocket.WebSocketManager;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.UUID;
 
 public class LobbyScreen extends BaseScreen {
 
@@ -22,8 +19,7 @@ public class LobbyScreen extends BaseScreen {
     private JLabel lobbyNameLabel;
     private JList<Account> playerList;
     private DefaultListModel<Account> accountListModel;
-    private List<Message> messageList;
-    private JTextArea chatBox;
+    private JTextPane chatBox;
 
 
     public LobbyScreen(Dimension resolution) {
@@ -36,7 +32,7 @@ public class LobbyScreen extends BaseScreen {
     protected void backButtonAction(){
 
         WebSocketManager.sendLeaveLobbyMessage(currentLobby.getName());
-        currentLobby = null;
+        setCurrentLobby(null);
         ScreenManager.back();
         if (ScreenManager.getCurrentScreen() instanceof CreateLobbyScreen){
             ScreenManager.back();
@@ -129,9 +125,9 @@ public class LobbyScreen extends BaseScreen {
         c.gridy = 0;
         chatPanel.setBackground( Theme.tablePanelColor);
 
-        chatBox = new JTextArea();
+        chatBox = new JTextPane();
         chatBox.setEditable(false);
-        chatBox.setBackground(Theme.tableHeaderColor);
+        chatBox.setBackground(Theme.backgroundColor);
 
         JScrollPane chatScroll = new JScrollPane(chatBox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         chatScroll.setPreferredSize(new Dimension(getMainWidth()/2,100));
@@ -143,10 +139,12 @@ public class LobbyScreen extends BaseScreen {
             @Override
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    Message message = new Message(UUID.randomUUID().toString(), currentLobby.getName(), chatField.getText(), "now", Config.getName());
+/*                    Message message = new Message(UUID.randomUUID().toString(), currentLobby.getName(), chatField.getText(), "now", Config.getName());
                     chatField.setText("");
                     chatBox.append(getChatBoxMessage(message));
-                    RESTRequestManager.postMesage(message);
+                    RESTRequestManager.postMesage(message);*/
+                    WebSocketManager.sendChatMessage(Config.getId(),currentLobby.getName(),chatField.getText());
+                    chatField.setText("");
                 }
             }
         });
@@ -187,6 +185,18 @@ public class LobbyScreen extends BaseScreen {
         return buttonPanel;
     }
 
+    public void newMessage(String authorId, String content){
+
+        String author = "Player";
+
+        for (int i = 0; i < currentLobby.getPlayerCount(); i++){
+            if (currentLobby.getPlayers().get(i).getId().equals(authorId)){
+                author = currentLobby.getPlayers().get(i).getName();
+            }
+        }
+
+        addChatBoxMessage(author, content);
+    }
 
     private JPanel initializePlayerList() {
 
@@ -202,8 +212,20 @@ public class LobbyScreen extends BaseScreen {
         return listPanel;
     }
 
-    private String getChatBoxMessage(Message message){
-        return message.getAuthor() + ": " + message.getMessage() + "\n";
+    private void addChatBoxMessage(String author, String content){
+
+        try {
+            StyledDocument doc = chatBox.getStyledDocument();
+            SimpleAttributeSet keyWord = new SimpleAttributeSet();
+            StyleConstants.setForeground(keyWord, Theme.chatAuthorColor);
+            doc.insertString(doc.getLength(), "[" + author + "] ", keyWord);
+
+            StyleConstants.setForeground(keyWord, Theme.chatMessageColor);
+            doc.insertString(doc.getLength(), content + "\n", keyWord);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void kick() {
@@ -238,13 +260,19 @@ public class LobbyScreen extends BaseScreen {
     public void setCurrentLobby(Lobby currentLobby) {
 
         this.currentLobby = currentLobby;
-        lobbyNameLabel.setText(currentLobby.getName());
-        accountListModel.removeAllElements();
 
-        for(int i = 0; i < currentLobby.getPlayers().size(); i++ )
-            accountListModel.addElement(currentLobby.getPlayers().get(i));
+        if (currentLobby != null) {
+            lobbyNameLabel.setText(currentLobby.getName());
+            accountListModel.removeAllElements();
 
-        playerList.setModel(accountListModel);
+            for (int i = 0; i < currentLobby.getPlayers().size(); i++)
+                accountListModel.addElement(currentLobby.getPlayers().get(i));
+
+            playerList.setModel(accountListModel);
+        }
+        else {
+            chatBox.setText("");
+        }
 
     }
 

@@ -44,4 +44,7 @@ public class Theme {
     public static Color hoverFontColor;
     public static Color pressFontColor;
 
+    public static Color chatAuthorColor;
+    public static Color chatMessageColor;
+
 }
