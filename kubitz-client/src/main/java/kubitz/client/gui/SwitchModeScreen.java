@@ -30,9 +30,14 @@ public class SwitchModeScreen extends BaseGameScreen{
         if( quit == 0 ) {
 
             ScreenManager.doubleBack();
-
+            //ToDo notify server
+            ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(null);
             setGame(null);
             MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
+
+            if (ScreenManager.getCurrentScreen() instanceof CreateLobbyScreen){
+                ScreenManager.back();
+            }
         }
 
     }
