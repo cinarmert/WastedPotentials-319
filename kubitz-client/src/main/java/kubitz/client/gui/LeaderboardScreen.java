@@ -118,8 +118,6 @@ public class LeaderboardScreen extends BaseScreen {
             return leaderboard.getLeaderboard().size();
         }
 
-
-
         @Override
         public int getColumnCount() {
             return 3;
