@@ -26,6 +26,7 @@ public class RESTRequestManager {
     private static final String LOBBY_CHANGE_SETTINGS = "/lobby/changeSettings";
     private static final String LOBBY_GET_LOBBIES = "/lobby/getLobbies";
     private static final String LOBBY_GET_LOBBYBYNAME = "/lobby/getLobbyByName/%s";
+    private static final String LOBBY_GET_CANJOINLOBBY = "/canJoinLobby/%s";
     private static final String LOBBY_KICK_PLAYER = "/lobby/kickPlayer";
     private static final String SWITCH_GET_GAME_STATE = "/switch/getGameState/%s";
     private static final String SWITCH_POST_GAME_STATE = "/switch/postGameState";
@@ -47,6 +48,20 @@ public class RESTRequestManager {
             return JsonUtil.fromJson(response, Lobby.class);
         } catch (IOException e) {
             System.err.println("Could not parse the body to Lobby, storage: " + response);
+            return null;
+        }
+    }
+
+    public static LobbyJoinResponseMessage getCanJoinLobby(String name)
+    {
+        String urlFragment = String.format(LOBBY_GET_CANJOINLOBBY, name);
+        String response = makeServerRequest(METHOD_GET, urlFragment, null);
+
+        try {
+            System.out.println(response);
+            return JsonUtil.fromJson(response, LobbyJoinResponseMessage.class);
+        } catch (IOException e) {
+            System.err.println("Could not parse the body to LobbyJoinResponseMessage, storage: " + response);
             return null;
         }
     }

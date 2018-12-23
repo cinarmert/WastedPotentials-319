@@ -3,6 +3,7 @@ package kubitz.client.gui;
 import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
+import kubitz.client.storage.LobbyJoinResponseMessage;
 import kubitz.client.websocket.WebSocketManager;
 
 import javax.swing.*;
@@ -167,6 +168,15 @@ public class LobbiesScreen extends BaseScreen {
                 }
             }
 
+            LobbyJoinResponseMessage message = RESTRequestManager.getCanJoinLobby(lobbyName);
+            if(!message.getResponse())
+            {
+                JOptionPane.showMessageDialog( this,
+                        message.getResponse(),
+                        "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (lobby != null) {
                 lobby.addPlayer(new Account(Config.getId()));
                 WebSocketManager.sendJoinLobbyMessage(lobby.getId());
