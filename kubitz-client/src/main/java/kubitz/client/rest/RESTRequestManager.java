@@ -26,7 +26,7 @@ public class RESTRequestManager {
     private static final String LOBBY_CHANGE_SETTINGS = "/lobby/changeSettings";
     private static final String LOBBY_GET_LOBBIES = "/lobby/getLobbies";
     private static final String LOBBY_GET_LOBBYBYNAME = "/lobby/getLobbyByName/%s";
-    private static final String LOBBY_GET_CANJOINLOBBY = "/canJoinLobby/%s";
+    private static final String LOBBY_GET_CANJOINLOBBY = "/lobby/canJoinLobby/%s";
     private static final String LOBBY_KICK_PLAYER = "/lobby/kickPlayer";
     private static final String SWITCH_GET_GAME_STATE = "/switch/getGameState/%s";
     private static final String SWITCH_POST_GAME_STATE = "/switch/postGameState";
