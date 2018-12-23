@@ -22,19 +22,7 @@ public class KubitzServer {
     @Bean
     CommandLineRunner init(AccountRepository accountRepository) {
 
-        return args -> {
-
-//            Account acc = new Account();
-//            acc.setId("mert");
-//            Account acc2 = new Account();
-//            acc.setId("alp");
-//
-//            accountRepository.save(acc);
-//            accountRepository.save(acc2);
-//            List<Account> accounts = accountRepository.findAll();
-//            System.out.println(accounts);
-
-        };
+        return args -> {};
 
     }
 
