@@ -1,5 +1,6 @@
 package kubitz.server.database.lobby.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kubitz.server.database.accounts.model.Account;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,6 +25,7 @@ public class Lobby {
 
     public Lobby(){}
 
+    @JsonIgnore
     public int getPlayerCount() {
         return players.size();
     }
@@ -88,6 +90,7 @@ public class Lobby {
         players.remove(player);
     }
 
+    @JsonIgnore
     public boolean isFull() {
         return getPlayerCount() >= maxPlayerLimit;
     }
