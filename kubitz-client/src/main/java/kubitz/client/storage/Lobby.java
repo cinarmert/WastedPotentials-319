@@ -1,5 +1,6 @@
 package kubitz.client.storage;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class Lobby {
         this.id = id;
     }
 
+    @JsonIgnore
     public int getPlayerCount() {
         return players.size();
     }
@@ -97,6 +99,7 @@ public class Lobby {
         return privateLobby;
     }
 
+    @JsonIgnore
     public boolean isFull(){
         return(maxPlayerLimit == getPlayerCount());
     }
