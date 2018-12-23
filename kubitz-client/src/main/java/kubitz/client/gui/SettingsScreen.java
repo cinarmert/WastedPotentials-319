@@ -466,7 +466,8 @@ public class SettingsScreen extends BaseScreen{
                     Arrays.asList( GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayModes()));
 
             for (int i = 0; i < displayModes.size(); i++) {
-                resolutions.add(new Resolution(displayModes.get(i).getWidth(), displayModes.get(i).getHeight()));
+                if (displayModes.get(i).getWidth() >= 800 && displayModes.get(i).getHeight() >= 600)
+                    resolutions.add(new Resolution(displayModes.get(i).getWidth(), displayModes.get(i).getHeight()));
             }
 
             HashSet<Resolution> hashSet = new HashSet<>(resolutions);
