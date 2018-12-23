@@ -8,12 +8,14 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class LobbyScreen extends BaseScreen {
 
-    private static final Dimension BUTTONSIZE = new Dimension(150,20);
+    private final Dimension BUTTONSIZE = new Dimension(getMainWidth()/6,getMainHeight()/34);
 
     private Lobby currentLobby;
     private JLabel lobbyNameLabel;
@@ -57,7 +59,7 @@ public class LobbyScreen extends BaseScreen {
     private JPanel initializeContainer() {
         JPanel container = new JPanel(new GridBagLayout());
         container.setBorder(new LineBorder(Theme.borderColor, 2));
-        container.setBackground( Theme.tablePanelColor);
+        container.setBackground(Theme.tablePanelColor);
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -97,12 +99,30 @@ public class LobbyScreen extends BaseScreen {
         JTextField inviteTextField;
         invitePanel.setBackground( Theme.tablePanelColor);
         inviteTextField = new JTextField("Enter a nickname...");
+        inviteTextField.setPreferredSize(BUTTONSIZE);
+        inviteTextField.setBackground(Theme.tableHeaderColor);
+        inviteTextField.setBorder(new LineBorder(Theme.borderColor));
+        inviteTextField.setForeground(Theme.alternateColor1);
+        inviteTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                inviteTextField.setText("");
+            }
 
-        c.anchor = GridBagConstraints.CENTER;
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
+
+        c.anchor = GridBagConstraints.LINE_START;
         c.insets = new Insets(0,20,10,0);
         c.gridx = 0;
         c.gridy = 0;
-        invitePanel.add(new JLabel("Invite a friend"),c);
+        invitePanel.add(new JLabel("Invite a friend"){{
+            setHorizontalAlignment(JLabel.LEFT);
+            setFont(new Font("Calibri", Font.BOLD, 16));
+        }},c);
 
         c.gridy = 1;
         invitePanel.add(inviteTextField,c);
@@ -123,6 +143,7 @@ public class LobbyScreen extends BaseScreen {
 
         c.gridx = 0;
         c.gridy = 0;
+
         chatPanel.setBackground( Theme.tablePanelColor);
 
         chatBox = new JTextPane();
@@ -133,8 +154,9 @@ public class LobbyScreen extends BaseScreen {
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         JScrollPane chatScroll = new JScrollPane(chatBox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        chatScroll.setPreferredSize(new Dimension(getMainWidth()/2,100));
+        chatScroll.setPreferredSize(new Dimension(getMainWidth()/2,getMainHeight()/5));
         chatScroll.getVerticalScrollBar().setUI(new CustomScrollbarUI(chatScroll));
+        chatScroll.setBorder(new LineBorder(Theme.borderColor, 2));
         chatPanel.add(chatScroll,c);
 
         c.gridy = 1;
@@ -143,16 +165,12 @@ public class LobbyScreen extends BaseScreen {
             @Override
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
-/*                    Message message = new Message(UUID.randomUUID().toString(), currentLobby.getId(), chatField.getText(), "now", Config.getId());
-                    chatField.setText("");
-                    chatBox.append(getChatBoxMessage(message));
-                    RESTRequestManager.postMesage(message);*/
                     WebSocketManager.sendChatMessage(Config.getId(),currentLobby.getId(),chatField.getText());
                     chatField.setText("");
                 }
             }
         });
-        chatField.setPreferredSize(new Dimension(getMainWidth()/2,30));
+        chatField.setPreferredSize(new Dimension(getMainWidth()/2,getMainHeight()/25));
         chatPanel.add(chatField,c);
 
         return chatPanel;
