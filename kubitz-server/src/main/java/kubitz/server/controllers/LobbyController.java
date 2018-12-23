@@ -1,6 +1,7 @@
 package kubitz.server.controllers;
 
 import kubitz.server.database.lobby.model.Lobby;
+import kubitz.server.database.lobby.model.LobbyStatus;
 import kubitz.server.database.lobby.repository.LobbyRepository;
 import kubitz.server.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,33 @@ public class LobbyController {
         String response = JsonUtil.toJson(lobbyRepository.findLobbyById(lobbyname));
         logger.info("returning the lobbies: " + response);
         return response;
+    }
+
+    @RequestMapping(value = "/canJoinLobby/{lobbyname}", method = RequestMethod.GET)
+    @ResponseBody
+    public String canJoinLobby(@PathParam("lobbyname") String lobbyname) {
+        Lobby lobby = lobbyRepository.findLobbyById(lobbyname);
+        boolean isFull = lobby.isFull();
+        boolean isPrivate = lobby.isPrivateLobby();
+        boolean isPlaying = LobbyStatus.PLAYING.equals(lobby.getStatus());
+        String reason = "OK";
+        if(isFull)
+        {
+            reason = "Lobby is full";
+        }
+
+        if(isPrivate)
+        {
+            reason = "Lobby is private";
+        }
+
+        if(isPlaying)
+        {
+            reason = "Lobby is in a game";
+        }
+
+        LobbyJoinResponseMessage message = new LobbyJoinResponseMessage(!(isFull || isPlaying || isPrivate), reason);
+        return JsonUtil.toJson(message);
     }
 
 }

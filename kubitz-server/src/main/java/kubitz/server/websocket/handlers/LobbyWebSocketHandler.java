@@ -4,6 +4,7 @@ import kubitz.server.database.accounts.model.Account;
 import kubitz.server.database.chat.repository.ChatRepository;
 import kubitz.server.database.gamestate.repository.GameStateRepository;
 import kubitz.server.database.lobby.model.Lobby;
+import kubitz.server.database.lobby.model.LobbyStatus;
 import kubitz.server.database.lobby.repository.LobbyRepository;
 import kubitz.server.util.JsonUtil;
 import kubitz.server.util.RandomUtil;
@@ -81,6 +82,9 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
         Lobby lobby = lobbyRepository.findLobbyById(startGameMessage.getLobbyId());
         //ToDo get size from lobby properties
+        lobby.setStatus(LobbyStatus.PLAYING);
+        lobbyRepository.save(lobby);
+
         startGameMessage.setCard(RandomUtil.getRandomCard(4));
         notifyLobbyParticipants(lobby, JsonUtil.toJson(startGameMessage), LobbyMessageTypes.LOBBY_START_GAME_MSG);
     }
@@ -103,7 +107,8 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
         Lobby lobby = lobbyRepository.findLobbyById(finishGameMessage.getLobbyId());
         logger.info("player " + finishGameMessage.getAccount().getId() + " in lobby " + finishGameMessage.getLobbyId() + " finished game in " + finishGameMessage.getFinishTime());
-
+        lobby.setStatus(LobbyStatus.WAITING);
+        lobbyRepository.save(lobby);
         notifyLobbyParticipants(lobby, JsonUtil.toJson(finishGameMessage), LobbyMessageTypes.LOBBY_FINISH_GAME);
     }
 
