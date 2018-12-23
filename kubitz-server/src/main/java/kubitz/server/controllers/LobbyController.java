@@ -70,6 +70,7 @@ public class LobbyController {
     @ResponseBody
     public String canJoinLobby(@PathParam("lobbyname") String lobbyname) {
         Lobby lobby = lobbyRepository.findLobbyById(lobbyname);
+        logger.info("found lobby: " + JsonUtil.toJson(lobby));
         boolean isFull = lobby.isFull();
         boolean isPrivate = lobby.isPrivateLobby();
         boolean isPlaying = LobbyStatus.PLAYING.equals(lobby.getStatus());
@@ -90,6 +91,7 @@ public class LobbyController {
         }
 
         LobbyJoinResponseMessage message = new LobbyJoinResponseMessage(!(isFull || isPlaying || isPrivate), reason);
+        logger.info("returning the lobby join response msg: " + JsonUtil.toJson(message) + "for " + message + "and lobby " + JsonUtil.toJson(lobby));
         return JsonUtil.toJson(message);
     }
 
