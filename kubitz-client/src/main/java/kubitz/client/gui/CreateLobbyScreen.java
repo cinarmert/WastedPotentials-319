@@ -17,7 +17,13 @@ public class CreateLobbyScreen extends BaseScreen{
     private JComboBox<String> modeBox;
     private JComboBox noOfPlayersBox;
     private JCheckBox privateCheckBox;
-    private static final Dimension BOXDIMENSION = new Dimension( 150, 30);
+    private CustomButton createButton;
+
+    private JLabel nameFieldLabel;
+    private JLabel modeLabel;
+    private JLabel noOfPlayersLabel;
+
+    private final Dimension BOXDIMENSION = new Dimension( getMainWidth()/5, getMainHeight()/34);
 
     public CreateLobbyScreen( Dimension resolution) {
 
@@ -34,7 +40,7 @@ public class CreateLobbyScreen extends BaseScreen{
         setBackButton(true);
 
         c.insets = new Insets(30,30,0,0);
-        c.anchor = GridBagConstraints.NORTH;
+        c.anchor = GridBagConstraints.CENTER;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.gridx = 0;
@@ -43,91 +49,95 @@ public class CreateLobbyScreen extends BaseScreen{
 
     }
 
-    private JPanel initializeContainer() {
-        JPanel container = new JPanel(new GridBagLayout());
-        container.setBorder(new LineBorder(Theme.borderColor, 2));
-        container.setBackground( Theme.tablePanelColor);
+    private JPanel initializeContainer(){
 
-        container.setBorder( new LineBorder(Theme.borderColor, 2));
-        container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3), getMainHeight()-(getMainHeight()/3)));
+        JPanel container = new JPanel( new GridBagLayout());
+
+        container.setBackground(Theme.tablePanelColor);
+        container.setBorder(new LineBorder(Color.BLACK, 3));
+        container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3),
+                getMainHeight()-(getMainHeight()/3)));
 
         GridBagConstraints c = new GridBagConstraints();
-
-        c.insets = new Insets(40,0,0,0);
-        c.anchor = GridBagConstraints.NORTH;
-        c.gridx = 1;
-        c.gridy = 0;
-        c.gridwidth = getMainWidth() - (getMainWidth()/3);
-
-        container.add(new JLabel("Create Lobby"){{
-            setFont(new Font("Calibri", Font.BOLD, 26));
-        }},c);
-
+        c.anchor = GridBagConstraints.LINE_START;
+        c.insets = new Insets(20,30,0,0);
+        c.weightx = 1.0;
+        c.weighty = 1.0;
         c.gridx = 0;
-        container.add(Box.createHorizontalStrut( getMainWidth()/2),c);
+        c.gridy = 0;
 
-        c.gridx = 2;
-        container.add(Box.createHorizontalStrut( getMainWidth()/2),c);
+        JLabel header = new JLabel("Create Lobby");
+        header.setFont(container.getFont().deriveFont(32.0f));
+        container.add(header,c);
 
-        c.gridx = 1;
-        c.insets = new Insets(60,0,0,0);
         c.gridy = 1;
-        container.add(initializeNameField(),c);
+        c.anchor = GridBagConstraints.NORTH;
 
-        c.insets = new Insets(20,0,0,0);
-        c.gridy = 2;
-        container.add(initializeModeBox(),c);
+        container.add(initializeCreateLobbyContainer(),c);
 
-        c.gridy = 3;
-        container.add(initializePlayerBox(),c);
-
-        c.gridy = 4;
-        container.add(initializePrivateCheckBox(), c);
-
-        c.gridy = 5;
-        c.insets = new Insets(40,0,0,0);
-        container.add(new CustomButton("Create"){{
-            setPreferredSize(BOXDIMENSION);
-            addActionListener(e->createLobby());
-        }},c);
-
-        c.gridy = 6;
-        c.insets = new Insets(20,0,0,0);
-        container.add(Box.createVerticalStrut(getMainHeight()/6),c);
         return container;
+
     }
 
-    private JPanel initializePrivateCheckBox() {
-        JPanel privateCheckBoxPanel = new JPanel(new BorderLayout());
-        privateCheckBoxPanel.setBackground( Theme.tablePanelColor);
+    private JPanel initializeCreateLobbyContainer() {
+        JPanel container = new JPanel(new GridLayout(5,1,0,20));
+        container.setBackground(Theme.tablePanelColor);
+
+        initializeNameField();
+
+        initializeModeBox();
+
+        initializePlayerBox();
 
         privateCheckBox = new JCheckBox("Private Lobby (Invite Only)");
-        privateCheckBoxPanel.add(privateCheckBox,BorderLayout.CENTER);
-        return privateCheckBoxPanel;
+
+        initializeButton();
+
+        container.add(initializeRow(nameFieldLabel, nameField));
+        container.add(initializeRow(modeLabel, modeBox));
+        container.add(initializeRow(noOfPlayersLabel, noOfPlayersBox));
+        container.add(initializeRow(new JLabel(""), privateCheckBox));
+        container.add(initializeRow(new JLabel(""), createButton));
+
+        return container;
+
     }
 
-    private JPanel initializePlayerBox() {
-        JPanel playerPanel = new JPanel(new GridLayout(1,2));
-        playerPanel.setBackground( Theme.tablePanelColor);
+    private void initializeButton() {
+        createButton = new CustomButton("Create");
+        setPreferredSize(BOXDIMENSION);
+        createButton.addActionListener(e->createLobby());
+
+    }
+
+    private JPanel initializeRow( JComponent component1, JComponent component2){
+        JPanel rowPanel = new JPanel(new GridLayout(1,2,0,0));
+        rowPanel.setOpaque(false);
+
+        rowPanel.add(new JPanel(new FlowLayout(FlowLayout.CENTER)){{
+            add(component1);
+            component2.setPreferredSize(BOXDIMENSION);
+            add(component2);
+            setOpaque(false);
+        }});
+
+        return rowPanel;
+    }
+
+    private void initializePlayerBox() {
 
         Integer[] sizeList = new Integer[]{1,2,3,4};
-
-        playerPanel.add(new JLabel("LobbySize", JLabel.LEFT));
 
         noOfPlayersBox = new JComboBox(sizeList);
         noOfPlayersBox.setPreferredSize(BOXDIMENSION);
 
-        playerPanel.add(noOfPlayersBox);
-        return playerPanel;
+        noOfPlayersLabel = new JLabel("Lobby Size");
+
     }
 
-    private JPanel initializeModeBox() {
-        JPanel modePanel = new JPanel(new GridLayout(1,2));
-        modePanel.setBackground( Theme.tablePanelColor);
-        modePanel.add(new JLabel("Game Mode", JLabel.LEFT));
+    private void initializeModeBox() {
 
         String[] modeList = {Lobby.MODE_CLASSIC, Lobby.MODE_SWITCH};
-
         modeBox = new JComboBox(modeList);
         modeBox.setPreferredSize(BOXDIMENSION);
         modeBox.addActionListener(e->{
@@ -144,14 +154,10 @@ public class CreateLobbyScreen extends BaseScreen{
         ComboBoxRenderer renderer = new ComboBoxRenderer();
         modeBox.setRenderer(renderer);
 
-        modePanel.add(modeBox);
-        return modePanel;
+        modeLabel = new JLabel("Game Mode");
     }
 
-    private JPanel initializeNameField() {
-        JPanel namePanel = new JPanel(new GridLayout(1,2));
-        namePanel.setBackground( Theme.tablePanelColor);
-        namePanel.add(new JLabel("Lobby Name", JLabel.LEFT));
+    private void initializeNameField() {
 
         nameField = new JTextField("Enter name...");
         nameField.addFocusListener(new FocusListener() {
@@ -167,8 +173,8 @@ public class CreateLobbyScreen extends BaseScreen{
         });
         nameField.setColumns(20);
         nameField.setEditable(true);
-        namePanel.add(nameField);
-        return namePanel;
+
+        nameFieldLabel = new JLabel("Lobby Name");
     }
 
     private void createLobby(){
