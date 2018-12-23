@@ -424,6 +424,7 @@ public class KeyBindingScreen extends BaseScreen{
     public void onHide(){
         MainFrame.getInstance().removeKeyListener(keyListener);
         updateKeys();
+        MainFrame.getInstance().getMoveController().updateControls();
     }
 
     class BindingKeyListener implements KeyListener {
