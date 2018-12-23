@@ -168,6 +168,7 @@ public class LobbiesScreen extends BaseScreen {
                 }
             }
 
+            /**
             LobbyJoinResponseMessage message = RESTRequestManager.getCanJoinLobby(lobbyName);
             if(!message.getResponse())
             {
@@ -177,6 +178,7 @@ public class LobbiesScreen extends BaseScreen {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+             **/
             if (lobby != null) {
                 lobby.addPlayer(new Account(Config.getId()));
                 WebSocketManager.sendJoinLobbyMessage(lobby.getId());
