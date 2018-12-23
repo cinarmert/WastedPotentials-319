@@ -143,7 +143,6 @@ public class KeyBindingScreen extends BaseScreen{
 
         this.addMain(initializeContainer(),c);
 
-
     }
 
     private JPanel initializeContainer() {
@@ -225,33 +224,66 @@ public class KeyBindingScreen extends BaseScreen{
 
         rotateLeftAssign = new CustomButton("Change"){{
             setPreferredSize(new Dimension(getMainWidth()/10,getMainWidth()/35));
-            addActionListener(e -> bindingToChange = 0);
+            addActionListener(e ->{
+                setLabelColours();
+                rotateLeftLabel.setForeground(Color.GREEN);
+                bindingToChange = 0;
+            });
         }};
 
         rotateRightAssign = new CustomButton("Change"){{
             setPreferredSize(new Dimension(getMainWidth()/10,getMainWidth()/35));
-            addActionListener(e -> bindingToChange = 1);
+            addActionListener(e ->{
+                setLabelColours();
+                rotateRightLabel.setForeground(Color.GREEN);
+                bindingToChange = 1;
+            });
         }};
 
         rotateUpAssign = new CustomButton("Change"){{
             setPreferredSize(new Dimension(getMainWidth()/10,getMainWidth()/35));
-            addActionListener(e -> bindingToChange = 2);
+            addActionListener(e ->{
+                setLabelColours();
+                rotateUpLabel.setForeground(Color.GREEN);
+                bindingToChange = 2;
+            });
         }};
 
         rotateDownAssign = new CustomButton("Change"){{
             setPreferredSize(new Dimension(getMainWidth()/10,getMainWidth()/35));
-            addActionListener(e -> bindingToChange = 3);
+            addActionListener(e ->{
+                setLabelColours();
+                rotateDownLabel.setForeground(Color.GREEN);
+                bindingToChange = 3;
+            });
         }};
 
         rotateClockwiseAssign = new CustomButton("Change"){{
             setPreferredSize(new Dimension(getMainWidth()/10,getMainWidth()/35));
-            addActionListener(e -> bindingToChange = 4);
+            addActionListener(e ->{
+                setLabelColours();
+                rotateClockwiseLabel.setForeground(Color.GREEN);
+                bindingToChange = 4;
+            });
         }};
 
         rotateCounterclockwiseAssign = new CustomButton("Change"){{
             setPreferredSize(new Dimension(getMainWidth()/10,getMainWidth()/35));
-            addActionListener(e -> bindingToChange = 5);
+            addActionListener(e ->{
+                setLabelColours();
+                rotateCounterclockwiseLabel.setForeground(Color.GREEN);
+                bindingToChange = 5;
+            });
         }};
+    }
+
+    private void setLabelColours() {
+        rotateLeftLabel.setForeground(Color.BLACK);
+        rotateRightLabel.setForeground(Color.BLACK);
+        rotateUpLabel.setForeground(Color.BLACK);
+        rotateDownLabel.setForeground(Color.BLACK);
+        rotateClockwiseLabel.setForeground(Color.BLACK);
+        rotateCounterclockwiseLabel.setForeground(Color.BLACK);
     }
 
     private void initializeKeyLabels() {
@@ -406,19 +438,56 @@ public class KeyBindingScreen extends BaseScreen{
 
             switch (bindingToChange){
 
-                case 0 : setLeftKey(e.getKeyCode());
+                case 0 :
+                    if(searchKey(e.getKeyCode(), bindingToChange))
+                        showErrorMsg();
+                    else {
+                        setLeftKey(e.getKeyCode());
+                    }
+                    rotateLeftLabel.setForeground(Color.BLACK);
                     break;
-                case 1 : setRightKey(e.getKeyCode());
+                case 1 :
+                    if(searchKey(e.getKeyCode(), bindingToChange))
+                        showErrorMsg();
+                    else {
+                        setRightKey(e.getKeyCode());
+                    }
+                    rotateRightLabel.setForeground(Color.BLACK);
                     break;
-                case 2 : setUpKey(e.getKeyCode());
+                case 2 :
+                    if(searchKey(e.getKeyCode(), bindingToChange))
+                        showErrorMsg();
+                    else {
+                        setUpKey(e.getKeyCode());
+                    }
+                    rotateUpLabel.setForeground(Color.BLACK);
                     break;
-                case 3 : setDownKey(e.getKeyCode());
+                case 3 :
+                    if(searchKey(e.getKeyCode(), bindingToChange))
+                        showErrorMsg();
+                    else {
+                        setDownKey(e.getKeyCode());
+                    }
+                    rotateDownLabel.setForeground(Color.BLACK);
                     break;
-                case 4 : setClockwiseKey(e.getKeyCode());
+                case 4 :
+                    if(searchKey(e.getKeyCode(), bindingToChange))
+                        showErrorMsg();
+                    else {
+                        setClockwiseKey(e.getKeyCode());
+                    }
+                    rotateClockwiseLabel.setForeground(Color.BLACK);
                     break;
-                case 5 : setCounterclockwiseKey(e.getKeyCode());
+                case 5 :
+                    if(searchKey(e.getKeyCode(), bindingToChange))
+                        showErrorMsg();
+                    else {
+                        setCounterclockwiseKey(e.getKeyCode());
+                    }
+                    rotateCounterclockwiseLabel.setForeground(Color.BLACK);
                     break;
-                default: break;
+                default:
+                    break;
             }
             bindingToChange = -1;
 
@@ -426,6 +495,41 @@ public class KeyBindingScreen extends BaseScreen{
 
         @Override
         public void keyReleased(KeyEvent e) {
+
+        }
+    }
+
+    private void showErrorMsg() {
+        JOptionPane.showMessageDialog( this,
+                "You cannot assign a key that is already assigned to another function!",
+                "ERROR",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    // Checks if given key binding is already used except for the key
+    // key : 0 left, 1 right, 2 up, 3 down, 4 clockwise, 5 counterclockwise
+    private boolean searchKey(int keyCode, int key) {
+        switch (key){
+            case 0 :
+                return (keyCode == rightKey) | (keyCode == upKey) | (keyCode == downKey) |
+                        (keyCode == clockwiseKey) | (keyCode == counterclockwiseKey);
+            case 1 :
+                return (keyCode == leftKey) | (keyCode == upKey) | (keyCode == downKey) |
+                        (keyCode == clockwiseKey) | (keyCode == counterclockwiseKey);
+            case 2 :
+                return (keyCode == leftKey) | (keyCode == rightKey) | (keyCode == downKey) |
+                        (keyCode == clockwiseKey) | (keyCode == counterclockwiseKey);
+            case 3 :
+                return (keyCode == leftKey) | (keyCode == rightKey) | (keyCode == upKey) |
+                        (keyCode == clockwiseKey) | (keyCode == counterclockwiseKey);
+            case 4 :
+                return (keyCode == leftKey) | (keyCode == rightKey) | (keyCode == upKey) |
+                        (keyCode == downKey) | (keyCode == counterclockwiseKey);
+            case 5 :
+                return (keyCode == leftKey) | (keyCode == rightKey) | (keyCode == upKey) |
+                        (keyCode == downKey) | (keyCode == clockwiseKey);
+            default :
+                return false;
 
         }
     }
