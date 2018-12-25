@@ -5,24 +5,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LeaderboardUser {
 
     @JsonProperty
-    private String id;
+    private Account account;
 
     @JsonProperty
     private int score;
 
     public LeaderboardUser(){}
 
-    public LeaderboardUser(String id, int score) {
-        this.id = id;
+    public LeaderboardUser(Account account, int score) {
+        this.account = account;
         this.score = score;
     }
 
-    public String getId() {
-        return id;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public int getScore() {
