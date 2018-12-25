@@ -118,6 +118,7 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
         Lobby lobbyToLeave = lobbyRepository.findLobbyById(leaveMessage.getLobbyId());
         lobbyToLeave.removePlayer(leaveMessage.getAccount());
+        logger.info("lobby size after leave " + lobbyToLeave.getPlayerCount() + "");
 
         if (lobbyToLeave.getPlayerCount() == 0) {
             logger.info("no players in the lobby, deleting... lobbyId: " + leaveMessage.getLobbyId());

@@ -22,4 +22,9 @@ public class Account {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o){
+        return this.id.equals(((Account) o).getId());
+    }
 }
