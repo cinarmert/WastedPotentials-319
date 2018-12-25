@@ -30,8 +30,10 @@ public class SwitchModeScreen extends BaseGameScreen{
         if( quit == 0 ) {
 
             ScreenManager.doubleBack();
-            //ToDo notify server
-            ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(null);
+            LobbyScreen lobbyScreen = ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN));
+
+            WebSocketManager.sendLeaveLobbyMessage(lobbyScreen.getCurrentLobby().getId());
+            lobbyScreen.setCurrentLobby(null);
             setGame(null);
             MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
 
