@@ -4,12 +4,11 @@ import kubitz.server.database.lobby.model.Lobby;
 import kubitz.server.database.lobby.model.LobbyStatus;
 import kubitz.server.database.lobby.repository.LobbyRepository;
 import kubitz.server.util.JsonUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.io.IOException;
 
 @RestController
@@ -58,17 +57,17 @@ public class LobbyController {
         lobbyRepository.save(lobby);
     }
 
-    @RequestMapping(value = "/getLobbyByName/{lobbyname}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getLobbyByName/{lobbyId}", method = RequestMethod.GET)
     @ResponseBody
-    public String getLobbyByName(@PathParam("lobbyname") String lobbyname) {
-        String response = JsonUtil.toJson(lobbyRepository.findLobbyById(lobbyname));
+    public String getLobbyByName(@PathVariable String lobbyId) {
+        String response = JsonUtil.toJson(lobbyRepository.findLobbyById(lobbyId));
         logger.info("returning the lobbies: " + response);
         return response;
     }
 
     @RequestMapping(value = "/canJoinLobby/{lobbyname}", method = RequestMethod.GET)
     @ResponseBody
-    public String canJoinLobby(@PathParam("lobbyname") String lobbyname) {
+    public String canJoinLobby(@PathVariable("lobbyname") String lobbyname) {
         Lobby lobby = lobbyRepository.findLobbyById(lobbyname);
         logger.info("found lobby for lobby name " + lobbyname + ": " + JsonUtil.toJson(lobby));
         boolean isFull = lobby.isFull();
