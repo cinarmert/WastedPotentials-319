@@ -100,7 +100,7 @@ public class DailyChallengeScreen extends BaseGameScreen{
                 "GAME OVER",
                 JOptionPane.INFORMATION_MESSAGE);
 
-        //ToDo go main manu then show leaderboard?
+        ScreenManager.doubleBack(); // go main menu
         ScreenManager.getScreen(ScreenManager.LEADERBOARD_SCREEN).update();
         ScreenManager.show(ScreenManager.LEADERBOARD_SCREEN);
 
