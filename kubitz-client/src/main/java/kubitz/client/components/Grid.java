@@ -51,7 +51,7 @@ public class Grid
     public void setGrid(int[][] grid){
         for (int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                this.grid[i][j] = new Cube(grid[i][j]);
+                this.grid[i][j] =(grid[i][j] == -1) ? null :  new Cube(grid[i][j]);
             }
         }
     }
@@ -62,7 +62,7 @@ public class Grid
 
         for(int i = 0; i < size; i++)
             for(int j = 0; j < size; j++)
-                ret[i][j] = grid[i][j].getCurrentFace();
+                ret[i][j] = (grid[i][j] == null) ? -1 : grid[i][j].getCurrentFace();
 
         return ret;
     }
