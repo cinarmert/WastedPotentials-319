@@ -82,6 +82,7 @@ public class ScreenManager extends JPanel {
     public static void synchronizeStackWithScreen(){
         instance.removeAll();
         instance.add(stack.peek());
+        stack.peek().onShow();
         MainFrame.getInstance().revalidate();
         MainFrame.getInstance().repaint();
     }
@@ -92,7 +93,6 @@ public class ScreenManager extends JPanel {
         if(!canShown(screen_))
             return false;
 
-        screen_.onShow();
         stack.push(screen_);
         synchronizeStackWithScreen();
         return true;
@@ -100,15 +100,9 @@ public class ScreenManager extends JPanel {
 
     public static void openGameScreen(BaseGameScreen screen){
 
-        screen.onShow();
-
-        instance.removeAll();
         stack.push( screen);
-        instance.add(stack.peek());
 
-        MainFrame.getInstance().revalidate();
-        MainFrame.getInstance().repaint();
-
+        synchronizeStackWithScreen();
     }
 
     public static void doubleBack(){

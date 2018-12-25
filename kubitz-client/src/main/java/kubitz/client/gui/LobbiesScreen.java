@@ -172,7 +172,7 @@ public class LobbiesScreen extends BaseScreen {
             if(!message.getResponse())
             {
                 JOptionPane.showMessageDialog( this,
-                        message.getResponse(),
+                        message.getReason(),
                         "ERROR",
                         JOptionPane.ERROR_MESSAGE);
                 return;
