@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 
-//ToDo to be tested
 public class RESTRequestManager {
 
     private static final String BASE_URL = "http://" + Config.getServer();
