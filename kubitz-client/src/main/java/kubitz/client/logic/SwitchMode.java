@@ -36,9 +36,7 @@ public class SwitchMode extends BaseGame {
 
     public Void switchGrids(Void v)
     {
-        stop();
         WebSocketManager.sendStateMessage(getGridState(), Config.getId(), lobby.getId());
-        start();
         return null;
     }
 
