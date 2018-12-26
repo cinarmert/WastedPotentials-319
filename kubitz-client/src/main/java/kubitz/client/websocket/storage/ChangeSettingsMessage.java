@@ -16,6 +16,11 @@ public class ChangeSettingsMessage {
 
     public ChangeSettingsMessage(){}
 
+    public ChangeSettingsMessage(Lobby lobby, Account account){
+        this.lobby = lobby;
+        this.account = account;
+    }
+
     public Lobby getLobby() {
         return lobby;
     }

@@ -152,6 +152,9 @@ public class KubitzWebSocketClient extends WebSocketClient {
 
     private void handleChangeSettingsMessage(LobbyMessage lm) throws IOException {
         ChangeSettingsMessage changeSettingsMessage = JsonUtil.fromJson(lm.getPayload().toString(), ChangeSettingsMessage.class);
+        LobbyScreen ls = ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN));
+
+        ls.setCurrentLobby(changeSettingsMessage.getLobby());
 
     }
 }

@@ -256,6 +256,10 @@ public class LobbyScreen extends BaseScreen {
 
     private void goSettings() {
 
+        ((LobbySettingsScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SETTINGS_SCREEN)).setCurrentLobby(currentLobby);
+
+        ScreenManager.show(ScreenManager.LOBBY_SETTINGS_SCREEN);
+
     }
 
     private void startGame() {
@@ -277,7 +281,7 @@ public class LobbyScreen extends BaseScreen {
     }
 
 
-    public  Lobby getCurrentLobby() {
+    public Lobby getCurrentLobby() {
         return currentLobby;
     }
 
