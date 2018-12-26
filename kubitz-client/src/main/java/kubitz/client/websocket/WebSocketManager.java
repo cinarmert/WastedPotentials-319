@@ -57,7 +57,7 @@ public class WebSocketManager {
         client.send(JsonUtil.toJson(lm));
     }
 
-    public static void sendInviteMessage(String invitedPlayerId, String playerId, String lobbyId){
+    public static void sendInviteMessage(String invitedPlayerId, String lobbyId){
         InviteMessage inviteMessage = new InviteMessage(invitedPlayerId, Config.getAccount(), lobbyId);
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(inviteMessage));

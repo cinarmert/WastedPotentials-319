@@ -61,6 +61,11 @@ public class SwitchModeScreen extends BaseGameScreen{
         updateCardUI();
     }
 
+    public void setGridState(int[][] grid){
+        ((SwitchMode)getGame()).setGridState(grid);
+        updateCardUI();
+    }
+
     @Override
     public void onGameFinished() {
 

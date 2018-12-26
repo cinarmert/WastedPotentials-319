@@ -73,11 +73,9 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleStateMessage(LobbyMessage lm) throws IOException {
         StateMessage stateMessage = JsonUtil.fromJson(lm.getPayload().toString(), StateMessage.class);
         SwitchModeScreen sms = (SwitchModeScreen) ScreenManager.getCurrentScreen();
-        SwitchMode sm = (SwitchMode) sms.getGame();
         if (!Config.getId().equals(stateMessage.getAccount().getId()))
         {
-            sm.setGridState(stateMessage.getState());
-            sm.signalUpdate();
+            sms.setGridState(stateMessage.getState());
         }
     }
 
