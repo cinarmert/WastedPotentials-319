@@ -124,4 +124,16 @@ public class Lobby {
     public void removePlayer(Account a) {
         players.remove(a);
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o)
+            return true;
+        if(!(o instanceof Lobby))
+            return false;
+
+        Lobby lobby = (Lobby)o;
+        return (this.getId().equals(lobby.getId()) && this.getMode().equals(lobby.getMode()) &&
+                this.getMaxPlayerLimit() == lobby.getMaxPlayerLimit() && this.isPrivate() == lobby.isPrivate());
+    }
 }

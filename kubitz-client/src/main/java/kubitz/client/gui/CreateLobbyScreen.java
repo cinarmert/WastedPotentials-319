@@ -187,46 +187,46 @@ public class CreateLobbyScreen extends BaseScreen{
 
         ScreenManager.show(ScreenManager.LOBBY_SCREEN);
     }
-class ComboBoxRenderer extends JLabel implements ListCellRenderer, ComboBoxEditor {
+    class ComboBoxRenderer extends JLabel implements ListCellRenderer, ComboBoxEditor {
 
-    @Override
-    public Component getEditorComponent() {
-        return null;
+        @Override
+        public Component getEditorComponent() {
+            return null;
+        }
+
+        @Override
+        public void setItem(Object anObject) {
+
+        }
+
+        @Override
+        public Object getItem() {
+            return null;
+        }
+
+        @Override
+        public void selectAll() {
+
+        }
+
+        @Override
+        public void addActionListener(ActionListener l) {
+
+        }
+
+        @Override
+        public void removeActionListener(ActionListener l) {
+
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index,
+                                                      boolean isSelected, boolean cellHasFocus) {
+            if(value.equals(Lobby.MODE_CLASSIC))
+                setText("Classic");
+            else
+                setText("Switch");
+            return this;
+        }
     }
-
-    @Override
-    public void setItem(Object anObject) {
-
-    }
-
-    @Override
-    public Object getItem() {
-        return null;
-    }
-
-    @Override
-    public void selectAll() {
-
-    }
-
-    @Override
-    public void addActionListener(ActionListener l) {
-
-    }
-
-    @Override
-    public void removeActionListener(ActionListener l) {
-
-    }
-
-    @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index,
-                                                  boolean isSelected, boolean cellHasFocus) {
-        if(value.equals(Lobby.MODE_CLASSIC))
-            setText("Classic");
-        else
-            setText("Switch");
-        return this;
-    }
-}
 }

@@ -1,10 +1,12 @@
 package kubitz.client.websocket;
 
 import kubitz.client.gui.Config;
+import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.*;
 import org.java_websocket.drafts.Draft_6455;
 
+import javax.json.Json;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -76,6 +78,14 @@ public class WebSocketManager {
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(stateMessage));
         lm.setType(LobbyMessageTypes.LOBBY_STATE_MESSAGE);
+        client.send(JsonUtil.toJson(lm));
+    }
+
+    public static void sendLobbySettingsMessage(Lobby lobby){
+        ChangeSettingsMessage settingsMessage = new ChangeSettingsMessage(lobby, Config.getAccount());
+        LobbyMessage lm = new LobbyMessage();
+        lm.setPayload(JsonUtil.toJson(settingsMessage));
+        lm.setType(LobbyMessageTypes.LOBBY_CHANGE_SETTINGS);
         client.send(JsonUtil.toJson(lm));
     }
 }
