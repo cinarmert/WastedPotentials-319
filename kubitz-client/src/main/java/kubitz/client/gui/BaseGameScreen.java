@@ -288,6 +288,9 @@ public abstract class BaseGameScreen extends BaseScreen{
 
         gridUI.repaint();
         cardUI.repaint();
+
+        revalidate();
+        repaint();
     }
 
     @Override
