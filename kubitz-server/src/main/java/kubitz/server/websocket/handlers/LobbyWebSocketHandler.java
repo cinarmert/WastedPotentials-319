@@ -49,14 +49,19 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         logger.info(String.format("Session %s closed because of %s", session.getId(), status.getReason()));
+
+        String playerId = getPlayerId(session.getUri().getPath());
+        Account accountToRemove = new Account(playerId);
+
+        Lobby lobby = lobbyRepository.findLobbyByPlayersContaining(accountToRemove);
+        lobby.removePlayer(accountToRemove);
+        lobbyRepository.save(lobby);
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
         logger.info("Connected ... " + session.getId());
-//        session.sendMessage(new TextMessage("Hello " + ("name") + " !"));
-
     }
 
     @Override
