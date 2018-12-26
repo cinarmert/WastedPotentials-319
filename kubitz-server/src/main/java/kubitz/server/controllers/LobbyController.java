@@ -65,6 +65,13 @@ public class LobbyController {
         return response;
     }
 
+    @RequestMapping(value = "/clearLobbies", method = RequestMethod.GET)
+    @ResponseBody
+    public void clearLobbies() {
+        logger.info("clearing lobbies...");
+        lobbyRepository.deleteAll();
+    }
+
     @RequestMapping(value = "/canJoinLobby/{lobbyname}", method = RequestMethod.GET)
     @ResponseBody
     public String canJoinLobby(@PathVariable("lobbyname") String lobbyname) {
