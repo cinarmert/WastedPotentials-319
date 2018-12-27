@@ -28,7 +28,7 @@ public class SwitchModeScreen extends BaseGameScreen{
                 JOptionPane.WARNING_MESSAGE);
 
         if( quit == 0 ) {
-
+            ((SwitchMode)getGame()).stop();
             ScreenManager.doubleBack();
             LobbyScreen lobbyScreen = ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN));
 

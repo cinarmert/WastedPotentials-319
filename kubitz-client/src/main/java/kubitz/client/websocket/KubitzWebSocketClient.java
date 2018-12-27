@@ -46,7 +46,7 @@ public class KubitzWebSocketClient extends WebSocketClient {
 
     @Override
     public void onClose( int code, String reason, boolean remote ) {
-        System.out.println( "closed connection: " + reason);
+        System.out.println( "closed connection: " + reason + " " +  code + " " + remote);
 //        WebSocketManager.client.reconnect();
     }
 

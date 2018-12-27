@@ -10,7 +10,7 @@ import kubitz.client.websocket.WebSocketManager;
 
 public class SwitchMode extends BaseGame {
 
-    private final int PERIOD = 15000;
+    private final int PERIOD = 10000;//15000;
     private PeriodicTimeController ptc;
     private int period;
     private Lobby lobby;
