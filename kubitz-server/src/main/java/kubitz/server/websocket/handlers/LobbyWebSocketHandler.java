@@ -20,6 +20,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -32,12 +33,14 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
     private final LobbyRepository lobbyRepository;
     private final ChatRepository chatRepository;
     private final GameStateRepository gameStateRepository;
+    private HashMap<String, ArrayList<StateMessage>> statesHashTable;
 
     @Autowired
     public LobbyWebSocketHandler(LobbyRepository lobbyRepository, ChatRepository chatRepository, GameStateRepository gameStateRepository) {
         this.lobbyRepository = lobbyRepository;
         this.chatRepository = chatRepository;
         this.gameStateRepository = gameStateRepository;
+        statesHashTable = new HashMap<String, ArrayList<StateMessage>>();
     }
 
 
@@ -102,7 +105,17 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
 
         logger.info("player " + stateMessage.getAccount().getId() + " in lobby " + stateMessage.getLobbyId() + " is ready to switch");
 
-        notifyLobbyParticipants(lobby, JsonUtil.toJson(stateMessage), LobbyMessageTypes.LOBBY_STATE_MESSAGE);
+        if(!statesHashTable.containsKey(lobby.getId()))
+            statesHashTable.put(lobby.getId(), new ArrayList<StateMessage>());
+
+        ArrayList<StateMessage> stateMessages = statesHashTable.get(lobby.getId());
+        stateMessages.add(stateMessage);
+        if(stateMessages.size() >= 2)
+        {
+            for(StateMessage s: stateMessages)
+                notifyLobbyParticipants(lobby, JsonUtil.toJson(s), LobbyMessageTypes.LOBBY_STATE_MESSAGE);
+            stateMessages.clear();
+        }
 
     }
 
@@ -128,6 +141,9 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
         if (lobbyToLeave.getPlayerCount() == 0) {
             logger.info("no players in the lobby, deleting... lobbyId: " + leaveMessage.getLobbyId());
             lobbyRepository.delete(lobbyToLeave);
+
+            if(statesHashTable.containsKey(lobbyToLeave.getId()))
+                statesHashTable.remove(lobbyToLeave.getId());
         } else {
             lobbyRepository.save(lobbyToLeave);
             notifyLobbyParticipants(lobbyToLeave, JsonUtil.toJson(leaveMessage), LobbyMessageTypes.LOBBY_LEAVE_MESSAGE);
