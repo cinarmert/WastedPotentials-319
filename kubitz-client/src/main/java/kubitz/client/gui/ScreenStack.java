@@ -23,6 +23,10 @@ public class ScreenStack {
         return pop;
     }
 
+    public void clear(){
+        stack.clear();
+    }
+
     public BaseScreen push(BaseScreen screen){
         BaseScreen push = stack.push(screen);
         return push;

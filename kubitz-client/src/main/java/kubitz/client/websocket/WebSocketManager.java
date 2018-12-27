@@ -6,13 +6,13 @@ import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.*;
 import org.java_websocket.drafts.Draft_6455;
 
-import javax.json.Json;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class WebSocketManager {
 
     public static KubitzWebSocketClient client;
+    private static boolean reConnecting = false;
 
     public WebSocketManager(){
         try {
@@ -23,6 +23,30 @@ public class WebSocketManager {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean isConnected(){
+        return client.isOpen();
+    }
+
+    public static void reconnect(){
+        //ToDo "Mert" reconnect
+        try {
+            reConnecting = true;
+            System.out.println("Reconnecting");
+            client = new KubitzWebSocketClient(new URI("ws://" + Config.getServer() + "/player/" + Config.getId()), new Draft_6455());
+            client.connectBlocking();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static boolean isReConnecting(){
+        reConnecting = reConnecting && !isConnected();
+        return reConnecting;
     }
 
     public static void sendJoinLobbyMessage(String lobbyId){

@@ -1,7 +1,6 @@
 package kubitz.client.websocket;
 
 import kubitz.client.gui.*;
-import kubitz.client.logic.SwitchMode;
 import kubitz.client.rest.RESTRequestManager;
 import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
@@ -47,7 +46,19 @@ public class KubitzWebSocketClient extends WebSocketClient {
     @Override
     public void onClose( int code, String reason, boolean remote ) {
         System.out.println( "closed connection: " + reason + " " +  code + " " + remote);
-//        WebSocketManager.client.reconnect();
+
+        if (!WebSocketManager.isReConnecting()) {
+            if (!(ScreenManager.getCurrentScreen() instanceof MainMenuScreen)) {
+                ScreenManager.reset();
+            }
+
+            ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(null);
+            JOptionPane.showMessageDialog(ScreenManager.getScreen(ScreenManager.MAIN_MENU_SCREEN),
+                    "No Connection!",
+                    "ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     @Override

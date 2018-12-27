@@ -44,7 +44,6 @@ public class LeaderboardScreen extends BaseScreen {
                 "Connection Failed!",
                 "ERROR",
                 JOptionPane.ERROR_MESSAGE);
-        System.out.println("ERORR");
     }
 
     @Override

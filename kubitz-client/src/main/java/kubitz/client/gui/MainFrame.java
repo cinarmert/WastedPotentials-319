@@ -79,9 +79,11 @@ public class MainFrame extends JFrame {
                         JOptionPane.WARNING_MESSAGE);
 
                 if( quit == 0 ) {
-                    LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
-                    if (lobbyScreen.getCurrentLobby() != null) {
-                        WebSocketManager.sendLeaveLobbyMessage(lobbyScreen.getCurrentLobby().getId());
+                    if (WebSocketManager.isConnected()) {
+                        LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
+                        if (lobbyScreen.getCurrentLobby() != null) {
+                            WebSocketManager.sendLeaveLobbyMessage(lobbyScreen.getCurrentLobby().getId());
+                        }
                     }
                     System.exit(0);
                 }

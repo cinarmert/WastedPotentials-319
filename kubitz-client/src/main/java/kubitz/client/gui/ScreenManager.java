@@ -1,6 +1,7 @@
 package kubitz.client.gui;
 
 import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.websocket.WebSocketManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,7 +73,12 @@ public class ScreenManager extends JPanel {
     }
 
     public static boolean canShown(BaseScreen screen){
-        if(screen.doesRequireConnection() && !RESTRequestManager.checkServerConnection()) {
+        if(screen.doesRequireConnection() && !(RESTRequestManager.checkServerConnection() && WebSocketManager.isConnected())) {
+
+            if (!WebSocketManager.isConnected()){
+                WebSocketManager.reconnect();
+            }
+
             return false;
         }
 
@@ -116,6 +122,11 @@ public class ScreenManager extends JPanel {
 
     public static BaseScreen getCurrentScreen(){
         return stack.peek();
+    }
+
+    public static void reset(){
+        stack.clear();
+        show(MAIN_MENU_SCREEN);
     }
 
     public static void updateResolutions(){
