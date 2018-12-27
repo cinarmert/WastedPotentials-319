@@ -20,7 +20,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
         super(resolution);
 
-        time = new JLabel("00:00:00");
+        time = new JLabel("0 : 0 : 0");
         time.setForeground(Theme.gameClockColor);
         time.setFont( new Font( time.getFont().getName(), Font.PLAIN, 50));
 
@@ -79,6 +79,7 @@ public class SurvivalModeScreen extends BaseGameScreen {
 
             super.backButtonAction();
 
+            ((SurvivalMode)getGame()).stopCountDown();
             timer.stop();
             setGame(null);
             MainFrame.getInstance().getMoveController().setBaseGameScreen(null);
