@@ -91,6 +91,8 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
 
         addKeyListener(moveController);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     public MoveController getMoveController(){

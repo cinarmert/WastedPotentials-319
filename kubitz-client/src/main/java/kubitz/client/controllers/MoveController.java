@@ -1,6 +1,8 @@
 package kubitz.client.controllers;
 
 import kubitz.client.gui.BaseGameScreen;
+import kubitz.client.gui.Screen;
+import kubitz.client.gui.ScreenManager;
 
 import java.awt.event.*;
 import java.io.IOException;
@@ -36,10 +38,16 @@ public class MoveController implements KeyListener, MouseListener {
     }
 
     public void keyPressed(KeyEvent e) {
+        int i = e.getKeyCode();
+        if(!(ScreenManager.getCurrentScreen() instanceof BaseGameScreen))
+            return;
+
+        BaseGameScreen baseGameScreen = (BaseGameScreen) ScreenManager.getCurrentScreen();
+
 
         if (baseGameScreen != null) {
 
-            int i = e.getKeyCode();
+
             if (i == left) {
                 baseGameScreen.getSelectedCube().rotate(1, 0, 0);
 
@@ -61,6 +69,7 @@ public class MoveController implements KeyListener, MouseListener {
             } else {
             }
             baseGameScreen.updateCubes();
+            baseGameScreen.revalidate();
             baseGameScreen.repaint();
 
         }
