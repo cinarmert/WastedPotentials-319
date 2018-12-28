@@ -26,16 +26,16 @@ public class KickMessage {
         return account;
     }
 
-    public Account getAccountToKick() {
-        return accountToKick;
-    }
-
     public void setAccount(Account account) {
         this.account = account;
     }
 
-    public void setAccountToKick(Account account) {
+    public void setAccountToKick(Account accountToKick) {
         this.accountToKick = accountToKick;
+    }
+
+    public Account getAccountToKick() {
+        return accountToKick;
     }
 
     public String getLobbyId() {
