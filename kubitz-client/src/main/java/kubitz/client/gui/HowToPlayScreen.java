@@ -7,10 +7,17 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class HowToPlayScreen extends BaseScreen {
+
+    private final Dimension gifDimension = new Dimension((getMainHeight()-(getMainHeight() / 2)) * 2,
+            getMainHeight()-(getMainHeight() / 2));
+    private ImageIcon controlsGIF;
+    private JLabel tutorial_controls;
 
     public HowToPlayScreen(Dimension resolution) {
 
@@ -53,53 +60,72 @@ public class HowToPlayScreen extends BaseScreen {
         tabbedPane.addTab("Switch", initializeSwitchTutorial());
         tabbedPane.addTab("Daily Challenge", initializeChallengeTutorial());
         tabbedPane.addTab("Survival", initializeSurvivalTutorial());
-        tabbedPane.addTab("Controls", initializeControlsTutorial());
+        tabbedPane.addTab("Rotation", initializeControlsTutorial());
+        tabbedPane.addTab("Placement", initializePlacement());
 
         tabbedPane.setUI( new CustomTabbedPaneUI());
         return tabbedPane;
     }
 
+    private JPanel initializePlacement() {
+        JPanel placementTutorialPanel = new JPanel(new BorderLayout());
+        placementTutorialPanel.setOpaque(false);
+
+        ImageIcon placement = createImageIcon("/tutorials/tutorial_placement.gif");
+        placement.setImage(placement.getImage().getScaledInstance((int)gifDimension.getHeight(),
+                (int)gifDimension.getHeight(), Image.SCALE_DEFAULT));
+
+        JLabel tutorial = new JLabel(placement, JLabel.CENTER);
+
+        placementTutorialPanel.add(tutorial,BorderLayout.NORTH);
+
+        placementTutorialPanel.add(new JTextArea("  \n You can place the cubes by clicking on the grid."){{
+            setLineWrap(true);
+            setWrapStyleWord(true);
+            setEditable(false);
+            setFont(new Font("Calibri", Font.PLAIN,16));
+            setBackground(Theme.tablePanelColor);
+            setBorder(null);
+            setAlignmentY(BOTTOM_ALIGNMENT);
+
+        }}, BorderLayout.CENTER);
+
+        return placementTutorialPanel;
+    }
+
     private JPanel initializeControlsTutorial() {
-        JPanel controlsTutorialPanel = new JPanel(new GridLayout(2, 2));
+        JPanel controlsTutorialPanel = new JPanel(new BorderLayout());
         controlsTutorialPanel.setOpaque(false);
 
-        JLabel mouseIcon = new JLabel();
-        JLabel keysIcon = new JLabel();
+        controlsGIF = createImageIcon("/tutorials/tutorial_rotation.gif");
+        controlsGIF.setImage(controlsGIF.getImage().getScaledInstance(  3 * getMainHeight() / 3,
+                getMainHeight() / 3, Image.SCALE_DEFAULT));
 
-        BufferedImage keys = null;
-        BufferedImage mouse = null;
+        ImageIcon controls_v2 = createImageIcon("/tutorials/tutorial_rotation_v2.gif");
+        controls_v2.setImage(controls_v2.getImage().getScaledInstance(  getMainHeight() / 3,
+                getMainHeight() / 3, Image.SCALE_DEFAULT));
 
-        try {
-            keys = ImageIO.read(getClass().getResource("/tutorials/keys.png"));
-            mouse = ImageIO.read(getClass().getResource("/tutorials/mouse.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        tutorial_controls = new JLabel(controlsGIF, JLabel.CENTER);
 
-        Image reSizedKeys = keys.getScaledInstance(getMainWidth()/4, getMainHeight()/4, Image.SCALE_SMOOTH);
-        Image reSizedMouse = mouse.getScaledInstance(getMainWidth()/4, getMainHeight()/4, Image.SCALE_SMOOTH);
-        mouseIcon.setIcon(new ImageIcon(reSizedMouse));
-        keysIcon.setIcon(new ImageIcon(reSizedKeys));
-        controlsTutorialPanel.add(keysIcon);
-        controlsTutorialPanel.add(new JTextArea("You can use W, A, S, D keys to rotate the cube to see another face" +
-                "and use Q, E keys to rotate the current cube face counter-clockwise or clockwise respectively"){{
+        controlsTutorialPanel.add(tutorial_controls,BorderLayout.CENTER);
+
+        JLabel tutorial_v2 = new JLabel(controls_v2, JLabel.CENTER);
+
+        controlsTutorialPanel.add(tutorial_v2, BorderLayout.NORTH);
+
+        controlsTutorialPanel.add(new JTextArea("  \n You can use W, A, S, D keys to rotate the cube to see another " +
+                "face and use Q, E keys to rotate the current cube face counter-clockwise or clockwise respectively." +
+                " However, you have the option to change the control keys as you wish. You can also rotate the cube by " +
+                "clicking on its sides as you can see on the GIF."){{
             setLineWrap(true);
             setWrapStyleWord(true);
             setEditable(false);
             setFont(new Font("Calibri", Font.PLAIN,16));
             setBackground(Theme.tablePanelColor);
-            setBorder(new LineBorder(Theme.borderColor,2));
+            setBorder(null);
+            setAlignmentY(BOTTOM_ALIGNMENT);
 
-        }});
-        controlsTutorialPanel.add(mouseIcon);
-        controlsTutorialPanel.add(new JTextArea("You can use your mouse's left click on a grid to place the cube"){{
-            setLineWrap(true);
-            setWrapStyleWord(true);
-            setEditable(false);
-            setFont(new Font("Calibri", Font.PLAIN,16));
-            setBackground(Theme.tablePanelColor);
-            setBorder(new LineBorder(Theme.borderColor,2));
-        }});
+        }}, BorderLayout.SOUTH);
 
         return controlsTutorialPanel;
     }
@@ -108,24 +134,18 @@ public class HowToPlayScreen extends BaseScreen {
         JPanel survivalTutorialPanel = new JPanel(new BorderLayout());
         survivalTutorialPanel.setOpaque(false);
 
-        JLabel tutorial = new JLabel();
-        BufferedImage tutorialImage = null;
+        ImageIcon survival = createImageIcon("/tutorials/tutorial_survival.gif");
+        survival.setImage(survival.getImage().getScaledInstance((int)gifDimension.getWidth(),
+                (int)gifDimension.getHeight(), Image.SCALE_DEFAULT));
 
-        try {
-            tutorialImage = ImageIO.read(getClass().getResource("/tutorials/survival_tutorial.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JLabel tutorial = new JLabel(survival, JLabel.CENTER);
 
-        Image reSizedTutorialImage = tutorialImage.getScaledInstance(getMainWidth()-(getMainWidth()/5),
-                getMainHeight()-(getMainHeight()/2), Image.SCALE_SMOOTH);
-        tutorial.setIcon(new ImageIcon(reSizedTutorialImage));
         survivalTutorialPanel.add(tutorial,BorderLayout.NORTH);
 
-        survivalTutorialPanel.add(new JTextArea("\n     Survival is a single player mode in which you will " +
-                "try to solve solve as many puzzles as you can in a time interval. You will start with a " +
-                "specified time, each time you solve a puzzle, you will be given additional time. " +
-                "So, you will challenge yourself in this game mode."){{
+        survivalTutorialPanel.add(new JTextArea("  \n Survival is a single player mode in which you will try to solve" +
+                " solve as many puzzles as you can in a time interval. You will start with a specified time, each time" +
+                " you solve a puzzle, you will be given additional time. So, you will challenge yourself in" +
+                " this game mode."){{
             setLineWrap(true);
             setWrapStyleWord(true);
             setEditable(false);
@@ -142,23 +162,21 @@ public class HowToPlayScreen extends BaseScreen {
     private JPanel initializeChallengeTutorial() {
         JPanel challengeTutorialPanel = new JPanel(new BorderLayout());
         challengeTutorialPanel.setOpaque(false);
-        JLabel tutorial = new JLabel();
-        BufferedImage tutorialImage = null;
-        try {
-            tutorialImage = ImageIO.read(getClass().getResource("/tutorials/daily_challenge_tutorial.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Image reSizedTutorialImage = tutorialImage.getScaledInstance(getMainWidth()-(getMainWidth()/5),
-                getMainHeight()-(getMainHeight()/2), Image.SCALE_SMOOTH);
-        tutorial.setIcon(new ImageIcon(reSizedTutorialImage));
+
+        ImageIcon challenge = createImageIcon("/tutorials/tutorial_challenge.gif");
+        challenge.setImage(challenge.getImage().getScaledInstance((int)gifDimension.getWidth(),
+                (int)gifDimension.getHeight(), Image.SCALE_DEFAULT));
+
+        JLabel tutorial = new JLabel(challenge, JLabel.CENTER);
+
         challengeTutorialPanel.add(tutorial,BorderLayout.NORTH);
 
-        challengeTutorialPanel.add(new JTextArea("  \n Each day there is a daily challenge. " +
-                "The grid is can be 2x2 up to 16x16 depending on the challenge. " +
-                "You place squares to match the pattern on the card. After finishing the day's challenge," +
-                " your score will be added to the leaderboard. " +
-                "To be the 1st player of the day, you need to complete the day's challenge in shortest time."){{
+        challengeTutorialPanel.add(new JTextArea("  \n A daily challenge will be available each day. " +
+                "The boards can be 2x2 up to 16x16 depending on the challenge. " +
+                "You should place qubes to match the pattern on the game card. " +
+                "After finishing the challenge of a day, your score will be added to the leaderboard. " +
+                "To be the 1st player of the day, you need to complete the day's challenge in shortest time. " +
+                "However, you can only play this game mode once a day."){{
             setLineWrap(true);
             setWrapStyleWord(true);
             setEditable(false);
@@ -173,19 +191,60 @@ public class HowToPlayScreen extends BaseScreen {
     }
 
     private JPanel initializeSwitchTutorial() {
-        JPanel switchTutorialPanel = new JPanel();
+        JPanel switchTutorialPanel = new JPanel(new BorderLayout());
         switchTutorialPanel.setOpaque(false);
 
-        switchTutorialPanel.add(new JLabel("Switch Tutorial"));
+        ImageIcon classic = createImageIcon("/tutorials/tutorial_switch.gif");
+        classic.setImage(classic.getImage().getScaledInstance((int)gifDimension.getWidth(),
+                (int)gifDimension.getHeight(), Image.SCALE_DEFAULT));
+
+        JLabel tutorial = new JLabel(classic, JLabel.CENTER);
+
+        switchTutorialPanel.add(tutorial,BorderLayout.NORTH);
+
+        switchTutorialPanel.add(new JTextArea("  \n Switch mode is also a multiplayer game." +
+                " In this mode the main goal is to finish the board you have before your opponent does. " +
+                "The trick is, your board will be changed with your opponents board in a predefined time. " +
+                "You can either unsolve the board you have or try to finish it. It is up to you and your strategy!"){{
+            setLineWrap(true);
+            setWrapStyleWord(true);
+            setEditable(false);
+            setFont(new Font("Calibri", Font.PLAIN,16));
+            setBackground(Theme.tablePanelColor);
+            setBorder(null);
+            setAlignmentY(BOTTOM_ALIGNMENT);
+
+        }}, BorderLayout.CENTER);
 
         return switchTutorialPanel;
     }
 
     private JPanel initializeClassicTutorial() {
-        JPanel classicTutorialPanel = new JPanel();
+        JPanel classicTutorialPanel = new JPanel(new BorderLayout());
         classicTutorialPanel.setOpaque(false);
 
-        classicTutorialPanel.add(new JLabel("Classic Tutorial"));
+        ImageIcon classic = createImageIcon("/tutorials/tutorial_classic.gif");
+        classic.setImage(classic.getImage().getScaledInstance((int)gifDimension.getWidth(),
+                (int)gifDimension.getHeight(), Image.SCALE_DEFAULT));
+
+        JLabel tutorial = new JLabel(classic, JLabel.CENTER);
+
+        classicTutorialPanel.add(tutorial,BorderLayout.NORTH);
+
+        classicTutorialPanel.add(new JTextArea("  \n Classic game mode is a multiplayer mode. " +
+                "You can play this mode by creating a lobby or by joining a lobby. " +
+                "It can be played up to 4 people and the main goal is to complete the board " +
+                "according to the game card shown in the upper middle of the game screen." +
+                " The first one who finishes the board wins."){{
+            setLineWrap(true);
+            setWrapStyleWord(true);
+            setEditable(false);
+            setFont(new Font("Calibri", Font.PLAIN,16));
+            setBackground(Theme.tablePanelColor);
+            setBorder(null);
+            setAlignmentY(BOTTOM_ALIGNMENT);
+
+        }}, BorderLayout.CENTER);
 
         return classicTutorialPanel;
     }
@@ -216,7 +275,7 @@ public class HowToPlayScreen extends BaseScreen {
             h -= (y - insets.top);
 
             if ( tabPane.getTabCount() > 0  ) {
-                g.setColor(Theme.normalColor);
+                g.setColor(Theme.tablePanelColor);
                 g.fillRect(x,y,w,h);
             }
 
@@ -280,4 +339,15 @@ public class HowToPlayScreen extends BaseScreen {
         }
 
     }
+
+    private ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
+
 }
