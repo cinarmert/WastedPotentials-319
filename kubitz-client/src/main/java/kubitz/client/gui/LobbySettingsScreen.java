@@ -196,6 +196,8 @@ public class LobbySettingsScreen extends BaseScreen {
 
         nameFieldLabel = new JLabel("Lobby Name");
 
+        nameField.setEnabled(false);
+
     }
 
     private void saveSettings() {
@@ -203,7 +205,6 @@ public class LobbySettingsScreen extends BaseScreen {
         Lobby oldLobby = new Lobby(currentLobby.getId(), currentLobby.getMode(), currentLobby.getMaxPlayerLimit(), currentLobby.isPrivateLobby());
 
         currentLobby.setMode((String)modeBox.getSelectedItem());
-        currentLobby.setId(nameField.getText());
         currentLobby.setMaxPlayerLimit((int)noOfPlayersBox.getSelectedItem());
         currentLobby.setPrivateLobby(privateCheckBox.isSelected());
 
