@@ -24,7 +24,17 @@ public class Lobby {
 
     private ArrayList<Account> players;
 
+    private Account admin;
+
     public Lobby(){}
+
+    public Account getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Account admin) {
+        this.admin = admin;
+    }
 
     @JsonIgnore
     @Transient

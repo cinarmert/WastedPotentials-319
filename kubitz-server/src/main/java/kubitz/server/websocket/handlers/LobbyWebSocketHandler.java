@@ -145,6 +145,10 @@ public class LobbyWebSocketHandler extends TextWebSocketHandler {
             if(statesHashTable.containsKey(lobbyToLeave.getId()))
                 statesHashTable.remove(lobbyToLeave.getId());
         } else {
+            if (leaveMessage.getAccount().equals(lobbyToLeave.getAdmin())){
+                logger.info("admin is leaving the lobby, new admin is: " + lobbyToLeave.getPlayers().get(0));
+                lobbyToLeave.setAdmin(lobbyToLeave.getPlayers().get(0));
+            }
             lobbyRepository.save(lobbyToLeave);
             notifyLobbyParticipants(lobbyToLeave, JsonUtil.toJson(leaveMessage), LobbyMessageTypes.LOBBY_LEAVE_MESSAGE);
         }
