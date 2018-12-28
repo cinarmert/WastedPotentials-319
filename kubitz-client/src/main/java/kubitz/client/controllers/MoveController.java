@@ -18,8 +18,8 @@ public class MoveController implements KeyListener, MouseListener {
     public static final int DEFAULT_RIGHT = KeyEvent.VK_D;
     public static final int DEFAULT_UP = KeyEvent.VK_W;
     public static final int DEFAULT_DOWN = KeyEvent.VK_S;
-    public static final int DEFAULT_ROTATECLOCKWISE = KeyEvent.VK_Q;
-    public static final int DEFAULT_ROTATECOUNTERCLOCKWISE = KeyEvent.VK_E;
+    public static final int DEFAULT_ROTATECLOCKWISE = KeyEvent.VK_E;
+    public static final int DEFAULT_ROTATECOUNTERCLOCKWISE = KeyEvent.VK_Q;
 
     public static int left = DEFAULT_LEFT;
     public static int right = DEFAULT_RIGHT;

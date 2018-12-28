@@ -69,7 +69,8 @@ public class SwitchModeScreen extends BaseGameScreen{
     @Override
     public void onGameFinished() {
 
-        String winner = ((SwitchMode)getGame()).getWhoWon();
+        String winner = getGame().getWhoWon();
+        ((SwitchMode)getGame()).stop();
 
         if( winner.equals(Config.getId()))
             JOptionPane.showMessageDialog( this,

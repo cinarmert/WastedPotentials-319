@@ -87,8 +87,8 @@ public class KeyBindingScreen extends BaseScreen{
             props.setProperty("rotateRight", "" + KeyEvent.VK_D);
             props.setProperty("rotateUp", "" + KeyEvent.VK_W);
             props.setProperty("rotateDown", "" + KeyEvent.VK_S);
-            props.setProperty("rotateClockwise", "" + KeyEvent.VK_Q);
-            props.setProperty("rotateCounterclockwise", "" + KeyEvent.VK_E);
+            props.setProperty("rotateClockwise", "" + KeyEvent.VK_E);
+            props.setProperty("rotateCounterclockwise", "" + KeyEvent.VK_Q);
 
             File f = new File( getClass().getResource("/").toURI().getPath() +  BINDINGS_NAME);
             OutputStream out = new FileOutputStream( f );
@@ -98,8 +98,8 @@ public class KeyBindingScreen extends BaseScreen{
             rightKey = KeyEvent.VK_D;
             upKey = KeyEvent.VK_W;
             downKey = KeyEvent.VK_S;
-            clockwiseKey = KeyEvent.VK_Q;
-            counterclockwiseKey = KeyEvent.VK_E;
+            clockwiseKey = KeyEvent.VK_E;
+            counterclockwiseKey = KeyEvent.VK_Q;
         }
         catch (Exception e ) {
             e.printStackTrace();
