@@ -113,7 +113,7 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleKickMessage(LobbyMessage lm) throws IOException {
         KickMessage kickMessage = JsonUtil.fromJson(lm.getPayload().toString(), KickMessage.class);
 
-        if (kickMessage.getAccountToKick().getId().equals(Config.getId()) ){
+        if (kickMessage.getAccountToKick().equals(Config.getAccount()) ){
             LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
             lobbyScreen.setCurrentLobby(null);
             ScreenManager.back();

@@ -1,6 +1,7 @@
 package kubitz.client.websocket;
 
 import kubitz.client.gui.Config;
+import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.*;
@@ -110,6 +111,14 @@ public class WebSocketManager {
         LobbyMessage lm = new LobbyMessage();
         lm.setPayload(JsonUtil.toJson(settingsMessage));
         lm.setType(LobbyMessageTypes.LOBBY_CHANGE_SETTINGS);
+        client.send(JsonUtil.toJson(lm));
+    }
+
+    public static void sendKickMessage(String lobbyId, Account toKick){
+        KickMessage kickMessage = new KickMessage(Config.getAccount(), lobbyId, toKick);
+        LobbyMessage lm = new LobbyMessage();
+        lm.setPayload( JsonUtil.toJson(kickMessage));
+        lm.setType(LobbyMessageTypes.LOBBY_KICK_MESSAGE);
         client.send(JsonUtil.toJson(lm));
     }
 }

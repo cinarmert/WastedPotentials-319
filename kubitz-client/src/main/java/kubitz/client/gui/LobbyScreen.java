@@ -252,6 +252,12 @@ public class LobbyScreen extends BaseScreen {
 
     private void kick() {
 
+       Account toKick = playerList.getSelectedValue();
+
+       if (!toKick.equals(Config.getAccount())){
+           WebSocketManager.sendKickMessage(currentLobby.getId(), toKick);
+       }
+
     }
 
     private void goSettings() {

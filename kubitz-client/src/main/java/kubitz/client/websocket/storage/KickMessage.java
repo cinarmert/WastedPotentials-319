@@ -14,6 +14,14 @@ public class KickMessage {
     @JsonProperty
     private Account accountToKick;
 
+    public KickMessage(){};
+
+    public KickMessage(Account account, String lobbyId, Account accountToKick) {
+        this.account = account;
+        this.lobbyId = lobbyId;
+        this.accountToKick = accountToKick;
+    }
+
     public Account getAccount() {
         return account;
     }
@@ -37,7 +45,5 @@ public class KickMessage {
     public void setLobbyId(String lobbyId) {
         this.lobbyId = lobbyId;
     }
-
-    public KickMessage(){};
 
 }
