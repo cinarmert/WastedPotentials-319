@@ -151,18 +151,24 @@ public class KubitzWebSocketClient extends WebSocketClient {
     private void handleInviteMessage(LobbyMessage lm) throws IOException {
         InviteMessage inviteMessage = JsonUtil.fromJson(lm.getPayload().toString(), InviteMessage.class);
 
-        int invite = JOptionPane.showConfirmDialog( MainFrame.getInstance(),
-                inviteMessage.getAccount().getId() + " invites you.",
-                "Play?",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
+        if ( !( ScreenManager.getCurrentScreen() instanceof BaseGameScreen ||
+                ScreenManager.getCurrentScreen() instanceof LobbyScreen ||
+                ScreenManager.getCurrentScreen() instanceof  LobbySettingsScreen ||
+                ScreenManager.getCurrentScreen() instanceof  CreateLobbyScreen)) {
 
-        if (invite == 0){// ToDo test invite
-            Lobby lobby = RESTRequestManager.getLobbyByName(inviteMessage.getLobbyId()); //ToDo invite message returns lobby?
-            WebSocketManager.sendJoinLobbyMessage(inviteMessage.getLobbyId());
+            int invite = JOptionPane.showConfirmDialog(MainFrame.getInstance(),
+                    inviteMessage.getAccount().getId() + " invites you.",
+                    "Play?",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
 
-            ((LobbyScreen)ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(lobby);
-            ScreenManager.show(ScreenManager.LOBBY_SCREEN);
+            if (invite == 0) {
+                Lobby lobby = RESTRequestManager.getLobbyByName(inviteMessage.getLobbyId());
+                WebSocketManager.sendJoinLobbyMessage(inviteMessage.getLobbyId());
+
+                ((LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN)).setCurrentLobby(lobby);
+                ScreenManager.show(ScreenManager.LOBBY_SCREEN);
+            }
         }
     }
 

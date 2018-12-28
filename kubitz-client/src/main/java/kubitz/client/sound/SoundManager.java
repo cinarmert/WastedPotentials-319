@@ -51,9 +51,6 @@ public class SoundManager {
         menuClickSound.setFramePosition(0);
         menuClickSound.start();
 
-        //ToDo make this cleaner // Do we need?
-        //changeEffectsVolume((double) (Config.getMasterSound() * Config.getEffectsSound() / 100));
-
     }
 
     public static void changeMusicVolume(double volume){
