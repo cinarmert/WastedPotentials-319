@@ -21,6 +21,10 @@ public class CustomButton extends JButton {
         setBorder( new LineBorder( Color.BLACK, 2) ); // if different borders will be used, this can be added to mouse listener.
     }
 
+    public void resetUi(){
+        setUI( new CustomButtonUI());
+    }
+
     private class CustomButtonUI extends BasicButtonUI implements MouseListener{
 
         public CustomButtonUI() {

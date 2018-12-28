@@ -135,6 +135,7 @@ public abstract class BaseScreen extends JPanel implements Screen {
 
     @Override
     public void update(){
+        backButton.resetUi();
         this.removeMainAll();
         initializeResources();
         revalidate();

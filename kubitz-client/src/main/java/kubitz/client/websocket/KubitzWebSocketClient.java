@@ -51,7 +51,7 @@ public class KubitzWebSocketClient extends WebSocketClient {
     public void onClose( int code, String reason, boolean remote ) {
         System.out.println( "closed connection: " + reason + " " +  code + " " + remote);
 
-        if (!WebSocketManager.isReConnecting()) {
+        if (!WebSocketManager.isReConnecting() && !(ScreenManager.getCurrentScreen() instanceof SurvivalModeScreen)) {
             if (!(ScreenManager.getCurrentScreen() instanceof MainMenuScreen)) {
                 ScreenManager.reset();
             }
