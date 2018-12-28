@@ -311,6 +311,7 @@ public class LobbyScreen extends BaseScreen {
     public void setCurrentLobby(Lobby currentLobby) {
 
         this.currentLobby = currentLobby;
+        adminButtons(false);
 
         if (currentLobby != null) {
             lobbyNameLabel.setText(currentLobby.getId());
@@ -402,25 +403,25 @@ public class LobbyScreen extends BaseScreen {
                     && !dropLocation.isInsert()
                     && dropLocation.getIndex() == index) {
 
-                background = Color.BLUE;
-                foreground = Color.WHITE;
+                background = Theme.pressColor;
+                foreground = Theme.pressFontColor;
 
                 // check if this cell is selected
             } else if (isSelected) {
-                background = Color.RED;
-                foreground = Color.WHITE;
+                background = Theme.pressColor;
+                foreground = Theme.pressFontColor;
 
                 // unselected, and not the DnD drop location
             } else {
-                background = Color.WHITE;
-                foreground = Color.BLACK;
+                background = Theme.normalColor;
+                foreground = Theme.normalFontColor;
             }
 
             if (currentLobby.getAdmin().equals(value) ) {
                 setText(value.toString() + " (ADMIN) ");
 
-                background = Color.RED;
-                foreground = Color.WHITE;
+                background = Theme.hoverColor;
+                foreground = Theme.hoverFontColor;
             }
 
             setBackground(background);
