@@ -142,11 +142,11 @@ public class LeaderboardScreen extends BaseScreen {
         @Override
         public int compare(LeaderboardUser u1, LeaderboardUser u2) {
             if(u1.getScore() > u2.getScore())
-                return -1;
+                return 1;
             else if(u1.getScore() == u2.getScore())
                 return 0;
             else
-                return 1;
+                return -1;
         }
     }
 }
