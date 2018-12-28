@@ -50,6 +50,17 @@ public class SwitchMode extends BaseGame {
         return this.grid.getGridIntArray();
     }
 
+    @Override
+    public boolean isGameFinished(){
+
+        boolean haveIFinished = super.isGameFinished();
+
+        if (haveIFinished ){
+            WebSocketManager.sendFinishGameMessage("", Config.getId(), lobby.getId());
+        }
+
+        return getWhoWon() != null;
+    }
 
 
 }
