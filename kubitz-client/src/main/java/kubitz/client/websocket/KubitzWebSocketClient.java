@@ -112,14 +112,18 @@ public class KubitzWebSocketClient extends WebSocketClient {
 
     private void handleKickMessage(LobbyMessage lm) throws IOException {
         KickMessage kickMessage = JsonUtil.fromJson(lm.getPayload().toString(), KickMessage.class);
+        LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
+        Lobby lobby = lobbyScreen.getCurrentLobby();
 
         if (kickMessage.getAccountToKick().equals(Config.getAccount()) ){
-            LobbyScreen lobbyScreen = (LobbyScreen) ScreenManager.getScreen(ScreenManager.LOBBY_SCREEN);
-            lobbyScreen.setCurrentLobby(null);
             ScreenManager.back();
+            lobbyScreen.setCurrentLobby(null);
+            return;
             //ToDo cant join again
         }
 
+        lobby.removePlayer(kickMessage.getAccountToKick());
+        lobbyScreen.setCurrentLobby(lobby);
     }
 
     private void handleJoinMessage(LobbyMessage lm) throws IOException {
