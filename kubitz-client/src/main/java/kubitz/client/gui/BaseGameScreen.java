@@ -18,6 +18,8 @@ public abstract class BaseGameScreen extends BaseScreen{
     private CubeUI cubeWestUI;
     private CubeUI cubeNorthUI;
     private CubeUI cubeSouthUI;
+    private JLabel rotateClockwise;
+    private JLabel rotateCounterclockwise;
     protected CardUI cardUI;
     private BaseGame baseGame;
     protected JPanel cardPanel;
@@ -155,9 +157,21 @@ public abstract class BaseGameScreen extends BaseScreen{
         JPanel cubePanel = new JPanel( new GridLayout(3,3));
         cubePanel.setOpaque(false);
 
-        cubePanel.add(Box.createHorizontalStrut(MainFrame.getInstance().getResolution().height/12));
+        ImageIcon clockwise = createImageIcon("/icons/rotate_right.png");
+        clockwise.setImage(clockwise.getImage().getScaledInstance((int)cubeDimension.getWidth(),
+                (int)cubeDimension.getHeight(), Image.SCALE_DEFAULT));
+
+        ImageIcon counterClockwise = createImageIcon("/icons/rotate_left.png");
+        counterClockwise.setImage(counterClockwise.getImage().getScaledInstance((int)cubeDimension.getWidth(),
+                (int)cubeDimension.getHeight(), Image.SCALE_DEFAULT));
+        rotateClockwise = new JLabel(clockwise);
+        rotateCounterclockwise = new JLabel(counterClockwise);
+        rotateClockwise.setPreferredSize(cubeDimension);
+        rotateCounterclockwise.setPreferredSize(cubeDimension);
+
+        cubePanel.add(rotateCounterclockwise, BorderLayout.WEST);
         cubePanel.add(cubeNorthUI);
-        cubePanel.add(Box.createHorizontalStrut(MainFrame.getInstance().getResolution().height/12));
+        cubePanel.add(rotateClockwise, BorderLayout.EAST);
         cubePanel.add(cubeWestUI, BorderLayout.WEST);
         cubePanel.add(cubeUI, BorderLayout.CENTER);
         cubePanel.add(cubeEastUI, BorderLayout.EAST);
@@ -165,10 +179,11 @@ public abstract class BaseGameScreen extends BaseScreen{
         cubePanel.add(cubeSouthUI, BorderLayout.SOUTH);
         cubePanel.add(Box.createHorizontalStrut(MainFrame.getInstance().getResolution().height/12));
 
+        addClickRotation();
+
         cubeGridPanel.add(cubePanel);
         cubeGridPanel.add( Box.createHorizontalStrut( MainFrame.getInstance().getResolution().width/5)) ;
         cubeGridPanel.add(gridUI);
-
 
         cardPanel = new JPanel();
         cardPanel.setOpaque(false);
@@ -181,6 +196,50 @@ public abstract class BaseGameScreen extends BaseScreen{
         return mainPanel;
 
     }
+
+    private void addClickRotation(){
+        cubeNorthUI.setFocusable(true);
+        cubeSouthUI.setFocusable(true);
+        cubeWestUI.setFocusable(true);
+        cubeEastUI.setFocusable(true);
+
+        cubeNorthUI.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                getSelectedCube().rotate(0, 1, 0);
+                updateCubes();
+            }
+        });
+        cubeSouthUI.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                getSelectedCube().rotate(0, -1, 0);
+                updateCubes();
+            }
+        });
+        cubeEastUI.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                getSelectedCube().rotate(-1, 0, 0);
+                updateCubes();
+            }
+        });
+        cubeWestUI.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                getSelectedCube().rotate(1, 0, 0);
+                updateCubes();
+            }
+        });
+        rotateClockwise.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                getSelectedCube().rotate(0, 0, -1);
+                updateCubes();
+            }
+        });
+        rotateCounterclockwise.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                getSelectedCube().rotate(0, 0, 1);
+                updateCubes();
+            }
+        });
+    };
 
     public void updateCubes()
     {
@@ -297,5 +356,15 @@ public abstract class BaseGameScreen extends BaseScreen{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage( Theme.gameBackgroundImage, 0, 0, getWidth(), getHeight(), this);
+    }
+
+    protected ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
 }
