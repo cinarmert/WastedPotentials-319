@@ -116,11 +116,11 @@ public class KubitzWebSocketClient extends WebSocketClient {
                 }
             });
 
+            lobby.removePlayer(leaveMessage.getAccount());
             if (leaveMessage.getAccount().equals(lobby.getAdmin())) {
                 lobby.setAdmin(lobby.getPlayers().get(0));
             }
 
-            lobby.removePlayer(leaveMessage.getAccount());
             lobbyScreen.setCurrentLobby(lobby);
         }
     }
