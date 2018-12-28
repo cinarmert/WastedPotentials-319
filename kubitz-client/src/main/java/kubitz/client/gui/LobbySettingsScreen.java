@@ -202,7 +202,7 @@ public class LobbySettingsScreen extends BaseScreen {
 
     private void saveSettings() {
 
-        Lobby oldLobby = new Lobby(currentLobby.getId(), currentLobby.getMode(), currentLobby.getMaxPlayerLimit(), currentLobby.isPrivateLobby());
+        Lobby oldLobby = new Lobby(currentLobby.getId(), currentLobby.getMode(), currentLobby.getMaxPlayerLimit(), currentLobby.isPrivateLobby(), currentLobby.getAdmin());
 
         currentLobby.setMode((String)modeBox.getSelectedItem());
         currentLobby.setMaxPlayerLimit((int)noOfPlayersBox.getSelectedItem());

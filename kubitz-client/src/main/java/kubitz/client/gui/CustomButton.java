@@ -58,23 +58,31 @@ public class CustomButton extends JButton {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), Theme.pressColor, Theme.pressFontColor);
-            SoundManager.startMenuClickSound();
+            if (isEnabled()) {
+                changeButtonStyle((JButton) e.getComponent(), Theme.pressColor, Theme.pressFontColor);
+                SoundManager.startMenuClickSound();
+            }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), Theme.normalColor, Theme.normalFontColor);
+            if (isEnabled()) {
+                changeButtonStyle((JButton) e.getComponent(), Theme.normalColor, Theme.normalFontColor);
+            }
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), Theme.hoverColor, Theme.hoverFontColor);
+            if (isEnabled()) {
+                changeButtonStyle((JButton) e.getComponent(), Theme.hoverColor, Theme.hoverFontColor);
+            }
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), Theme.normalColor, Theme.normalFontColor);
+            if (isEnabled()) {
+                changeButtonStyle((JButton) e.getComponent(), Theme.normalColor, Theme.normalFontColor);
+            }
         }
 
 

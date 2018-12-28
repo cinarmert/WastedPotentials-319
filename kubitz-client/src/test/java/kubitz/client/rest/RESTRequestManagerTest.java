@@ -16,7 +16,7 @@ public class RESTRequestManagerTest {
     private GameState gameState = new GameState();
     private Leaderboard leaderboard = new Leaderboard();
     private LeaderboardUser leaderboardUser = new LeaderboardUser();
-    private Lobby lobby = new Lobby("testlobby", Lobby.MODE_CLASSIC, 5, false, Lobby.STATUS_PLAYING);
+    private Lobby lobby = new Lobby("testlobby", Lobby.MODE_CLASSIC, 5, false, Lobby.STATUS_PLAYING, new Account("test"));
     Message message = new Message("testfromrest", "testlobby", "tstmsg", "now", "autrest");
 
     @Before

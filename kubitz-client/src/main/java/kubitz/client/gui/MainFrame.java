@@ -23,6 +23,8 @@ public class MainFrame extends JFrame {
     private MoveController moveController;
     private Account account;
 
+    private final Image icon = new ImageIcon(MainFrame.class.getResource("/icons/icon.png")).getImage();
+
     public MainFrame(){
         instance = this;
 
@@ -63,6 +65,7 @@ public class MainFrame extends JFrame {
             SettingsScreen.setFullScreen();
         }
 
+        this.setIconImage(icon);
         this.setContentPane(new ScreenManager());
         this.setSize( resolution);
         this.setLocationRelativeTo(null);

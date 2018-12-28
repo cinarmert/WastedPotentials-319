@@ -35,22 +35,24 @@ public class Lobby {
 
     public Lobby() {}
 
-    public Lobby(String id, String mode, int maxPlayerLimit, boolean privateLobby ){
+    public Lobby(String id, String mode, int maxPlayerLimit, boolean privateLobby, Account admin ){
         this.id = id;
         this.mode = mode;
         this.maxPlayerLimit = maxPlayerLimit;
         this.privateLobby = privateLobby;
         players = new ArrayList<>();
         status = Lobby.STATUS_WAITING;
+        this.admin = admin;
     }
 
-    public Lobby(String id, String mode, int maxPlayerLimit, boolean privateLobby, String status ){
+    public Lobby(String id, String mode, int maxPlayerLimit, boolean privateLobby, String status, Account admin ){
         this.id = id;
         this.mode = mode;
         this.maxPlayerLimit = maxPlayerLimit;
         this.privateLobby = privateLobby;
         players = new ArrayList<>();
         this.status = status;
+        this.admin = admin;
     }
 
     public Account getAdmin() {

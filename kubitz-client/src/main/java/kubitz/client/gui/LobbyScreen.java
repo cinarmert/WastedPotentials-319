@@ -23,6 +23,10 @@ public class LobbyScreen extends BaseScreen {
     private DefaultListModel<Account> accountListModel;
     private JTextPane chatBox;
 
+    private CustomButton startButton;
+    private CustomButton settingsButton;
+    private CustomButton kickButton;
+
 
     public LobbyScreen(Dimension resolution) {
         super(resolution);
@@ -183,28 +187,41 @@ public class LobbyScreen extends BaseScreen {
 
         GridBagConstraints c = new GridBagConstraints();
 
+        startButton = new CustomButton("Start"){{
+            setPreferredSize(BUTTONSIZE);
+            addActionListener(e->startGame());
+        }};
         c.anchor = GridBagConstraints.CENTER;
         c.gridy = 0;
         c.gridx = 0;
         c.insets = new Insets(20, 20,0,0);
-        buttonPanel.add(new CustomButton("Start"){{
-            setPreferredSize(BUTTONSIZE);
-            addActionListener(e->startGame());
-        }},c);
+        buttonPanel.add(startButton,c);
 
-        c.gridy = 1;
-        buttonPanel.add(new CustomButton("Settings"){{
+        settingsButton = new CustomButton("Settings"){{
             setPreferredSize(BUTTONSIZE);
             addActionListener(e->goSettings());
-        }},c);
+        }};
+        c.gridy = 1;
+        buttonPanel.add(settingsButton,c);
 
-        c.gridy = 2;
-        buttonPanel.add(new CustomButton("Kick player"){{
+        kickButton = new CustomButton("Kick player"){{
             setPreferredSize(BUTTONSIZE);
             addActionListener(e->kick());
-        }},c);
+        }};
+        c.gridy = 2;
+        buttonPanel.add(kickButton,c);
+
+        adminButtons(false);
 
         return buttonPanel;
+    }
+
+    public void adminButtons( boolean admin){
+
+        startButton.setEnabled(admin);
+        settingsButton.setEnabled(admin);
+        kickButton.setEnabled(admin);
+
     }
 
     public void newMessage(String authorId, String content){
@@ -227,6 +244,7 @@ public class LobbyScreen extends BaseScreen {
 
         playerList = new JList<>(accountListModel);
         playerList.setFixedCellHeight(30);
+        playerList.setCellRenderer(new LobbyCellRenderer());
 
         listPanel.add(playerList);
         playerList.setPreferredSize(new Dimension(getMainWidth()/2, getMainHeight()/5));
@@ -302,6 +320,10 @@ public class LobbyScreen extends BaseScreen {
                 accountListModel.addElement(currentLobby.getPlayers().get(i));
 
             playerList.setModel(accountListModel);
+
+            if (currentLobby.getAdmin().equals(Config.getAccount())){
+                adminButtons(true);
+            }
         }
         else {
             chatBox.setText("");
@@ -356,6 +378,56 @@ public class LobbyScreen extends BaseScreen {
             }
         }
 
+    }
+
+    class LobbyCellRenderer extends JLabel implements ListCellRenderer {
+        public LobbyCellRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getListCellRendererComponent(JList list,
+                                                      Object value,
+                                                      int index,
+                                                      boolean isSelected,
+                                                      boolean cellHasFocus) {
+
+            setText(value.toString());
+
+            Color background;
+            Color foreground;
+
+            // check if this cell represents the current DnD drop location
+            JList.DropLocation dropLocation = list.getDropLocation();
+            if (dropLocation != null
+                    && !dropLocation.isInsert()
+                    && dropLocation.getIndex() == index) {
+
+                background = Color.BLUE;
+                foreground = Color.WHITE;
+
+                // check if this cell is selected
+            } else if (isSelected) {
+                background = Color.RED;
+                foreground = Color.WHITE;
+
+                // unselected, and not the DnD drop location
+            } else {
+                background = Color.WHITE;
+                foreground = Color.BLACK;
+            }
+
+            if (currentLobby.getAdmin().equals(value) ) {
+                setText(value.toString() + " (ADMIN) ");
+
+                background = Color.RED;
+                foreground = Color.WHITE;
+            }
+
+            setBackground(background);
+            setForeground(foreground);
+
+            return this;
+        }
     }
 
 }

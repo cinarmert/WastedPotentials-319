@@ -179,7 +179,7 @@ public class CreateLobbyScreen extends BaseScreen{
 
     private void createLobby(){
         Lobby lobby = new Lobby(nameField.getText(),(String)modeBox.getSelectedItem(),
-                (int)noOfPlayersBox.getSelectedItem(), privateCheckBox.isSelected());
+                (int)noOfPlayersBox.getSelectedItem(), privateCheckBox.isSelected(), Config.getAccount());
         lobby.addPlayer(new Account(Config.getId()));
         RESTRequestManager.createLobby(lobby);
 
