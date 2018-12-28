@@ -2,6 +2,7 @@ package kubitz.client.websocket;
 
 import kubitz.client.gui.*;
 import kubitz.client.rest.RESTRequestManager;
+import kubitz.client.storage.Account;
 import kubitz.client.storage.Lobby;
 import kubitz.client.util.JsonUtil;
 import kubitz.client.websocket.storage.*;
@@ -12,6 +13,9 @@ import org.java_websocket.handshake.ServerHandshake;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class KubitzWebSocketClient extends WebSocketClient {
 
@@ -105,6 +109,15 @@ public class KubitzWebSocketClient extends WebSocketClient {
         Lobby lobby = lobbyScreen.getCurrentLobby();
 
         if (lobby != null) {
+            lobby.getPlayers().sort(new Comparator<Account>() {
+                @Override
+                public int compare(Account o1, Account o2) {
+                    return o1.getId().compareTo(o2.getId());
+                }
+            });
+
+            lobby.setAdmin(lobby.getPlayers().get(0));
+
             lobby.removePlayer(leaveMessage.getAccount());
             lobbyScreen.setCurrentLobby(lobby);
         }
