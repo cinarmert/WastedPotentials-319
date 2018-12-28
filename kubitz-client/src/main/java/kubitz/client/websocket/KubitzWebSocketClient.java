@@ -116,7 +116,9 @@ public class KubitzWebSocketClient extends WebSocketClient {
                 }
             });
 
-            lobby.setAdmin(lobby.getPlayers().get(0));
+            if (leaveMessage.getAccount().equals(lobby.getAdmin())) {
+                lobby.setAdmin(lobby.getPlayers().get(0));
+            }
 
             lobby.removePlayer(leaveMessage.getAccount());
             lobbyScreen.setCurrentLobby(lobby);
