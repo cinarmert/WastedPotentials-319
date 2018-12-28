@@ -25,6 +25,9 @@ public class Lobby {
     @JsonProperty
     private ArrayList<Account> players;
 
+    @JsonProperty
+    private Account admin;
+
     public final static String MODE_SWITCH = "LOBBY_MODE_SWITCH";
     public final static String MODE_CLASSIC = "LOBBY_MODE_CLASSIC";
     public final static String STATUS_WAITING = "LOBBY_STATUS_WAITING";
@@ -48,6 +51,14 @@ public class Lobby {
         this.privateLobby = privateLobby;
         players = new ArrayList<>();
         this.status = status;
+    }
+
+    public Account getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Account admin) {
+        this.admin = admin;
     }
 
     public String getId() {
