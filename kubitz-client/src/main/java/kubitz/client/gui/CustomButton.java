@@ -54,7 +54,6 @@ public class CustomButton extends JButton {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            changeButtonStyle( (JButton) e.getComponent(), Theme.pressColor, Theme.pressFontColor);
         }
 
         @Override

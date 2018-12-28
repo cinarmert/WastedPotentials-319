@@ -3,6 +3,8 @@ package kubitz.client.gui;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -90,7 +92,7 @@ public class KeyBindingScreen extends BaseScreen{
 
             File f = new File( getClass().getResource("/").toURI().getPath() +  BINDINGS_NAME);
             OutputStream out = new FileOutputStream( f );
-            props.store(out, "BINDING FILE");
+            props.store(out, "KEY BINDINGS");
 
             leftKey = KeyEvent.VK_A;
             rightKey = KeyEvent.VK_D;
@@ -149,10 +151,10 @@ public class KeyBindingScreen extends BaseScreen{
 
         JPanel container = new JPanel( new GridBagLayout());
 
-        container.setBackground(Color.WHITE);
-        container.setBorder(new LineBorder(Color.BLACK, 3));
+        container.setBackground(Theme.backgroundColor);
+        container.setBorder(new LineBorder(Theme.borderColor, 3));
         container.setPreferredSize( new Dimension( getMainWidth()-(getMainWidth()/3),
-                getMainHeight()-(getMainHeight()/3)));
+                getMainHeight()*3/4));
 
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.LINE_START;
@@ -176,7 +178,7 @@ public class KeyBindingScreen extends BaseScreen{
 
     private JPanel initializeBindingContainer() {
 
-        JPanel bindingContainer = new JPanel(new GridLayout(6,1,0,20));
+        JPanel bindingContainer = new JPanel(new GridLayout(7,1,0,20));
         bindingContainer.setOpaque(false);
 
         initializeKeyLabels();
@@ -193,6 +195,16 @@ public class KeyBindingScreen extends BaseScreen{
         bindingContainer.add(initializeRow("Rotate Clockwise", rotateClockwiseKeyBox, rotateClockwiseAssign));
 
         bindingContainer.add(initializeRow( "Rotate Counterclockwise", rotateCounterclockwiseKeyBox, rotateCounterclockwiseAssign));
+
+        CustomButton reset = new CustomButton("RESET DEFAULTS");
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createDefaultConfig();
+                updateLabels();
+            }
+        });
+        bindingContainer.add(reset);
 
         return bindingContainer;
     }
